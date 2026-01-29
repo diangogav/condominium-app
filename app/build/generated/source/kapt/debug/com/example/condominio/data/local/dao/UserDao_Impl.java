@@ -41,7 +41,7 @@ public final class UserDao_Impl implements UserDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `users` (`id`,`name`,`email`,`apartmentUnit`) VALUES (?,?,?,?)";
+        return "INSERT OR REPLACE INTO `users` (`id`,`name`,`email`,`apartmentUnit`,`building`) VALUES (?,?,?,?,?)";
       }
 
       @Override
@@ -66,6 +66,11 @@ public final class UserDao_Impl implements UserDao {
           statement.bindNull(4);
         } else {
           statement.bindString(4, entity.getApartmentUnit());
+        }
+        if (entity.getBuilding() == null) {
+          statement.bindNull(5);
+        } else {
+          statement.bindString(5, entity.getBuilding());
         }
       }
     };
@@ -138,6 +143,7 @@ public final class UserDao_Impl implements UserDao {
           final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
           final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
           final int _cursorIndexOfApartmentUnit = CursorUtil.getColumnIndexOrThrow(_cursor, "apartmentUnit");
+          final int _cursorIndexOfBuilding = CursorUtil.getColumnIndexOrThrow(_cursor, "building");
           final UserEntity _result;
           if (_cursor.moveToFirst()) {
             final String _tmpId;
@@ -164,7 +170,13 @@ public final class UserDao_Impl implements UserDao {
             } else {
               _tmpApartmentUnit = _cursor.getString(_cursorIndexOfApartmentUnit);
             }
-            _result = new UserEntity(_tmpId,_tmpName,_tmpEmail,_tmpApartmentUnit);
+            final String _tmpBuilding;
+            if (_cursor.isNull(_cursorIndexOfBuilding)) {
+              _tmpBuilding = null;
+            } else {
+              _tmpBuilding = _cursor.getString(_cursorIndexOfBuilding);
+            }
+            _result = new UserEntity(_tmpId,_tmpName,_tmpEmail,_tmpApartmentUnit,_tmpBuilding);
           } else {
             _result = null;
           }

@@ -30,13 +30,18 @@ class RegisterViewModel @Inject constructor(
         _uiState.update { it.copy(unit = unit) }
     }
 
+    fun onBuildingChange(building: String) {
+        _uiState.update { it.copy(building = building) }
+    }
+
     fun onPasswordChange(password: String) {
         _uiState.update { it.copy(password = password) }
     }
 
     fun onRegisterClick() {
         if (_uiState.value.email.isBlank() || _uiState.value.password.isBlank() || 
-            _uiState.value.name.isBlank() || _uiState.value.unit.isBlank()) {
+            _uiState.value.name.isBlank() || _uiState.value.unit.isBlank() ||
+            _uiState.value.building.isBlank()) {
             _uiState.update { it.copy(error = "Please fill in all fields") }
             return
         }
@@ -46,7 +51,8 @@ class RegisterViewModel @Inject constructor(
             val result = authRepository.register(
                 _uiState.value.name, 
                 _uiState.value.email, 
-                _uiState.value.unit, 
+                _uiState.value.unit,
+                _uiState.value.building,
                 _uiState.value.password
             )
             _uiState.update { it.copy(isLoading = false) }
@@ -64,6 +70,7 @@ data class RegisterUiState(
     val name: String = "",
     val email: String = "",
     val unit: String = "",
+    val building: String = "",
     val password: String = "",
     val isLoading: Boolean = false,
     val error: String? = null,

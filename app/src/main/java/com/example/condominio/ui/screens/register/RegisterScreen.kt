@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
@@ -89,6 +90,50 @@ fun RegisterScreen(
                 shape = RoundedCornerShape(12.dp),
                 singleLine = true
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Building Selector
+            var buildingExpanded by remember { mutableStateOf(false) }
+            val buildings = listOf(
+                "Torre Este",
+                "Torre Oeste",
+                "Torre Norte",
+                "Torre Sur",
+                "Edificio Principal",
+                "Anexo A",
+                "Anexo B"
+            )
+            
+            ExposedDropdownMenuBox(
+                expanded = buildingExpanded,
+                onExpandedChange = { buildingExpanded = !buildingExpanded },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = uiState.building,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Building/Tower") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = buildingExpanded) },
+                    modifier = Modifier.fillMaxWidth().menuAnchor(),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                ExposedDropdownMenu(
+                    expanded = buildingExpanded,
+                    onDismissRequest = { buildingExpanded = false }
+                ) {
+                    buildings.forEach { building ->
+                        DropdownMenuItem(
+                            text = { Text(building) },
+                            onClick = {
+                                viewModel.onBuildingChange(building)
+                                buildingExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 

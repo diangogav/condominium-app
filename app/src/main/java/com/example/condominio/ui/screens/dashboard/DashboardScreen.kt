@@ -61,7 +61,12 @@ fun DashboardScreen(
             contentPadding = PaddingValues(bottom = 24.dp)
         ) {
             item {
-                HeaderSection(userName = uiState.userName, onProfileClick = onProfileClick)
+                HeaderSection(
+                    userName = uiState.userName,
+                    building = uiState.userBuilding,
+                    apartmentUnit = uiState.userApartment,
+                    onProfileClick = onProfileClick
+                )
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
@@ -104,7 +109,12 @@ fun DashboardScreen(
 }
 
 @Composable
-fun HeaderSection(userName: String, onProfileClick: () -> Unit = {}) {
+fun HeaderSection(
+    userName: String,
+    building: String = "",
+    apartmentUnit: String = "",
+    onProfileClick: () -> Unit = {}
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,6 +132,15 @@ fun HeaderSection(userName: String, onProfileClick: () -> Unit = {}) {
                 text = userName,
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
             )
+            if (building.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "$building • Apt $apartmentUnit",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
         // Avatar - Clickable to open profile
         Box(
@@ -248,13 +267,26 @@ fun PaymentStatusGrid(
     modifier: Modifier = Modifier
 ) {
     // Determine paid months
-    // Get all paid periods from all payments that are not REJECTED
     val paidPeriods = payments
         .filter { it.status != PaymentStatus.REJECTED }
         .flatMap { it.paidPeriods }
         .toSet()
 
-    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    val calendar = Calendar.getInstance()
+    val currentYear = calendar.get(Calendar.YEAR)
+    val currentMonthIndex = calendar.get(Calendar.MONTH) // 0-indexed
+    
+    // Blinking animation for current pending month
+    val infiniteTransition = rememberInfiniteTransition(label = "blinking")
+    val alpha by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 0.2f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(800, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "alpha"
+    )
     
     Column(
         modifier = modifier
@@ -274,17 +306,23 @@ fun PaymentStatusGrid(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                rowMonths.forEach { month ->
-                    val periodId = String.format(Locale.US, "%d-%02d", currentYear, month + 1)
+                rowMonths.forEach { monthIndex ->
+                    val periodId = String.format(Locale.US, "%d-%02d", currentYear, monthIndex + 1)
                     val isPaid = paidPeriods.contains(periodId)
+                    val isCurrent = monthIndex == currentMonthIndex
+                    val isPast = monthIndex < currentMonthIndex
+                    
                     // Use 3-letter abbreviation
                     val monthName = SimpleDateFormat("MMM", Locale.US).format(
-                        Calendar.getInstance().apply { set(Calendar.MONTH, month) }.time
+                        Calendar.getInstance().apply { set(Calendar.MONTH, monthIndex) }.time
                     ).uppercase()
                     
                     MonthStatusItem(
                         month = monthName,
                         isPaid = isPaid,
+                        isCurrent = isCurrent,
+                        isPast = isPast,
+                        blinkingAlpha = if (isCurrent && !isPaid) alpha else 1f,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -298,24 +336,38 @@ fun PaymentStatusGrid(
 fun MonthStatusItem(
     month: String,
     isPaid: Boolean,
+    isCurrent: Boolean,
+    isPast: Boolean,
+    blinkingAlpha: Float,
     modifier: Modifier = Modifier
 ) {
+    // Determine color based on status
+    val dotColor = when {
+        isPaid -> Color(0xFF4CAF50) // Green for paid
+        isCurrent -> Color.Yellow // Yellow for current pending
+        isPast -> Color.Red // Red for overdue
+        else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f) // Grey for future
+    }
+    
+    val borderColor = when {
+        isPaid || isCurrent || isPast -> Color.Transparent
+        else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+    }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Minimalist Indicator
+        // Indicator Dot
         Box(
             modifier = Modifier
-                .size(12.dp) // Smaller dot
+                .size(12.dp)
+                .graphicsLayer { alpha = if (isCurrent && !isPaid) blinkingAlpha else 1f }
                 .clip(CircleShape)
-                .background(
-                    if (isPaid) MaterialTheme.colorScheme.primary 
-                    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f) // Subtle grey for pending
-                )
+                .background(dotColor)
                 .border(
                     width = 1.dp,
-                    color = if (isPaid) Color.Transparent else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
+                    color = borderColor,
                     shape = CircleShape
                 )
         )
@@ -324,10 +376,10 @@ fun MonthStatusItem(
             text = month,
             style = MaterialTheme.typography.labelSmall.copy(
                 fontSize = 10.sp,
-                fontWeight = if (isPaid) FontWeight.Bold else FontWeight.Normal,
+                fontWeight = if (isPaid || isCurrent) FontWeight.Bold else FontWeight.Normal,
                 letterSpacing = 0.5.sp
             ),
-            color = if (isPaid) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+            color = if (isPaid || isCurrent) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
         )
     }
 }
@@ -361,14 +413,7 @@ fun QuickActions(onPayClick: () -> Unit, onHistoryClick: () -> Unit) {
             onClick = { },
             modifier = Modifier.weight(1f)
         )
-        Spacer(modifier = Modifier.width(12.dp))
-        QuickActionItem(
-            icon = Icons.Default.Person,
-            label = "Profile",
-            color = Color(0xFF757575), // Grey
-            onClick = { },
-            modifier = Modifier.weight(1f)
-        )
+        // Profile removed as requested
     }
 }
 

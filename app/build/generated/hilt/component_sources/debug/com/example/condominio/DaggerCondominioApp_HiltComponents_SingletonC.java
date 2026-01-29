@@ -678,7 +678,7 @@ public final class DaggerCondominioApp_HiltComponents_SingletonC {
           return (T) DatabaseModule_ProvideAppDatabaseFactory.provideAppDatabase(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
 
           case 2: // com.example.condominio.data.repository.RoomAuthRepository 
-          return (T) new RoomAuthRepository(singletonCImpl.userDao());
+          return (T) new RoomAuthRepository(singletonCImpl.userDao(), singletonCImpl.paymentDao());
 
           case 3: // com.example.condominio.data.repository.RoomPaymentRepository 
           return (T) new RoomPaymentRepository(singletonCImpl.paymentDao());

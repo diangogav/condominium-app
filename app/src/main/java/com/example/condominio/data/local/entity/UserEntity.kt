@@ -9,19 +9,22 @@ data class UserEntity(
     @PrimaryKey val id: String,
     val name: String,
     val email: String,
-    val apartmentUnit: String
+    val apartmentUnit: String,
+    val building: String = ""
 )
 
 fun UserEntity.toDomain() = User(
     id = id,
     name = name,
     email = email,
-    apartmentUnit = apartmentUnit
+    apartmentUnit = apartmentUnit,
+    building = building
 )
 
 fun User.toEntity() = UserEntity(
     id = id,
     name = name,
     email = email,
-    apartmentUnit = apartmentUnit
+    apartmentUnit = apartmentUnit,
+    building = building
 )

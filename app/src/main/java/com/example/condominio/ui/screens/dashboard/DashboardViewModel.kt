@@ -79,12 +79,29 @@ class DashboardViewModel @Inject constructor(
                     }
                 }
             }
+            
+            // Collect user details separately
+            launch {
+                authRepository.currentUser.collect { user ->
+                    user?.let {
+                        _uiState.update { state ->
+                            state.copy(
+                                userName = it.name,
+                                userBuilding = it.building,
+                                userApartment = it.apartmentUnit
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 data class DashboardUiState(
     val userName: String = "",
+    val userBuilding: String = "",
+    val userApartment: String = "",
     val solvencyStatus: SolvencyStatus = SolvencyStatus.PENDING,
     val recentPayments: List<Payment> = emptyList(),
     val isLoading: Boolean = false

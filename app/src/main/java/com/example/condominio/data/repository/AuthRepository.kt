@@ -11,7 +11,7 @@ import javax.inject.Singleton
 interface AuthRepository {
     val currentUser: Flow<User?>
     suspend fun login(email: String, password: String): Result<User>
-    suspend fun register(name: String, email: String, unit: String, password: String): Result<User>
+    suspend fun register(name: String, email: String, unit: String, building: String, password: String): Result<User>
     suspend fun logout()
     suspend fun updateUser(user: User): Result<Unit>
     suspend fun changePassword(currentPassword: String, newPassword: String): Result<Unit>
@@ -33,9 +33,9 @@ class MockAuthRepository @Inject constructor() : AuthRepository {
         }
     }
 
-    override suspend fun register(name: String, email: String, unit: String, password: String): Result<User> {
+    override suspend fun register(name: String, email: String, unit: String, building: String, password: String): Result<User> {
         delay(1000)
-        val user = User("1", name, email, unit)
+        val user = User("1", name, email, unit, building)
         _currentUser.value = user
         return Result.success(user)
     }

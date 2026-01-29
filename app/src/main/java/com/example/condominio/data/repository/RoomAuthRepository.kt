@@ -1,8 +1,8 @@
 package com.example.condominio.data.repository
 
 import com.example.condominio.data.local.dao.UserDao
-import com.example.condominio.data.local.entity.toEntity
-import com.example.condominio.data.local.entity.toDomain
+import com.example.condominio.data.local.dao.PaymentDao
+import com.example.condominio.data.local.entity.*
 import com.example.condominio.data.model.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,8 @@ import javax.inject.Singleton
 
 @Singleton
 class RoomAuthRepository @Inject constructor(
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val paymentDao: PaymentDao
 ) : AuthRepository {
 
     override val currentUser: Flow<User?> = userDao.getUser().map { it?.toDomain() }
@@ -31,12 +32,14 @@ class RoomAuthRepository @Inject constructor(
                 id = "user_${System.currentTimeMillis()}",
                 name = "Demo User",
                 email = email,
-                apartmentUnit = "4B"
+                apartmentUnit = "4B",
+                building = "Torre Este"
             )
             
             // Only insert if it's a new user
             if (existingUser == null) {
                 userDao.insertUser(user.toEntity())
+                seedDemoPayments()
             }
             
             return Result.success(user)
@@ -44,10 +47,61 @@ class RoomAuthRepository @Inject constructor(
         return Result.failure(Exception("Invalid credentials"))
     }
 
-    override suspend fun register(name: String, email: String, unit: String, password: String): Result<User> {
+    private suspend fun seedDemoPayments() {
+        // Clear existing payments first
+        // paymentDao.clearPayments() // Assuming we want a clean state for the demo
+
+        val calendar = java.util.Calendar.getInstance()
+        val currentYear = calendar.get(java.util.Calendar.YEAR)
+        val currentMonth = calendar.get(java.util.Calendar.MONTH) // 0-indexed
+
+        // Requirement: 2 months paid, 1 month overdue, current month pending (blinking)
+        // M = Current (Pending)
+        // M-1 = Overdue (No payment)
+        // M-2 = Paid
+        // M-3 = Paid
+        
+        val monthsToSeed = listOf(currentMonth - 2, currentMonth - 3)
+        
+        monthsToSeed.forEach { month ->
+            // Handle year rollover if needed (e.g. Current=Jan(0), M-1=Dec(-1))
+            var year = currentYear
+            var m = month
+            if (m < 0) {
+                m += 12
+                year -= 1
+            }
+            
+            val periodId = String.format(java.util.Locale.US, "%d-%02d", year, m + 1)
+            
+            val payment = com.example.condominio.data.model.Payment(
+                id = "seed_${System.currentTimeMillis()}_$m",
+                amount = 45.0,
+                date = java.util.Calendar.getInstance().apply { 
+                    set(java.util.Calendar.YEAR, year)
+                    set(java.util.Calendar.MONTH, m)
+                    set(java.util.Calendar.DAY_OF_MONTH, 5)
+                }.time,
+                status = com.example.condominio.data.model.PaymentStatus.VERIFIED,
+                description = "Condo Fee ${monthName(m)}",
+                method = com.example.condominio.data.model.PaymentMethod.PAGO_MOVIL,
+                paidPeriods = listOf(periodId)
+            )
+            
+            paymentDao.insertPayment(payment.toEntity())
+        }
+    }
+    
+    private fun monthName(month: Int): String {
+        return java.text.SimpleDateFormat("MMMM", java.util.Locale.US).format(
+            java.util.Calendar.getInstance().apply { set(java.util.Calendar.MONTH, month) }.time
+        )
+    }
+
+    override suspend fun register(name: String, email: String, unit: String, building: String, password: String): Result<User> {
         delay(1000)
         
-        if (name.isBlank() || email.isBlank() || unit.isBlank() || password.length < 6) {
+        if (name.isBlank() || email.isBlank() || unit.isBlank() || building.isBlank() || password.length < 6) {
             return Result.failure(Exception("Invalid input"))
         }
         
@@ -61,8 +115,10 @@ class RoomAuthRepository @Inject constructor(
             id = "user_${System.currentTimeMillis()}",
             name = name,
             email = email,
-            apartmentUnit = unit
+            apartmentUnit = unit,
+            building = building
         )
+        
         userDao.insertUser(user.toEntity())
         return Result.success(user)
     }
