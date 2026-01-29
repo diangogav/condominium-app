@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.condominio.data.model.Payment
 import com.example.condominio.data.model.PaymentStatus
+import com.example.condominio.data.model.SolvencyStatus
+import androidx.compose.animation.core.*
+import androidx.compose.runtime.*
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -68,7 +72,10 @@ fun DashboardScreen(
                     modifier = Modifier.padding(bottom = 12.dp)
                 )
                 
-                PaymentStatusGrid(payments = uiState.recentPayments)
+                SolvencyFlipCard(
+                    solvencyStatus = uiState.solvencyStatus,
+                    payments = uiState.recentPayments
+                )
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
@@ -135,7 +142,111 @@ fun HeaderSection(userName: String, onProfileClick: () -> Unit = {}) {
 }
 
 @Composable
-fun PaymentStatusGrid(payments: List<Payment>) {
+fun SolvencyFlipCard(
+    solvencyStatus: SolvencyStatus,
+    payments: List<Payment>
+) {
+    var isFlipped by remember { mutableStateOf(false) }
+    val rotation by animateFloatAsState(
+        targetValue = if (isFlipped) 180f else 0f,
+        animationSpec = tween(durationMillis = 600, easing = FastOutSlowInEasing),
+        label = "flip"
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .clickable { isFlipped = !isFlipped }
+    ) {
+        // Back side (shown when flipped)
+        if (rotation > 90f) {
+            PaymentStatusGrid(
+                payments = payments,
+                modifier = Modifier.graphicsLayer {
+                    rotationY = 180f + rotation
+                    cameraDistance = 12f * density
+                }
+            )
+        } else {
+            // Front side (solvency status)
+            SolvencyStatusCard(
+                solvencyStatus = solvencyStatus,
+                modifier = Modifier.graphicsLayer {
+                    rotationY = rotation
+                    cameraDistance = 12f * density
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun SolvencyStatusCard(
+    solvencyStatus: SolvencyStatus,
+    modifier: Modifier = Modifier
+) {
+    val isUpToDate = solvencyStatus == SolvencyStatus.SOLVENT
+    val backgroundColor = if (isUpToDate) {
+        Color(0xFF4CAF50).copy(alpha = 0.15f) // Green
+    } else {
+        Color(0xFFFF6D00).copy(alpha = 0.15f) // Orange
+    }
+    val accentColor = if (isUpToDate) {
+        Color(0xFF4CAF50)
+    } else {
+        Color(0xFFFF6D00)
+    }
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
+            .border(2.dp, accentColor.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
+            .padding(24.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = if (isUpToDate) Icons.Default.CheckCircle else Icons.Default.Payment,
+                contentDescription = null,
+                tint = accentColor,
+                modifier = Modifier.size(48.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = if (isUpToDate) "¡Estás al día!" else "Pago Pendiente",
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                color = accentColor
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = if (isUpToDate) "Todos tus pagos están al corriente" else "Tienes pagos pendientes por realizar",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Tap para ver detalles",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                fontSize = 11.sp
+            )
+        }
+    }
+}
+
+@Composable
+fun PaymentStatusGrid(
+    payments: List<Payment>,
+    modifier: Modifier = Modifier
+) {
     // Determine paid months
     // Get all paid periods from all payments that are not REJECTED
     val paidPeriods = payments
@@ -146,11 +257,13 @@ fun PaymentStatusGrid(payments: List<Payment>) {
     val currentYear = Calendar.getInstance().get(Calendar.YEAR)
     
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .height(180.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp)) // Darker background
-            .padding(16.dp)
+            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center
     ) {
         // Grid of 2 rows x 6 columns
         val months = (0..11).toList()

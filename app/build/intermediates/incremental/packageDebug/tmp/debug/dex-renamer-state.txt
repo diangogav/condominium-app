@@ -1,4 +1,4 @@
-#Thu Jan 29 09:18:10 VET 2026
+#Thu Jan 29 09:43:55 VET 2026
 base.0=/home/diango/code/Condominio/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/diango/code/Condominio/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.10=/home/diango/code/Condominio/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
