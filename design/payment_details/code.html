@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Payment Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="relative flex min-h-screen w-full flex-col max-w-[480px] mx-auto overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="text-gray-900 dark:text-white flex size-12 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</div>
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Payment Details</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-12 bg-transparent text-gray-900 dark:text-white p-0">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col flex-1 px-4">
+<!-- Status Indicator Section -->
+<div class="flex flex-col items-center py-8">
+<div class="size-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-4">
+<span class="material-symbols-outlined !text-4xl">check_circle</span>
+</div>
+<!-- HeadlineText -->
+<h1 class="text-gray-900 dark:text-white tracking-light text-[32px] font-extrabold leading-tight text-center">$1,250.00</h1>
+<!-- MetaText -->
+<p class="text-gray-500 dark:text-[#9dabb9] text-sm font-medium leading-normal pt-1 text-center">Payment Successfully Verified</p>
+</div>
+<!-- Transaction Details Section -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl overflow-hidden border border-gray-100 dark:border-gray-800 mb-6">
+<!-- SectionHeader -->
+<h3 class="text-gray-900 dark:text-white text-base font-bold leading-tight tracking-[-0.015em] px-4 pt-4">Transaction Details</h3>
+<!-- DescriptionList -->
+<div class="p-4 pt-2">
+<div class="flex justify-between gap-x-6 py-3 border-b border-gray-50 dark:border-gray-800">
+<p class="text-gray-500 dark:text-[#9dabb9] text-sm font-medium">Transaction ID</p>
+<p class="text-gray-900 dark:text-white text-sm font-semibold text-right">#TXN-992834</p>
+</div>
+<div class="flex justify-between gap-x-6 py-3 border-b border-gray-50 dark:border-gray-800">
+<p class="text-gray-500 dark:text-[#9dabb9] text-sm font-medium">Date</p>
+<p class="text-gray-900 dark:text-white text-sm font-semibold text-right">Oct 24, 2023, 10:30 AM</p>
+</div>
+<div class="flex justify-between gap-x-6 py-3 border-b border-gray-50 dark:border-gray-800">
+<p class="text-gray-500 dark:text-[#9dabb9] text-sm font-medium">Payment Method</p>
+<p class="text-gray-900 dark:text-white text-sm font-semibold text-right">Bank Transfer (Chase)</p>
+</div>
+<div class="flex justify-between gap-x-6 py-3">
+<p class="text-gray-500 dark:text-[#9dabb9] text-sm font-medium">Unit Number</p>
+<p class="text-gray-900 dark:text-white text-sm font-semibold text-right">Unit 4B (John Doe)</p>
+</div>
+</div>
+</div>
+<!-- Receipt Preview Section -->
+<div class="flex flex-col mb-10">
+<div class="flex items-center justify-between px-1 mb-3">
+<h3 class="text-gray-900 dark:text-white text-base font-bold leading-tight">Payment Receipt</h3>
+<button class="text-primary text-sm font-bold">View Full</button>
+</div>
+<div class="relative w-full aspect-[3/4] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+<div class="absolute inset-0 bg-gradient-to-br from-gray-200/50 to-gray-400/50 dark:from-gray-700 dark:to-gray-900" data-alt="Abstract document pattern representing a physical receipt paper"></div>
+<div class="relative z-10 flex flex-col items-center gap-3">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-600 !text-6xl">description</span>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wider">Receipt_4B_Oct.pdf</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Actions -->
+<div class="p-4 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-800 pb-10">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors mb-3">
+<span class="material-symbols-outlined">download</span>
+                Download Receipt
+            </button>
+<button class="w-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined">mail</span>
+                Contact Tenant
+            </button>
+</div>
+</div>
+</body></html>

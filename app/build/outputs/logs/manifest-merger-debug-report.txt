@@ -1,0 +1,450 @@
+-- Merging decision tree log ---
+provider#androidx.core.content.FileProvider
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:20:9-28:20
+	android:grantUriPermissions
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:24:13-47
+	android:authorities
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:22:13-60
+	android:exported
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:23:13-37
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:21:13-62
+manifest
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:2:1-43:12
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:2:1-43:12
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:2:1-43:12
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:2:1-43:12
+MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] /home/diango/.gradle/caches/transforms-3/f4cd4c6c14b1720d24998ed435224915/transformed/hilt-navigation-compose-1.2.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.hilt:hilt-navigation:1.2.0] /home/diango/.gradle/caches/transforms-3/bafb89f0fcfc7caba73a0819d253d5c0/transformed/hilt-navigation-1.2.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-common:2.7.7] /home/diango/.gradle/caches/transforms-3/0b497cbbe617f0bc1690e5c714f7bda0/transformed/navigation-common-2.7.7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.7.7] /home/diango/.gradle/caches/transforms-3/1d34c1d7e5198fdd62a55352d1e2289e/transformed/navigation-runtime-2.7.7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] /home/diango/.gradle/caches/transforms-3/65c9ced09fa510a94fafab97c06a0c2d/transformed/navigation-common-ktx-2.7.7/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.7] /home/diango/.gradle/caches/transforms-3/dda232a39bc1d58b1ead4e1a1c37c94d/transformed/navigation-runtime-ktx-2.7.7/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.7.7] /home/diango/.gradle/caches/transforms-3/8c8c25bcf036348aa5e4df7490beab71/transformed/navigation-compose-2.7.7/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material3:material3-android:1.2.0] /home/diango/.gradle/caches/transforms-3/812baff79509506f12b69725ac78b7a8/transformed/material3-release/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.dagger:hilt-android:2.50] /home/diango/.gradle/caches/transforms-3/84f2bced4efa92536e7c2c23e9854e86/transformed/hilt-android-2.50/AndroidManifest.xml:16:1-19:12
+MERGED from [androidx.fragment:fragment:1.5.1] /home/diango/.gradle/caches/transforms-3/b8bf8134829059c705fa514d5fa51143/transformed/fragment-1.5.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.loader:loader:1.0.0] /home/diango/.gradle/caches/transforms-3/7ac6ef01e26a7903ff527584108f0e0f/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [io.coil-kt:coil-compose:2.5.0] /home/diango/.gradle/caches/transforms-3/ad94ed041f08fcbcbd648608015424a0/transformed/coil-compose-2.5.0/AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose-base:2.5.0] /home/diango/.gradle/caches/transforms-3/3b758e8758c4652fee6197fbb11e1746/transformed/coil-compose-base-2.5.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-android:1.6.3] /home/diango/.gradle/caches/transforms-3/23a6282ba00d89304336a7156019d047/transformed/material-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b3fd98aedf270ee3669d004e6944389a/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.3] /home/diango/.gradle/caches/transforms-3/ea8a10074d688c4eca7112dc4c939c4e/transformed/material-icons-extended-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.6.3] /home/diango/.gradle/caches/transforms-3/372c6b7537cf45ab31a027626f933d7f/transformed/material-ripple-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b1c2eac914bc770e33ad1af84e40f5ba/transformed/animation-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.6.3] /home/diango/.gradle/caches/transforms-3/fdd2765da3971bc2cfb2deb25ac28694/transformed/animation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.3] /home/diango/.gradle/caches/transforms-3/a33ccc5c70c4d47294b582488b9a5e43/transformed/foundation-layout-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7075d5fb3711dcc66ee4a69f8ce7ce39/transformed/foundation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.3] /home/diango/.gradle/caches/transforms-3/0fcd665f13563edee935642a34e28084/transformed/ui-tooling-data-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b8cdb5f9ee59c468939bd6ff0de2e31d/transformed/ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.3] /home/diango/.gradle/caches/transforms-3/d0c3a0c3095368aee2d30d101264159c/transformed/ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.3] /home/diango/.gradle/caches/transforms-3/611d199bcefa8ad227711be028d67b25/transformed/ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.3] /home/diango/.gradle/caches/transforms-3/445576514be3673af971f8fa6fa80c0c/transformed/ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.ui:ui-util-android:1.6.3] /home/diango/.gradle/caches/transforms-3/dd83ba3f5e09e2152c4c3fe44024efef/transformed/ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.6.3] /home/diango/.gradle/caches/transforms-3/816e9cd6106efbeb0650aa8ddb6efda8/transformed/ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/0abc9b0b005d20ecc0c5af0234aaf896/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /home/diango/.gradle/caches/transforms-3/059546d52043cae9f9f620b500a645e1/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /home/diango/.gradle/caches/transforms-3/105b95376f66e7f5938950467dcb8c5c/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/b0802289b760f752cbca05a106d3a3a7/transformed/lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /home/diango/.gradle/caches/transforms-3/e69daada193825e883ff872fa6a0effe/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/diango/.gradle/caches/transforms-3/5ea944a5ce214833fd685dcd4e930340/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/diango/.gradle/caches/transforms-3/5a533cb184fc0568ecc9908d5e2da1bb/transformed/savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /home/diango/.gradle/caches/transforms-3/52a82cee0c61303d8c0858c08f31325c/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [io.coil-kt:coil:2.5.0] /home/diango/.gradle/caches/transforms-3/b7f14ce60cfb40fb34b2825233874b26/transformed/coil-2.5.0/AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-base:2.5.0] /home/diango/.gradle/caches/transforms-3/c56cffcc448073e1e11ad2a4e7c81854/transformed/coil-base-2.5.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /home/diango/.gradle/caches/transforms-3/4bc97e429cc0858f6393bf3809524e65/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/07a61cd7159113b937ed72e5637a9e2e/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /home/diango/.gradle/caches/transforms-3/bd1e88e96afd2107f6aec6161a44801e/transformed/lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] /home/diango/.gradle/caches/transforms-3/075837aaef9459cfd7346959e2a590fc/transformed/accompanist-drawablepainter-0.32.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.compose.ui:ui-android:1.6.3] /home/diango/.gradle/caches/transforms-3/32069b5c28ca6ee6a3d5ea854c3d4419/transformed/ui-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.activity:activity-compose:1.8.2] /home/diango/.gradle/caches/transforms-3/8bad0c84ab2cd31b723f3b712e3434a0/transformed/activity-compose-1.8.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.8.2] /home/diango/.gradle/caches/transforms-3/697e7f3d81b3d3d3891765e70741286e/transformed/activity-ktx-1.8.2/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.8.2] /home/diango/.gradle/caches/transforms-3/1830871416df782e0d3a7ffd06c5f998/transformed/activity-1.8.2/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/diango/.gradle/caches/transforms-3/65bdd2d739e60ceb6d31e914df6e686b/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /home/diango/.gradle/caches/transforms-3/a00f0f53f525857198d69d363d9fb74f/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/diango/.gradle/caches/transforms-3/d740e6e4d54d7855bc04d2419c08dce5/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/diango/.gradle/caches/transforms-3/aae6ad4f8c626be7a58c5b50e702a667/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/diango/.gradle/caches/transforms-3/5016724f3123345013b76c49a58f068c/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.autofill:autofill:1.0.0] /home/diango/.gradle/caches/transforms-3/7e7083ea7eaf3710c42daf40af863568/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/diango/.gradle/caches/transforms-3/d0b835f4cd3dee17596a60523394e4e7/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.12.0] /home/diango/.gradle/caches/transforms-3/3c2d945558dca2a4387921df0ab54ede/transformed/core-ktx-1.12.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:17:1-31:12
+MERGED from [androidx.room:room-ktx:2.6.1] /home/diango/.gradle/caches/transforms-3/ed1d9b4c73da64eb64d44312bee22ca8/transformed/room-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] /home/diango/.gradle/caches/transforms-3/1255e668b228227ea77be0ac86e533dc/transformed/sqlite-framework-2.4.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.sqlite:sqlite:2.4.0] /home/diango/.gradle/caches/transforms-3/a8e5c064a41861cfb0d8a9ceb19696da/transformed/sqlite-2.4.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.3] /home/diango/.gradle/caches/transforms-3/03b3747056bc29f78d9f946b2a6653da/transformed/runtime-saveable-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.6.3] /home/diango/.gradle/caches/transforms-3/1a38ccf076ea7a12f93e720a8a06266e/transformed/runtime-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/diango/.gradle/caches/transforms-3/226bea8392b1c4f5ed8b157703a07497/transformed/annotation-experimental-1.4.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/diango/.gradle/caches/transforms-3/3a309af405d92ee2e302e2fa212d0ff5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/diango/.gradle/caches/transforms-3/35fbe3a80f50b28d1dde0a892f1d7762/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/diango/.gradle/caches/transforms-3/5106f8c05723d4fb5364937d5862d7ad/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] /home/diango/.gradle/caches/transforms-3/b820429f72f76745b23dd583a7078f4a/transformed/tracing-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] /home/diango/.gradle/caches/transforms-3/e06ea51e40865bbf210d29ee708b0855/transformed/exifinterface-1.3.6/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.dagger:dagger-lint-aar:2.50] /home/diango/.gradle/caches/transforms-3/2547b3000686a7abb888083f9782c828/transformed/dagger-lint-aar-2.50/AndroidManifest.xml:16:1-19:12
+	package
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:5:5-76
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:5:22-73
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:6:5-7:38
+	android:maxSdkVersion
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:7:9-35
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:6:22-77
+application
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:9:5-41:19
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:9:5-41:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:23:5-29:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/diango/.gradle/caches/transforms-3/3a309af405d92ee2e302e2fa212d0ff5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/diango/.gradle/caches/transforms-3/3a309af405d92ee2e302e2fa212d0ff5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+	android:extractNativeLibs
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:17:9-35
+	android:label
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:15:9-41
+	android:fullBackupContent
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:13:9-54
+	android:roundIcon
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:16:9-61
+	tools:targetApi
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:19:9-29
+	android:icon
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:14:9-56
+	android:allowBackup
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:11:9-35
+	android:theme
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:18:9-48
+	android:dataExtractionRules
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:12:9-65
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:10:9-38
+activity#com.example.condominio.MainActivity
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:30:9-40:20
+	android:label
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:33:13-45
+	android:exported
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:32:13-36
+	android:theme
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:34:13-52
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:31:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:35:13-39:29
+action#android.intent.action.MAIN
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:36:17-69
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:36:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:38:17-77
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:38:27-74
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:25:13-27:58
+	android:resource
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:27:17-55
+	android:name
+		ADDED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml:26:17-67
+uses-sdk
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] /home/diango/.gradle/caches/transforms-3/f4cd4c6c14b1720d24998ed435224915/transformed/hilt-navigation-compose-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] /home/diango/.gradle/caches/transforms-3/f4cd4c6c14b1720d24998ed435224915/transformed/hilt-navigation-compose-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.2.0] /home/diango/.gradle/caches/transforms-3/bafb89f0fcfc7caba73a0819d253d5c0/transformed/hilt-navigation-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.hilt:hilt-navigation:1.2.0] /home/diango/.gradle/caches/transforms-3/bafb89f0fcfc7caba73a0819d253d5c0/transformed/hilt-navigation-1.2.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.7] /home/diango/.gradle/caches/transforms-3/0b497cbbe617f0bc1690e5c714f7bda0/transformed/navigation-common-2.7.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.7] /home/diango/.gradle/caches/transforms-3/0b497cbbe617f0bc1690e5c714f7bda0/transformed/navigation-common-2.7.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.7] /home/diango/.gradle/caches/transforms-3/1d34c1d7e5198fdd62a55352d1e2289e/transformed/navigation-runtime-2.7.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.7] /home/diango/.gradle/caches/transforms-3/1d34c1d7e5198fdd62a55352d1e2289e/transformed/navigation-runtime-2.7.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] /home/diango/.gradle/caches/transforms-3/65c9ced09fa510a94fafab97c06a0c2d/transformed/navigation-common-ktx-2.7.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] /home/diango/.gradle/caches/transforms-3/65c9ced09fa510a94fafab97c06a0c2d/transformed/navigation-common-ktx-2.7.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.7] /home/diango/.gradle/caches/transforms-3/dda232a39bc1d58b1ead4e1a1c37c94d/transformed/navigation-runtime-ktx-2.7.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.7] /home/diango/.gradle/caches/transforms-3/dda232a39bc1d58b1ead4e1a1c37c94d/transformed/navigation-runtime-ktx-2.7.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.7] /home/diango/.gradle/caches/transforms-3/8c8c25bcf036348aa5e4df7490beab71/transformed/navigation-compose-2.7.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.7] /home/diango/.gradle/caches/transforms-3/8c8c25bcf036348aa5e4df7490beab71/transformed/navigation-compose-2.7.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.0] /home/diango/.gradle/caches/transforms-3/812baff79509506f12b69725ac78b7a8/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.0] /home/diango/.gradle/caches/transforms-3/812baff79509506f12b69725ac78b7a8/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [com.google.dagger:hilt-android:2.50] /home/diango/.gradle/caches/transforms-3/84f2bced4efa92536e7c2c23e9854e86/transformed/hilt-android-2.50/AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:hilt-android:2.50] /home/diango/.gradle/caches/transforms-3/84f2bced4efa92536e7c2c23e9854e86/transformed/hilt-android-2.50/AndroidManifest.xml:18:3-42
+MERGED from [androidx.fragment:fragment:1.5.1] /home/diango/.gradle/caches/transforms-3/b8bf8134829059c705fa514d5fa51143/transformed/fragment-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.1] /home/diango/.gradle/caches/transforms-3/b8bf8134829059c705fa514d5fa51143/transformed/fragment-1.5.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.loader:loader:1.0.0] /home/diango/.gradle/caches/transforms-3/7ac6ef01e26a7903ff527584108f0e0f/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /home/diango/.gradle/caches/transforms-3/7ac6ef01e26a7903ff527584108f0e0f/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [io.coil-kt:coil-compose:2.5.0] /home/diango/.gradle/caches/transforms-3/ad94ed041f08fcbcbd648608015424a0/transformed/coil-compose-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.5.0] /home/diango/.gradle/caches/transforms-3/ad94ed041f08fcbcbd648608015424a0/transformed/coil-compose-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.5.0] /home/diango/.gradle/caches/transforms-3/3b758e8758c4652fee6197fbb11e1746/transformed/coil-compose-base-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.5.0] /home/diango/.gradle/caches/transforms-3/3b758e8758c4652fee6197fbb11e1746/transformed/coil-compose-base-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.3] /home/diango/.gradle/caches/transforms-3/23a6282ba00d89304336a7156019d047/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.6.3] /home/diango/.gradle/caches/transforms-3/23a6282ba00d89304336a7156019d047/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b3fd98aedf270ee3669d004e6944389a/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b3fd98aedf270ee3669d004e6944389a/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.3] /home/diango/.gradle/caches/transforms-3/ea8a10074d688c4eca7112dc4c939c4e/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.3] /home/diango/.gradle/caches/transforms-3/ea8a10074d688c4eca7112dc4c939c4e/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.3] /home/diango/.gradle/caches/transforms-3/372c6b7537cf45ab31a027626f933d7f/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.3] /home/diango/.gradle/caches/transforms-3/372c6b7537cf45ab31a027626f933d7f/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b1c2eac914bc770e33ad1af84e40f5ba/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b1c2eac914bc770e33ad1af84e40f5ba/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.6.3] /home/diango/.gradle/caches/transforms-3/fdd2765da3971bc2cfb2deb25ac28694/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.6.3] /home/diango/.gradle/caches/transforms-3/fdd2765da3971bc2cfb2deb25ac28694/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.3] /home/diango/.gradle/caches/transforms-3/a33ccc5c70c4d47294b582488b9a5e43/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.3] /home/diango/.gradle/caches/transforms-3/a33ccc5c70c4d47294b582488b9a5e43/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7075d5fb3711dcc66ee4a69f8ce7ce39/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7075d5fb3711dcc66ee4a69f8ce7ce39/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.3] /home/diango/.gradle/caches/transforms-3/0fcd665f13563edee935642a34e28084/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.6.3] /home/diango/.gradle/caches/transforms-3/0fcd665f13563edee935642a34e28084/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b8cdb5f9ee59c468939bd6ff0de2e31d/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.3] /home/diango/.gradle/caches/transforms-3/b8cdb5f9ee59c468939bd6ff0de2e31d/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.3] /home/diango/.gradle/caches/transforms-3/d0c3a0c3095368aee2d30d101264159c/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.3] /home/diango/.gradle/caches/transforms-3/d0c3a0c3095368aee2d30d101264159c/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.3] /home/diango/.gradle/caches/transforms-3/611d199bcefa8ad227711be028d67b25/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.3] /home/diango/.gradle/caches/transforms-3/611d199bcefa8ad227711be028d67b25/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.3] /home/diango/.gradle/caches/transforms-3/445576514be3673af971f8fa6fa80c0c/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.3] /home/diango/.gradle/caches/transforms-3/445576514be3673af971f8fa6fa80c0c/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.3] /home/diango/.gradle/caches/transforms-3/dd83ba3f5e09e2152c4c3fe44024efef/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.3] /home/diango/.gradle/caches/transforms-3/dd83ba3f5e09e2152c4c3fe44024efef/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.3] /home/diango/.gradle/caches/transforms-3/816e9cd6106efbeb0650aa8ddb6efda8/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.3] /home/diango/.gradle/caches/transforms-3/816e9cd6106efbeb0650aa8ddb6efda8/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/0abc9b0b005d20ecc0c5af0234aaf896/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/0abc9b0b005d20ecc0c5af0234aaf896/transformed/lifecycle-livedata-core-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /home/diango/.gradle/caches/transforms-3/059546d52043cae9f9f620b500a645e1/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.7.0] /home/diango/.gradle/caches/transforms-3/059546d52043cae9f9f620b500a645e1/transformed/lifecycle-livedata-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /home/diango/.gradle/caches/transforms-3/105b95376f66e7f5938950467dcb8c5c/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] /home/diango/.gradle/caches/transforms-3/105b95376f66e7f5938950467dcb8c5c/transformed/lifecycle-livedata-core-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/b0802289b760f752cbca05a106d3a3a7/transformed/lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/b0802289b760f752cbca05a106d3a3a7/transformed/lifecycle-viewmodel-ktx-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /home/diango/.gradle/caches/transforms-3/e69daada193825e883ff872fa6a0effe/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /home/diango/.gradle/caches/transforms-3/e69daada193825e883ff872fa6a0effe/transformed/lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/diango/.gradle/caches/transforms-3/5ea944a5ce214833fd685dcd4e930340/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/diango/.gradle/caches/transforms-3/5ea944a5ce214833fd685dcd4e930340/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/diango/.gradle/caches/transforms-3/5a533cb184fc0568ecc9908d5e2da1bb/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/diango/.gradle/caches/transforms-3/5a533cb184fc0568ecc9908d5e2da1bb/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /home/diango/.gradle/caches/transforms-3/52a82cee0c61303d8c0858c08f31325c/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] /home/diango/.gradle/caches/transforms-3/52a82cee0c61303d8c0858c08f31325c/transformed/lifecycle-viewmodel-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [io.coil-kt:coil:2.5.0] /home/diango/.gradle/caches/transforms-3/b7f14ce60cfb40fb34b2825233874b26/transformed/coil-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.5.0] /home/diango/.gradle/caches/transforms-3/b7f14ce60cfb40fb34b2825233874b26/transformed/coil-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.5.0] /home/diango/.gradle/caches/transforms-3/c56cffcc448073e1e11ad2a4e7c81854/transformed/coil-base-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.5.0] /home/diango/.gradle/caches/transforms-3/c56cffcc448073e1e11ad2a4e7c81854/transformed/coil-base-2.5.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /home/diango/.gradle/caches/transforms-3/4bc97e429cc0858f6393bf3809524e65/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /home/diango/.gradle/caches/transforms-3/4bc97e429cc0858f6393bf3809524e65/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/07a61cd7159113b937ed72e5637a9e2e/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] /home/diango/.gradle/caches/transforms-3/07a61cd7159113b937ed72e5637a9e2e/transformed/lifecycle-runtime-ktx-2.7.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /home/diango/.gradle/caches/transforms-3/bd1e88e96afd2107f6aec6161a44801e/transformed/lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] /home/diango/.gradle/caches/transforms-3/bd1e88e96afd2107f6aec6161a44801e/transformed/lifecycle-viewmodel-compose-2.7.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] /home/diango/.gradle/caches/transforms-3/075837aaef9459cfd7346959e2a590fc/transformed/accompanist-drawablepainter-0.32.0/AndroidManifest.xml:21:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] /home/diango/.gradle/caches/transforms-3/075837aaef9459cfd7346959e2a590fc/transformed/accompanist-drawablepainter-0.32.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.compose.ui:ui-android:1.6.3] /home/diango/.gradle/caches/transforms-3/32069b5c28ca6ee6a3d5ea854c3d4419/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.6.3] /home/diango/.gradle/caches/transforms-3/32069b5c28ca6ee6a3d5ea854c3d4419/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.8.2] /home/diango/.gradle/caches/transforms-3/8bad0c84ab2cd31b723f3b712e3434a0/transformed/activity-compose-1.8.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.8.2] /home/diango/.gradle/caches/transforms-3/8bad0c84ab2cd31b723f3b712e3434a0/transformed/activity-compose-1.8.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] /home/diango/.gradle/caches/transforms-3/697e7f3d81b3d3d3891765e70741286e/transformed/activity-ktx-1.8.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] /home/diango/.gradle/caches/transforms-3/697e7f3d81b3d3d3891765e70741286e/transformed/activity-ktx-1.8.2/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.8.2] /home/diango/.gradle/caches/transforms-3/1830871416df782e0d3a7ffd06c5f998/transformed/activity-1.8.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.2] /home/diango/.gradle/caches/transforms-3/1830871416df782e0d3a7ffd06c5f998/transformed/activity-1.8.2/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/diango/.gradle/caches/transforms-3/65bdd2d739e60ceb6d31e914df6e686b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /home/diango/.gradle/caches/transforms-3/65bdd2d739e60ceb6d31e914df6e686b/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /home/diango/.gradle/caches/transforms-3/a00f0f53f525857198d69d363d9fb74f/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /home/diango/.gradle/caches/transforms-3/a00f0f53f525857198d69d363d9fb74f/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/diango/.gradle/caches/transforms-3/d740e6e4d54d7855bc04d2419c08dce5/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /home/diango/.gradle/caches/transforms-3/d740e6e4d54d7855bc04d2419c08dce5/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/diango/.gradle/caches/transforms-3/aae6ad4f8c626be7a58c5b50e702a667/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /home/diango/.gradle/caches/transforms-3/aae6ad4f8c626be7a58c5b50e702a667/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/diango/.gradle/caches/transforms-3/5016724f3123345013b76c49a58f068c/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /home/diango/.gradle/caches/transforms-3/5016724f3123345013b76c49a58f068c/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /home/diango/.gradle/caches/transforms-3/7e7083ea7eaf3710c42daf40af863568/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /home/diango/.gradle/caches/transforms-3/7e7083ea7eaf3710c42daf40af863568/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/diango/.gradle/caches/transforms-3/d0b835f4cd3dee17596a60523394e4e7/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/diango/.gradle/caches/transforms-3/d0b835f4cd3dee17596a60523394e4e7/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.12.0] /home/diango/.gradle/caches/transforms-3/3c2d945558dca2a4387921df0ab54ede/transformed/core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] /home/diango/.gradle/caches/transforms-3/3c2d945558dca2a4387921df0ab54ede/transformed/core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.room:room-ktx:2.6.1] /home/diango/.gradle/caches/transforms-3/ed1d9b4c73da64eb64d44312bee22ca8/transformed/room-ktx-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.room:room-ktx:2.6.1] /home/diango/.gradle/caches/transforms-3/ed1d9b4c73da64eb64d44312bee22ca8/transformed/room-ktx-2.6.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] /home/diango/.gradle/caches/transforms-3/1255e668b228227ea77be0ac86e533dc/transformed/sqlite-framework-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite-framework:2.4.0] /home/diango/.gradle/caches/transforms-3/1255e668b228227ea77be0ac86e533dc/transformed/sqlite-framework-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.4.0] /home/diango/.gradle/caches/transforms-3/a8e5c064a41861cfb0d8a9ceb19696da/transformed/sqlite-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.sqlite:sqlite:2.4.0] /home/diango/.gradle/caches/transforms-3/a8e5c064a41861cfb0d8a9ceb19696da/transformed/sqlite-2.4.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.3] /home/diango/.gradle/caches/transforms-3/03b3747056bc29f78d9f946b2a6653da/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.3] /home/diango/.gradle/caches/transforms-3/03b3747056bc29f78d9f946b2a6653da/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.6.3] /home/diango/.gradle/caches/transforms-3/1a38ccf076ea7a12f93e720a8a06266e/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.6.3] /home/diango/.gradle/caches/transforms-3/1a38ccf076ea7a12f93e720a8a06266e/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/diango/.gradle/caches/transforms-3/226bea8392b1c4f5ed8b157703a07497/transformed/annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/diango/.gradle/caches/transforms-3/226bea8392b1c4f5ed8b157703a07497/transformed/annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/diango/.gradle/caches/transforms-3/3a309af405d92ee2e302e2fa212d0ff5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/diango/.gradle/caches/transforms-3/3a309af405d92ee2e302e2fa212d0ff5/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/diango/.gradle/caches/transforms-3/35fbe3a80f50b28d1dde0a892f1d7762/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/diango/.gradle/caches/transforms-3/35fbe3a80f50b28d1dde0a892f1d7762/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/diango/.gradle/caches/transforms-3/5106f8c05723d4fb5364937d5862d7ad/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/diango/.gradle/caches/transforms-3/5106f8c05723d4fb5364937d5862d7ad/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] /home/diango/.gradle/caches/transforms-3/b820429f72f76745b23dd583a7078f4a/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] /home/diango/.gradle/caches/transforms-3/b820429f72f76745b23dd583a7078f4a/transformed/tracing-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] /home/diango/.gradle/caches/transforms-3/e06ea51e40865bbf210d29ee708b0855/transformed/exifinterface-1.3.6/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.6] /home/diango/.gradle/caches/transforms-3/e06ea51e40865bbf210d29ee708b0855/transformed/exifinterface-1.3.6/AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.dagger:dagger-lint-aar:2.50] /home/diango/.gradle/caches/transforms-3/2547b3000686a7abb888083f9782c828/transformed/dagger-lint-aar-2.50/AndroidManifest.xml:18:3-42
+MERGED from [com.google.dagger:dagger-lint-aar:2.50] /home/diango/.gradle/caches/transforms-3/2547b3000686a7abb888083f9782c828/transformed/dagger-lint-aar-2.50/AndroidManifest.xml:18:3-42
+	android:targetSdkVersion
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/diango/code/Condominio/app/src/main/AndroidManifest.xml
+activity#androidx.activity.ComponentActivity
+ADDED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:24:13-63
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/diango/.gradle/caches/transforms-3/e6cb3ad33dffa21f46e6baad3bbb7ac3/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+permission#com.example.condominio.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+uses-permission#com.example.condominio.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+service#androidx.room.MultiInstanceInvalidationService
+ADDED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+	android:exported
+		ADDED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:28:13-60
+	android:directBootAware
+		ADDED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+	android:name
+		ADDED from [androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
