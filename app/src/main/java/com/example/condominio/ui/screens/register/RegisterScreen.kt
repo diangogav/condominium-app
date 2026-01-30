@@ -95,15 +95,6 @@ fun RegisterScreen(
 
             // Building Selector
             var buildingExpanded by remember { mutableStateOf(false) }
-            val buildings = listOf(
-                "Torre Este",
-                "Torre Oeste",
-                "Torre Norte",
-                "Torre Sur",
-                "Edificio Principal",
-                "Anexo A",
-                "Anexo B"
-            )
             
             ExposedDropdownMenuBox(
                 expanded = buildingExpanded,
@@ -111,26 +102,34 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 OutlinedTextField(
-                    value = uiState.building,
+                    value = uiState.buildings.find { it.id == uiState.selectedBuildingId }?.name ?: "",
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Building/Tower") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = buildingExpanded) },
                     modifier = Modifier.fillMaxWidth().menuAnchor(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    enabled = !uiState.isLoadingBuildings
                 )
                 ExposedDropdownMenu(
                     expanded = buildingExpanded,
                     onDismissRequest = { buildingExpanded = false }
                 ) {
-                    buildings.forEach { building ->
+                    if (uiState.isLoadingBuildings) {
                         DropdownMenuItem(
-                            text = { Text(building) },
-                            onClick = {
-                                viewModel.onBuildingChange(building)
-                                buildingExpanded = false
-                            }
+                            text = { Text("Loading...") },
+                            onClick = {}
                         )
+                    } else {
+                        uiState.buildings.forEach { building ->
+                            DropdownMenuItem(
+                                text = { Text(building.name) },
+                                onClick = {
+                                    viewModel.onBuildingChange(building.id)
+                                    buildingExpanded = false
+                                }
+                            )
+                        }
                     }
                 }
             }

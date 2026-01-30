@@ -9,177 +9,182 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-11-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:5:5-76
-11-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:5:22-73
+11-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:5:5-76
+11-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:5:22-73
 12    <uses-permission
-12-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:6:5-7:38
+12-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:6:5-7:38
 13        android:name="android.permission.READ_EXTERNAL_STORAGE"
-13-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:6:22-77
+13-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:6:22-77
 14        android:maxSdkVersion="32" />
-14-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:7:9-35
-15
-16    <permission
-16-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-17        android:name="com.example.condominio.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-17-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-18        android:protectionLevel="signature" />
-18-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-19
-20    <uses-permission android:name="com.example.condominio.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-20-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-20-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
-21
-22    <application
-22-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:9:5-41:19
-23        android:name="com.example.condominio.CondominioApp"
-23-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:10:9-38
-24        android:allowBackup="true"
-24-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:11:9-35
-25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-25-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
-26        android:dataExtractionRules="@xml/data_extraction_rules"
-26-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:12:9-65
-27        android:debuggable="true"
-28        android:extractNativeLibs="false"
-29        android:fullBackupContent="@xml/backup_rules"
-29-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:13:9-54
-30        android:icon="@drawable/ic_launcher_foreground"
-30-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:14:9-56
-31        android:label="@string/app_name"
-31-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:15:9-41
-32        android:roundIcon="@drawable/ic_launcher_foreground"
-32-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:16:9-61
-33        android:supportsRtl="true"
-33-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:17:9-35
-34        android:testOnly="true"
-35        android:theme="@style/Theme.Condominio" >
-35-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:18:9-48
-36        <provider
-37            android:name="androidx.core.content.FileProvider"
-37-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:21:13-62
-38            android:authorities="com.example.condominio.provider"
-38-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:22:13-60
-39            android:exported="false"
-39-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:23:13-37
-40            android:grantUriPermissions="true" >
-40-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:24:13-47
-41            <meta-data
-41-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:25:13-27:58
-42                android:name="android.support.FILE_PROVIDER_PATHS"
-42-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:26:17-67
-43                android:resource="@xml/provider_paths" />
-43-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:27:17-55
-44        </provider>
-45
-46        <activity
-46-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:30:9-40:20
-47            android:name="com.example.condominio.MainActivity"
-47-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:31:13-41
-48            android:exported="true"
-48-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:32:13-36
-49            android:label="@string/app_name"
-49-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:33:13-45
-50            android:theme="@style/Theme.Condominio" >
-50-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:34:13-52
-51            <intent-filter>
-51-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:35:13-39:29
-52                <action android:name="android.intent.action.MAIN" />
-52-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:36:17-69
-52-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:36:25-66
-53
-54                <category android:name="android.intent.category.LAUNCHER" />
-54-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:38:17-77
-54-->/home/diango/code/Condominio/app/src/main/AndroidManifest.xml:38:27-74
-55            </intent-filter>
-56        </activity>
-57        <activity
-57-->[androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:23:9-25:39
-58            android:name="androidx.activity.ComponentActivity"
-58-->[androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:24:13-63
-59            android:exported="true" />
-59-->[androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/8ee8dbb9f42e6434db9ef4891d653ad1/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:25:13-36
-60
-61        <provider
-61-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
-62            android:name="androidx.startup.InitializationProvider"
-62-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
-63            android:authorities="com.example.condominio.androidx-startup"
-63-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
-64            android:exported="false" >
-64-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
-65            <meta-data
-65-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
-66                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-66-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
-67                android:value="androidx.startup" />
-67-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/e6c48f2c066f990b2fa85fb5f61002d8/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
-68            <meta-data
-68-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-69                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-69-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-70                android:value="androidx.startup" />
-70-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/184dd5537481cb673cf46198c2ce54b7/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-71            <meta-data
-71-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
-72                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-72-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
-73                android:value="androidx.startup" />
-73-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
-74        </provider>
-75
-76        <activity
-76-->[androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
-77            android:name="androidx.compose.ui.tooling.PreviewActivity"
-77-->[androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
-78            android:exported="true" />
-78-->[androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/7986fa16d61e100cd49f4c8c2de50e5b/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
-79
-80        <service
-80-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
-81            android:name="androidx.room.MultiInstanceInvalidationService"
-81-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
-82            android:directBootAware="true"
-82-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
-83            android:exported="false" />
-83-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/096ae08cd3ae022049a2682c2e75378e/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
-84
-85        <receiver
-85-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
-86            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-86-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
-87            android:directBootAware="false"
-87-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
-88            android:enabled="true"
-88-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
-89            android:exported="true"
-89-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
-90            android:permission="android.permission.DUMP" >
-90-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
-91            <intent-filter>
-91-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
-92                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-92-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
-93            </intent-filter>
-94            <intent-filter>
-94-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
-95                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-95-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-95-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
-96            </intent-filter>
-97            <intent-filter>
-97-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
-98                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-98-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-98-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
-99            </intent-filter>
-100            <intent-filter>
-100-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
-101                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-101-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-101-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/c8f4d007859e8edba465c7d286d8a886/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
-102            </intent-filter>
-103        </receiver>
-104    </application>
-105
-106</manifest>
+14-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:7:9-35
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:8:5-67
+15-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:8:22-64
+16
+17    <permission
+17-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+18        android:name="com.example.condominio.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.example.condominio.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+22
+23    <application
+23-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:10:5-43:19
+24        android:name="com.example.condominio.CondominioApp"
+24-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:11:9-38
+25        android:allowBackup="true"
+25-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:12:9-35
+26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+26-->[androidx.core:core:1.12.0] /home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+27        android:dataExtractionRules="@xml/data_extraction_rules"
+27-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:13:9-65
+28        android:debuggable="true"
+29        android:extractNativeLibs="false"
+30        android:fullBackupContent="@xml/backup_rules"
+30-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:14:9-54
+31        android:icon="@drawable/ic_launcher_foreground"
+31-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:15:9-56
+32        android:label="@string/app_name"
+32-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:16:9-41
+33        android:roundIcon="@drawable/ic_launcher_foreground"
+33-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:17:9-61
+34        android:supportsRtl="true"
+34-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:18:9-35
+35        android:testOnly="true"
+36        android:theme="@style/Theme.Condominio"
+36-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:19:9-48
+37        android:usesCleartextTraffic="true" >
+37-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:20:9-44
+38        <provider
+39            android:name="androidx.core.content.FileProvider"
+39-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:23:13-62
+40            android:authorities="com.example.condominio.provider"
+40-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:24:13-60
+41            android:exported="false"
+41-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:25:13-37
+42            android:grantUriPermissions="true" >
+42-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:26:13-47
+43            <meta-data
+43-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:27:13-29:58
+44                android:name="android.support.FILE_PROVIDER_PATHS"
+44-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:28:17-67
+45                android:resource="@xml/provider_paths" />
+45-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:29:17-55
+46        </provider>
+47
+48        <activity
+48-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:32:9-42:20
+49            android:name="com.example.condominio.MainActivity"
+49-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:33:13-41
+50            android:exported="true"
+50-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:34:13-36
+51            android:label="@string/app_name"
+51-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:35:13-45
+52            android:theme="@style/Theme.Condominio" >
+52-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:36:13-52
+53            <intent-filter>
+53-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:37:13-41:29
+54                <action android:name="android.intent.action.MAIN" />
+54-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:38:17-69
+54-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:38:25-66
+55
+56                <category android:name="android.intent.category.LAUNCHER" />
+56-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:40:17-77
+56-->/home/diango/code/condominio_app/Condominio/app/src/main/AndroidManifest.xml:40:27-74
+57            </intent-filter>
+58        </activity>
+59        <activity
+59-->[androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/c2fcf4f3b83f66a9b34ff98f4155a0b5/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:23:9-25:39
+60            android:name="androidx.activity.ComponentActivity"
+60-->[androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/c2fcf4f3b83f66a9b34ff98f4155a0b5/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:24:13-63
+61            android:exported="true" />
+61-->[androidx.compose.ui:ui-test-manifest:1.6.3] /home/diango/.gradle/caches/transforms-3/c2fcf4f3b83f66a9b34ff98f4155a0b5/transformed/ui-test-manifest-1.6.3/AndroidManifest.xml:25:13-36
+62
+63        <provider
+63-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+64            android:name="androidx.startup.InitializationProvider"
+64-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+65            android:authorities="com.example.condominio.androidx-startup"
+65-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+66            android:exported="false" >
+66-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+67            <meta-data
+67-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+68                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+68-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+69                android:value="androidx.startup" />
+69-->[androidx.emoji2:emoji2:1.3.0] /home/diango/.gradle/caches/transforms-3/d6baff4c9abd27e39b7aa50409ff9359/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+70            <meta-data
+70-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/63bdd81477235fa69d3ac5ad29665c3e/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+71                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+71-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/63bdd81477235fa69d3ac5ad29665c3e/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+72                android:value="androidx.startup" />
+72-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/diango/.gradle/caches/transforms-3/63bdd81477235fa69d3ac5ad29665c3e/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+73            <meta-data
+73-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+74                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+74-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+75                android:value="androidx.startup" />
+75-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+76        </provider>
+77
+78        <activity
+78-->[androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/aa0b723a3f4e668b116187e8a315adbc/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+79            android:name="androidx.compose.ui.tooling.PreviewActivity"
+79-->[androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/aa0b723a3f4e668b116187e8a315adbc/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+80            android:exported="true" />
+80-->[androidx.compose.ui:ui-tooling-android:1.6.3] /home/diango/.gradle/caches/transforms-3/aa0b723a3f4e668b116187e8a315adbc/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+81
+82        <service
+82-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/79ea1f983d46151378b08edd3fa84241/transformed/room-runtime-2.6.1/AndroidManifest.xml:24:9-28:63
+83            android:name="androidx.room.MultiInstanceInvalidationService"
+83-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/79ea1f983d46151378b08edd3fa84241/transformed/room-runtime-2.6.1/AndroidManifest.xml:25:13-74
+84            android:directBootAware="true"
+84-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/79ea1f983d46151378b08edd3fa84241/transformed/room-runtime-2.6.1/AndroidManifest.xml:26:13-43
+85            android:exported="false" />
+85-->[androidx.room:room-runtime:2.6.1] /home/diango/.gradle/caches/transforms-3/79ea1f983d46151378b08edd3fa84241/transformed/room-runtime-2.6.1/AndroidManifest.xml:27:13-37
+86
+87        <receiver
+87-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+88            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+88-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+89            android:directBootAware="false"
+89-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+90            android:enabled="true"
+90-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+91            android:exported="true"
+91-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+92            android:permission="android.permission.DUMP" >
+92-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+94                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+94-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+95            </intent-filter>
+96            <intent-filter>
+96-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+97                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+97-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+97-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+98            </intent-filter>
+99            <intent-filter>
+99-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+100                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+100-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+100-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+101            </intent-filter>
+102            <intent-filter>
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+103                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] /home/diango/.gradle/caches/transforms-3/4a7a8e88241836f061d56baed46b5a64/transformed/profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+104            </intent-filter>
+105        </receiver>
+106    </application>
+107
+108</manifest>

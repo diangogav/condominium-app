@@ -7,8 +7,12 @@ import com.example.condominio.data.local.dao.PaymentDao
 import com.example.condominio.data.local.dao.UserDao
 import com.example.condominio.data.repository.AuthRepository
 import com.example.condominio.data.repository.PaymentRepository
-import com.example.condominio.data.repository.RoomAuthRepository
-import com.example.condominio.data.repository.RoomPaymentRepository
+import com.example.condominio.data.repository.RemoteAuthRepository
+import com.example.condominio.data.repository.RemotePaymentRepository
+import com.example.condominio.data.repository.BuildingRepository
+import com.example.condominio.data.repository.RemoteBuildingRepository
+import com.example.condominio.data.repository.DashboardRepository
+import com.example.condominio.data.repository.RemoteDashboardRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -51,12 +55,24 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindAuthRepository(
-        authRepository: RoomAuthRepository
+        authRepository: RemoteAuthRepository
     ): AuthRepository
 
     @Binds
     @Singleton
     abstract fun bindPaymentRepository(
-        paymentRepository: RoomPaymentRepository
+        paymentRepository: RemotePaymentRepository
     ): PaymentRepository
+    
+    @Binds
+    @Singleton
+    abstract fun bindBuildingRepository(
+        buildingRepository: RemoteBuildingRepository
+    ): BuildingRepository
+    
+    @Binds
+    @Singleton
+    abstract fun bindDashboardRepository(
+        dashboardRepository: RemoteDashboardRepository
+    ): DashboardRepository
 }

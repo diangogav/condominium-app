@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.condominio.data.model.Payment;
 import com.example.condominio.data.model.SolvencyStatus;
 import com.example.condominio.data.repository.AuthRepository;
-import com.example.condominio.data.repository.RoomPaymentRepository;
+import com.example.condominio.data.repository.DashboardRepository;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import javax.inject.Inject;
 

@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.condominio.app-mergeDebugResources-60:/values-hi/values-hi.xml",
+            "outputFile": "com.example.condominio.app-mergeDebugResources-62:/values-hi/values-hi.xml",
             "map": [
                 {
-                    "source": "/home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/res/values-hi/values-hi.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,256,361,462,575,681,808",
-                        "endColumns": "97,102,104,100,112,105,126,100",
-                        "endOffsets": "148,251,356,457,570,676,803,904"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,79",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,203,306,411,512,625,731,8228",
-                        "endColumns": "97,102,104,100,112,105,126,100",
-                        "endOffsets": "198,301,406,507,620,726,853,8324"
-                    }
-                },
-                {
-                    "source": "/home/diango/.gradle/caches/transforms-3/32069b5c28ca6ee6a3d5ea854c3d4419/transformed/ui-release/res/values-hi/values-hi.xml",
+                    "source": "/home/diango/.gradle/caches/transforms-3/2f5385c6a29d6d1853228673e1b6c576/transformed/ui-release/res/values-hi/values-hi.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/home/diango/.gradle/caches/transforms-3/7075d5fb3711dcc66ee4a69f8ce7ce39/transformed/foundation-release/res/values-hi/values-hi.xml",
+                    "source": "/home/diango/.gradle/caches/transforms-3/05980f187d42af5026f7add3c53a6808/transformed/foundation-release/res/values-hi/values-hi.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -55,7 +38,24 @@
                     }
                 },
                 {
-                    "source": "/home/diango/.gradle/caches/transforms-3/812baff79509506f12b69725ac78b7a8/transformed/material3-release/res/values-hi/values-hi.xml",
+                    "source": "/home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/res/values-hi/values-hi.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,256,361,462,575,681,808",
+                        "endColumns": "97,102,104,100,112,105,126,100",
+                        "endOffsets": "148,251,356,457,570,676,803,904"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,79",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,203,306,411,512,625,731,8228",
+                        "endColumns": "97,102,104,100,112,105,126,100",
+                        "endOffsets": "198,301,406,507,620,726,853,8324"
+                    }
+                },
+                {
+                    "source": "/home/diango/.gradle/caches/transforms-3/5c431a20309ce3724f298d441cf6e46b/transformed/material3-release/res/values-hi/values-hi.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

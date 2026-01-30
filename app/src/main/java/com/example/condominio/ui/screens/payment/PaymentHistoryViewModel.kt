@@ -3,7 +3,7 @@ package com.example.condominio.ui.screens.payment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.condominio.data.model.Payment
-import com.example.condominio.data.repository.RoomPaymentRepository
+import com.example.condominio.data.repository.PaymentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PaymentHistoryViewModel @Inject constructor(
-    private val paymentRepository: RoomPaymentRepository
+    private val paymentRepository: PaymentRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PaymentHistoryUiState())
@@ -23,18 +23,21 @@ class PaymentHistoryViewModel @Inject constructor(
         loadPayments()
     }
 
-    private fun loadPayments() {
+    fun loadPayments() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             
-            // Use Flow to reactively collect payments
-            paymentRepository.getPaymentsFlow().collect { payments ->
+            try {
+                val payments = paymentRepository.getPayments()
                 _uiState.update { 
                     it.copy(
                         payments = payments,
                         isLoading = false
                     ) 
                 }
+            } catch (e: Exception) {
+                // Handle error
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
     }

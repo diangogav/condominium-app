@@ -22,6 +22,10 @@ import com.example.condominio.data.model.Payment
 import com.example.condominio.data.model.PaymentStatus
 import com.example.condominio.ui.screens.dashboard.TransactionItem
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.compose.runtime.DisposableEffect
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentHistoryScreen(
@@ -30,6 +34,19 @@ fun PaymentHistoryScreen(
     viewModel: PaymentHistoryViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.loadPayments()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     Scaffold(
         topBar = {

@@ -1,7 +1,7 @@
 package com.example.condominio.ui.screens.dashboard;
 
 import com.example.condominio.data.repository.AuthRepository;
-import com.example.condominio.data.repository.RoomPaymentRepository;
+import com.example.condominio.data.repository.DashboardRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -25,26 +25,26 @@ import javax.inject.Provider;
 public final class DashboardViewModel_Factory implements Factory<DashboardViewModel> {
   private final Provider<AuthRepository> authRepositoryProvider;
 
-  private final Provider<RoomPaymentRepository> paymentRepositoryProvider;
+  private final Provider<DashboardRepository> dashboardRepositoryProvider;
 
   public DashboardViewModel_Factory(Provider<AuthRepository> authRepositoryProvider,
-      Provider<RoomPaymentRepository> paymentRepositoryProvider) {
+      Provider<DashboardRepository> dashboardRepositoryProvider) {
     this.authRepositoryProvider = authRepositoryProvider;
-    this.paymentRepositoryProvider = paymentRepositoryProvider;
+    this.dashboardRepositoryProvider = dashboardRepositoryProvider;
   }
 
   @Override
   public DashboardViewModel get() {
-    return newInstance(authRepositoryProvider.get(), paymentRepositoryProvider.get());
+    return newInstance(authRepositoryProvider.get(), dashboardRepositoryProvider.get());
   }
 
   public static DashboardViewModel_Factory create(Provider<AuthRepository> authRepositoryProvider,
-      Provider<RoomPaymentRepository> paymentRepositoryProvider) {
-    return new DashboardViewModel_Factory(authRepositoryProvider, paymentRepositoryProvider);
+      Provider<DashboardRepository> dashboardRepositoryProvider) {
+    return new DashboardViewModel_Factory(authRepositoryProvider, dashboardRepositoryProvider);
   }
 
   public static DashboardViewModel newInstance(AuthRepository authRepository,
-      RoomPaymentRepository paymentRepository) {
-    return new DashboardViewModel(authRepository, paymentRepository);
+      DashboardRepository dashboardRepository) {
+    return new DashboardViewModel(authRepository, dashboardRepository);
   }
 }

@@ -24,6 +24,13 @@ data class Payment(
     val paidPeriods: List<String> = emptyList() // ["2024-01", "2024-02"]
 )
 
+data class DashboardSummary(
+    val solvencyStatus: String,
+    val lastPaymentDate: Date?,
+    val pendingPeriods: List<String>,
+    val recentTransactions: List<Payment>
+)
+
 enum class SolvencyStatus(val label: String) {
     SOLVENT("Al día"),
     PENDING("Pagos Pendientes")

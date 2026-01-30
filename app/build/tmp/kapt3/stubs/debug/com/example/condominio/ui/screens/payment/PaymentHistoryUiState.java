@@ -2,7 +2,7 @@ package com.example.condominio.ui.screens.payment;
 
 import androidx.lifecycle.ViewModel;
 import com.example.condominio.data.model.Payment;
-import com.example.condominio.data.repository.RoomPaymentRepository;
+import com.example.condominio.data.repository.PaymentRepository;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import javax.inject.Inject;
 

@@ -34,6 +34,10 @@ import com.example.condominio.data.model.PaymentMethod
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import com.example.condominio.util.FileUtils
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -47,12 +51,19 @@ fun CreatePaymentScreen(
     val calendar = Calendar.getInstance()
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     
+    val coroutineScope = rememberCoroutineScope()
+    
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         selectedImageUri = uri
         uri?.let {
-            viewModel.onProofUrlChange(it.toString())
+            coroutineScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+                val file = com.example.condominio.util.FileUtils.getFileFromUri(context, it)
+                if (file != null) {
+                    viewModel.onProofUrlChange(file.absolutePath)
+                }
+            }
         }
     }
     
@@ -233,7 +244,7 @@ fun CreatePaymentScreen(
             // Generate list of months (e.g., current year)
             // Ideally this would come from ViewModel, but for UI demo:
             val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-            val periods = remember {
+            val periods: List<Pair<String, String>> = remember {
                 (0..11).map { month ->
                     val cal = Calendar.getInstance()
                     cal.set(Calendar.YEAR, currentYear)

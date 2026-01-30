@@ -68,6 +68,12 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.coil.compose)
     implementation(libs.gson)
+    
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

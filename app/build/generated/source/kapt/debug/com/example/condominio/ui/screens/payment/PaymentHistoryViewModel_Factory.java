@@ -1,6 +1,6 @@
 package com.example.condominio.ui.screens.payment;
 
-import com.example.condominio.data.repository.RoomPaymentRepository;
+import com.example.condominio.data.repository.PaymentRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.QualifierMetadata;
@@ -22,10 +22,9 @@ import javax.inject.Provider;
     "KotlinInternalInJava"
 })
 public final class PaymentHistoryViewModel_Factory implements Factory<PaymentHistoryViewModel> {
-  private final Provider<RoomPaymentRepository> paymentRepositoryProvider;
+  private final Provider<PaymentRepository> paymentRepositoryProvider;
 
-  public PaymentHistoryViewModel_Factory(
-      Provider<RoomPaymentRepository> paymentRepositoryProvider) {
+  public PaymentHistoryViewModel_Factory(Provider<PaymentRepository> paymentRepositoryProvider) {
     this.paymentRepositoryProvider = paymentRepositoryProvider;
   }
 
@@ -35,11 +34,11 @@ public final class PaymentHistoryViewModel_Factory implements Factory<PaymentHis
   }
 
   public static PaymentHistoryViewModel_Factory create(
-      Provider<RoomPaymentRepository> paymentRepositoryProvider) {
+      Provider<PaymentRepository> paymentRepositoryProvider) {
     return new PaymentHistoryViewModel_Factory(paymentRepositoryProvider);
   }
 
-  public static PaymentHistoryViewModel newInstance(RoomPaymentRepository paymentRepository) {
+  public static PaymentHistoryViewModel newInstance(PaymentRepository paymentRepository) {
     return new PaymentHistoryViewModel(paymentRepository);
   }
 }

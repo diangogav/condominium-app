@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.condominio.app-mergeDebugResources-60:/values-v16/values-v16.xml",
+            "outputFile": "com.example.condominio.app-mergeDebugResources-62:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "/home/diango/.gradle/caches/transforms-3/250eae17c714c3d1b66ae0c4a88e5621/transformed/core-1.12.0/res/values-v16/values-v16.xml",
+                    "source": "/home/diango/.gradle/caches/transforms-3/5393a99b74015cb9b357714660f8bdaa/transformed/core-1.12.0/res/values-v16/values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
