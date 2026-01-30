@@ -60,6 +60,8 @@ class DashboardViewModel @Inject constructor(
                         it.copy(
                             solvencyStatus = status,
                             recentPayments = summary.recentTransactions,
+                            pendingPeriods = summary.pendingPeriods,
+                            paidPeriods = summary.paidPeriods,
                             isLoading = false
                         )
                     }
@@ -81,5 +83,7 @@ data class DashboardUiState(
     val userApartment: String = "",
     val solvencyStatus: SolvencyStatus = SolvencyStatus.PENDING,
     val recentPayments: List<Payment> = emptyList(),
+    val pendingPeriods: List<String> = emptyList(),
+    val paidPeriods: List<String> = emptyList(),
     val isLoading: Boolean = false
 )

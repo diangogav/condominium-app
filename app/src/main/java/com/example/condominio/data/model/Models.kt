@@ -29,6 +29,7 @@ data class DashboardSummary(
     val solvencyStatus: String,
     val lastPaymentDate: Date?,
     val pendingPeriods: List<String>,
+    val paidPeriods: List<String>,
     val recentTransactions: List<Payment>
 )
 

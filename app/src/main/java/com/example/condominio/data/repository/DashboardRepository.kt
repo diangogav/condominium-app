@@ -41,6 +41,7 @@ class RemoteDashboardRepository @Inject constructor(
                     solvencyStatus = dto.solvencyStatus,
                     lastPaymentDate = lastPaymentDate,
                     pendingPeriods = dto.pendingPeriods,
+                    paidPeriods = dto.paidPeriods,
                     recentTransactions = dto.recentTransactions.map { it.toDomain() }
                 )
                 

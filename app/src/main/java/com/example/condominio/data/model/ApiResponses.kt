@@ -53,6 +53,8 @@ data class DashboardSummaryDto(
     val lastPaymentDate: String?,
     @SerializedName("pending_periods")
     val pendingPeriods: List<String>,
+    @SerializedName("paid_periods")
+    val paidPeriods: List<String>,
     @SerializedName("recent_transactions")
     val recentTransactions: List<PaymentDto>
 )

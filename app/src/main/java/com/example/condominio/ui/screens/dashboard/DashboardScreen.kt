@@ -94,7 +94,9 @@ fun DashboardScreen(
                 
                 SolvencyFlipCard(
                     solvencyStatus = uiState.solvencyStatus,
-                    payments = uiState.recentPayments
+                    payments = uiState.recentPayments,
+                    pendingPeriods = uiState.pendingPeriods,
+                    paidPeriods = uiState.paidPeriods
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -178,7 +180,9 @@ fun HeaderSection(
 @Composable
 fun SolvencyFlipCard(
     solvencyStatus: SolvencyStatus,
-    payments: List<Payment>
+    payments: List<Payment>,
+    pendingPeriods: List<String>,
+    paidPeriods: List<String>
 ) {
     var isFlipped by remember { mutableStateOf(false) }
     val rotation by animateFloatAsState(
@@ -197,6 +201,8 @@ fun SolvencyFlipCard(
         if (rotation > 90f) {
             PaymentStatusGrid(
                 payments = payments,
+                pendingPeriods = pendingPeriods,
+                paidPeriods = paidPeriods,
                 modifier = Modifier.graphicsLayer {
                     rotationY = 180f + rotation
                     cameraDistance = 12f * density
@@ -279,13 +285,12 @@ fun SolvencyStatusCard(
 @Composable
 fun PaymentStatusGrid(
     payments: List<Payment>,
+    pendingPeriods: List<String>,
+    paidPeriods: List<String>,
     modifier: Modifier = Modifier
 ) {
-    // Determine paid months
-    val paidPeriods = payments
-        .filter { it.status != PaymentStatus.REJECTED }
-        .flatMap { it.paidPeriods }
-        .toSet()
+    // Use backend-calculated paid periods
+    val paidSet = paidPeriods.toSet()
 
     val calendar = Calendar.getInstance()
     val currentYear = calendar.get(Calendar.YEAR)
@@ -323,7 +328,7 @@ fun PaymentStatusGrid(
             ) {
                 rowMonths.forEach { monthIndex ->
                     val periodId = String.format(Locale.US, "%d-%02d", currentYear, monthIndex + 1)
-                    val isPaid = paidPeriods.contains(periodId)
+                    val isPaid = paidSet.contains(periodId) // Use paidPeriods directly
                     val isCurrent = monthIndex == currentMonthIndex
                     val isPast = monthIndex < currentMonthIndex
                     
