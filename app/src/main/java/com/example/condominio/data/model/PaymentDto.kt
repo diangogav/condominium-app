@@ -70,6 +70,13 @@ fun PaymentDto.toDomain(): Payment {
         PaymentStatus.PENDING
     }
     
+    // Parse createdAt timestamp
+    val createdAtDate = try {
+        dateFormat.parse(createdAt)
+    } catch (e: Exception) {
+        null
+    }
+    
     return Payment(
         id = id,
         amount = amount,
@@ -81,6 +88,7 @@ fun PaymentDto.toDomain(): Payment {
         bank = bank,
         phone = null,
         proofUrl = proofUrl,
-        paidPeriods = period?.let { listOf(it) } ?: emptyList()
+        paidPeriods = period?.let { listOf(it) } ?: emptyList(),
+        createdAt = createdAtDate
     )
 }

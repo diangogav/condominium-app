@@ -21,7 +21,8 @@ data class Payment(
     val bank: String? = null,         // For Transfer/Pago Movil
     val phone: String? = null,        // For Pago Movil
     val proofUrl: String? = null,     // Evidence for Cash/Others
-    val paidPeriods: List<String> = emptyList() // ["2024-01", "2024-02"]
+    val paidPeriods: List<String> = emptyList(), // ["2024-01", "2024-02"]
+    val createdAt: Date? = null       // When payment was reported
 )
 
 data class DashboardSummary(

@@ -45,7 +45,7 @@ fun PaymentDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val payment = uiState.payment
-    val dateFormat = SimpleDateFormat("MMM dd, yyyy, h:mm a", Locale.getDefault())
+    val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     val context = LocalContext.current
 
     LaunchedEffect(uiState.pdfFile) {
@@ -182,6 +182,10 @@ fun PaymentDetailScreen(
                         
                         DetailRow("Transaction ID", "#TXN-${payment.id.padEnd(6, '0')}")
                         DetailRow("Date", dateFormat.format(payment.date))
+                        payment.createdAt?.let { 
+                            val timestampFormat = SimpleDateFormat("MMM dd, yyyy, h:mm a", Locale.getDefault())
+                            DetailRow("Reported on", timestampFormat.format(it))
+                        }
                         DetailRow("Method", payment.method.label)
                         
                         // New Details
