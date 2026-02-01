@@ -134,19 +134,24 @@ fun PaymentDetailScreen(
                 Spacer(modifier = Modifier.height(24.dp))
                 
                 // Status Indicator
+                val statusColor = when (payment.status) {
+                    PaymentStatus.APPROVED -> Color(0xFF4CAF50) // Green
+                    PaymentStatus.PENDING -> Color(0xFFFFC107) // Amber
+                    PaymentStatus.REJECTED -> Color(0xFFF44336) // Red
+                }
+                
+                val statusBgColor = statusColor.copy(alpha = 0.1f)
+                
                 Box(
                     modifier = Modifier
                         .size(64.dp)
-                        .background(
-                            if (payment.status == PaymentStatus.VERIFIED) Color(0xFF81C784).copy(alpha = 0.1f) else Color(0xFFFFD54F).copy(alpha = 0.1f), 
-                            CircleShape
-                        ),
+                        .background(statusBgColor, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = null,
-                        tint = if (payment.status == PaymentStatus.VERIFIED) Color(0xFF81C784) else Color(0xFFCC8400), // Warmer Green / Deep Amber
+                        tint = statusColor,
                         modifier = Modifier.size(32.dp)
                     )
                 }
@@ -159,7 +164,11 @@ fun PaymentDetailScreen(
                 )
                 
                 Text(
-                    text = if (payment.status == PaymentStatus.VERIFIED) "Payment Successfully Verified" else "Payment Pending Verification",
+                    text = when (payment.status) {
+                        PaymentStatus.APPROVED -> "Payment Approved"
+                        PaymentStatus.PENDING -> "Payment Pending Approval"
+                        PaymentStatus.REJECTED -> "Payment Rejected"
+                    },
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     modifier = Modifier.padding(top = 4.dp)

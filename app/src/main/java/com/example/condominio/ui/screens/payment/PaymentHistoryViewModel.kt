@@ -11,9 +11,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.example.condominio.data.repository.AuthRepository
+import kotlinx.coroutines.flow.collectLatest
+
 @HiltViewModel
 class PaymentHistoryViewModel @Inject constructor(
-    private val paymentRepository: PaymentRepository
+    private val paymentRepository: PaymentRepository,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PaymentHistoryUiState())
@@ -21,6 +25,17 @@ class PaymentHistoryViewModel @Inject constructor(
 
     init {
         loadPayments()
+        observeUser()
+    }
+    
+    private fun observeUser() {
+        viewModelScope.launch {
+            authRepository.currentUser.collectLatest { user ->
+                if (user != null) {
+                    _uiState.update { it.copy(unit = user.apartmentUnit) }
+                }
+            }
+        }
     }
 
     fun loadPayments() {
@@ -45,5 +60,6 @@ class PaymentHistoryViewModel @Inject constructor(
 
 data class PaymentHistoryUiState(
     val payments: List<Payment> = emptyList(),
+    val unit: String = "",
     val isLoading: Boolean = false
 )

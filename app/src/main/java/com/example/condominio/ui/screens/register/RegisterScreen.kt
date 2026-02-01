@@ -1,6 +1,7 @@
 package com.example.condominio.ui.screens.register
 
 import androidx.compose.foundation.layout.*
+import com.example.condominio.data.model.UnitDto
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -81,15 +82,52 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Unit
-            OutlinedTextField(
-                value = uiState.unit,
-                onValueChange = viewModel::onUnitChange,
-                label = { Text("Ap. Unit (e.g. 4B)") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                singleLine = true
-            )
+            // Unit Selector
+            var unitExpanded by remember { mutableStateOf(false) }
+
+            ExposedDropdownMenuBox(
+                expanded = unitExpanded,
+                onExpandedChange = { if (uiState.selectedBuildingId.isNotBlank()) unitExpanded = !unitExpanded },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                OutlinedTextField(
+                    value = uiState.unit,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Ap. Unit") },
+                    placeholder = { Text(if (uiState.selectedBuildingId.isBlank()) "Select Building first" else "Select Unit") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = unitExpanded) },
+                    modifier = Modifier.fillMaxWidth().menuAnchor(),
+                    shape = RoundedCornerShape(12.dp),
+                    enabled = uiState.selectedBuildingId.isNotBlank() && !uiState.isLoadingUnits
+                )
+                ExposedDropdownMenu(
+                    expanded = unitExpanded,
+                    onDismissRequest = { unitExpanded = false }
+                ) {
+                    if (uiState.isLoadingUnits) {
+                        DropdownMenuItem(
+                            text = { Text("Loading units...") },
+                            onClick = {}
+                        )
+                    } else if (uiState.units.isEmpty()) {
+                         DropdownMenuItem(
+                            text = { Text("No units found") },
+                            onClick = {}
+                        )
+                    } else {
+                        uiState.units.forEach { unit ->
+                            DropdownMenuItem(
+                                text = { Text(unit.name) },
+                                onClick = {
+                                    viewModel.onUnitChange(unit.id, unit.name)
+                                    unitExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 

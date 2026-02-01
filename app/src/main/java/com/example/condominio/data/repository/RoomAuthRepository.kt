@@ -82,7 +82,7 @@ class RoomAuthRepository @Inject constructor(
                     set(java.util.Calendar.MONTH, m)
                     set(java.util.Calendar.DAY_OF_MONTH, 5)
                 }.time,
-                status = com.example.condominio.data.model.PaymentStatus.VERIFIED,
+                status = com.example.condominio.data.model.PaymentStatus.APPROVED,
                 description = "Condo Fee ${monthName(m)}",
                 method = com.example.condominio.data.model.PaymentMethod.PAGO_MOVIL,
                 paidPeriods = listOf(periodId)
@@ -98,10 +98,10 @@ class RoomAuthRepository @Inject constructor(
         )
     }
 
-    override suspend fun register(name: String, email: String, unit: String, building: String, password: String): Result<User> {
+    override suspend fun register(name: String, email: String, unitId: String, building: String, password: String): Result<User> {
         delay(1000)
         
-        if (name.isBlank() || email.isBlank() || unit.isBlank() || building.isBlank() || password.length < 6) {
+        if (name.isBlank() || email.isBlank() || unitId.isBlank() || building.isBlank() || password.length < 6) {
             return Result.failure(Exception("Invalid input"))
         }
         
@@ -115,7 +115,7 @@ class RoomAuthRepository @Inject constructor(
             id = "user_${System.currentTimeMillis()}",
             name = name,
             email = email,
-            apartmentUnit = unit,
+            apartmentUnit = "Demo Unit", // For demo, we just set a name
             building = building
         )
         
@@ -126,6 +126,15 @@ class RoomAuthRepository @Inject constructor(
     override suspend fun logout() {
         // In a real app, you might clear the user session
         // For now, we'll keep the user in the database
+    }
+
+    override suspend fun fetchCurrentUser(): Result<User> {
+        val userEntity = userDao.getUser().firstOrNull()
+        return if (userEntity != null) {
+            Result.success(userEntity.toDomain())
+        } else {
+            Result.failure(Exception("No user logged in"))
+        }
     }
 
     override suspend fun updateUser(user: User): Result<Unit> {
@@ -149,5 +158,21 @@ class RoomAuthRepository @Inject constructor(
         } else {
             Result.failure(Exception("Password must be at least 6 characters"))
         }
+    }
+
+    override suspend fun getUnits(buildingId: String): Result<List<com.example.condominio.data.model.UnitDto>> {
+        delay(500)
+        // Return dummy units for demo purposes
+        return Result.success(listOf(
+            com.example.condominio.data.model.UnitDto("u1", buildingId, "1A", "1", 0.0),
+            com.example.condominio.data.model.UnitDto("u2", buildingId, "1B", "1", 0.0),
+            com.example.condominio.data.model.UnitDto("u3", buildingId, "2A", "2", 0.0),
+            com.example.condominio.data.model.UnitDto("u4", buildingId, "2B", "2", 0.0)
+        ))
+    }
+
+    override suspend fun getUnit(unitId: String): Result<com.example.condominio.data.model.UnitDto> {
+        delay(500)
+        return Result.success(com.example.condominio.data.model.UnitDto(unitId, "building_id", "Demo Unit", "1", 0.0))
     }
 }

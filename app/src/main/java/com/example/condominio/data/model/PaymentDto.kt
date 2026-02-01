@@ -23,7 +23,10 @@ data class PaymentDto(
     @SerializedName("proof_url")
     val proofUrl: String? = null,
     val status: String,  // "PENDING", "APPROVED", "REJECTED"
-    val period: String? = null,  // "YYYY-MM"
+    val period: String? = null, // Kept for backward compatibility if needed, or remove if backend removed it completely.
+    // Backend says "Now: periods (Array of Strings)". It didn't explicitly say period is gone, but implied.
+    // Safest is to add periods.
+    val periods: List<String>? = null,
     val notes: String? = null,
     @SerializedName("created_at")
     val createdAt: String,
@@ -62,7 +65,7 @@ fun PaymentDto.toDomain(): Payment {
     val paymentStatus = try {
         when (status) {
             "PENDING" -> PaymentStatus.PENDING
-            "APPROVED", "VERIFIED" -> PaymentStatus.VERIFIED
+            "APPROVED", "VERIFIED" -> PaymentStatus.APPROVED
             "REJECTED" -> PaymentStatus.REJECTED
             else -> PaymentStatus.PENDING
         }
@@ -82,13 +85,13 @@ fun PaymentDto.toDomain(): Payment {
         amount = amount,
         date = date,
         status = paymentStatus,
-        description = period ?: "Pago de condominio",
+        description = notes ?: (if (!periods.isNullOrEmpty()) periods.joinToString(", ") else period ?: "Pago de condominio"),
         method = paymentMethod,
         reference = reference,
         bank = bank,
         phone = null,
         proofUrl = proofUrl,
-        paidPeriods = period?.let { listOf(it) } ?: emptyList(),
+        paidPeriods = periods ?: period?.let { listOf(it) } ?: emptyList(),
         createdAt = createdAtDate
     )
 }

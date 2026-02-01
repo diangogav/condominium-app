@@ -10,7 +10,8 @@ data class UserEntity(
     val name: String,
     val email: String,
     val apartmentUnit: String,
-    val building: String = ""
+    val building: String = "",
+    val buildingId: String = "" // New field
 )
 
 fun UserEntity.toDomain() = User(
@@ -18,7 +19,8 @@ fun UserEntity.toDomain() = User(
     name = name,
     email = email,
     apartmentUnit = apartmentUnit,
-    building = building
+    building = building,
+    buildingId = buildingId
 )
 
 fun User.toEntity() = UserEntity(
@@ -26,5 +28,6 @@ fun User.toEntity() = UserEntity(
     name = name,
     email = email,
     apartmentUnit = apartmentUnit,
-    building = building
+    building = building,
+    buildingId = buildingId
 )

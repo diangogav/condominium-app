@@ -42,7 +42,11 @@ class LoginViewModel @Inject constructor(
             result.onSuccess {
                 _uiState.update { it.copy(isSuccess = true) }
             }.onFailure { error ->
-                _uiState.update { it.copy(error = error.message) }
+                if (error is com.example.condominio.data.model.UserPendingException) {
+                    _uiState.update { it.copy(isPending = true) }
+                } else {
+                    _uiState.update { it.copy(error = error.message) }
+                }
             }
         }
     }
@@ -64,5 +68,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val isSuccess: Boolean = false,
+    val isPending: Boolean = false,
     val databaseCleared: Boolean = false
 )

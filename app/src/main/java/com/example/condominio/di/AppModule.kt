@@ -11,8 +11,6 @@ import com.example.condominio.data.repository.RemoteAuthRepository
 import com.example.condominio.data.repository.RemotePaymentRepository
 import com.example.condominio.data.repository.BuildingRepository
 import com.example.condominio.data.repository.RemoteBuildingRepository
-import com.example.condominio.data.repository.DashboardRepository
-import com.example.condominio.data.repository.RemoteDashboardRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -69,10 +67,4 @@ abstract class RepositoryModule {
     abstract fun bindBuildingRepository(
         buildingRepository: RemoteBuildingRepository
     ): BuildingRepository
-    
-    @Binds
-    @Singleton
-    abstract fun bindDashboardRepository(
-        dashboardRepository: RemoteDashboardRepository
-    ): DashboardRepository
 }

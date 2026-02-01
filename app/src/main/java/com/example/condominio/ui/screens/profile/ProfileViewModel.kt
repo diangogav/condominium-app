@@ -25,6 +25,9 @@ class ProfileViewModel @Inject constructor(
 
     private fun loadUserData() {
         viewModelScope.launch {
+            // Fetch latest user data to trigger enrichment
+            authRepository.fetchCurrentUser()
+            
             authRepository.currentUser.collect { user ->
                 _uiState.update { 
                     it.copy(

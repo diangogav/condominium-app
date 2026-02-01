@@ -22,14 +22,17 @@ import com.example.condominio.ui.theme.CondominioTheme
 @Composable
 fun LoginScreen(
     onLoginSuccess: () -> Unit,
+    onPendingApproval: () -> Unit,
     onRegisterClick: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(uiState.isSuccess) {
+    LaunchedEffect(uiState.isSuccess, uiState.isPending) {
         if (uiState.isSuccess) {
             onLoginSuccess()
+        } else if (uiState.isPending) {
+            onPendingApproval()
         }
     }
 

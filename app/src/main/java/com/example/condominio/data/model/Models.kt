@@ -7,7 +7,8 @@ data class User(
     val name: String,
     val email: String,
     val apartmentUnit: String,
-    val building: String = ""
+    val building: String = "",
+    val buildingId: String = "" // New field
 )
 
 data class Payment(
@@ -46,6 +47,17 @@ enum class PaymentMethod(val label: String) {
 
 enum class PaymentStatus {
     PENDING,
-    VERIFIED,
+    APPROVED,
     REJECTED
 }
+
+data class PaymentSummary(
+    val solvencyStatus: SolvencyStatus,
+    val lastPaymentDate: Date?,
+    val pendingPeriods: List<String>,
+    val paidPeriods: List<String>,
+    val recentTransactions: List<Payment>,
+    val unitName: String = ""
+)
+
+class UserPendingException(message: String) : Exception(message)

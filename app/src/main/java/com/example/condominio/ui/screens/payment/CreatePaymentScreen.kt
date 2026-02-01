@@ -14,9 +14,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.*
@@ -241,36 +243,128 @@ fun CreatePaymentScreen(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Generate list of months (e.g., current year)
-            // Ideally this would come from ViewModel, but for UI demo:
-            val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-            val periods: List<Pair<String, String>> = remember {
-                (0..11).map { month ->
-                    val cal = Calendar.getInstance()
-                    cal.set(Calendar.YEAR, currentYear)
-                    cal.set(Calendar.MONTH, month)
-                    val monthName = SimpleDateFormat("MMM", Locale.getDefault()).format(cal.time)
-                    val periodId = String.format(Locale.US, "%d-%02d", currentYear, month + 1)
-                    periodId to monthName
-                }
-            }
-
-            FlowRow(
+            // Year and Month selectors
+            val months = listOf(
+                "01" to "January", "02" to "February", "03" to "March",
+                "04" to "April", "05" to "May", "06" to "June",
+                "07" to "July", "08" to "August", "09" to "September",
+                "10" to "October", "11" to "November", "12" to "December"
+            )
+            
+            var monthExpanded by remember { mutableStateOf(false) }
+            
+            Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                periods.forEach { (periodId, periodLabel) ->
-                    val isSelected = uiState.selectedPeriods.contains(periodId)
-                    FilterChip(
-                        selected = isSelected,
-                        onClick = { viewModel.onPeriodToggle(periodId) },
-                        label = { Text(periodLabel) },
-                        leadingIcon = if (isSelected) {
-                            { Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null, modifier = Modifier.size(16.dp)) }
-                        } else null
+                // Year Input
+                OutlinedTextField(
+                    value = uiState.selectedYear.toString(),
+                    onValueChange = { newValue ->
+                        if (newValue.all { it.isDigit() }) {
+                             val year = newValue.toIntOrNull() ?: 0
+                             viewModel.onYearChange(year)
+                        }
+                    },
+                    label = { Text("Year") },
+                    modifier = Modifier.weight(0.8f),
+                    shape = RoundedCornerShape(12.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true
+                )
+                
+                // Month Dropdown
+                ExposedDropdownMenuBox(
+                    expanded = monthExpanded,
+                    onExpandedChange = { monthExpanded = it },
+                    modifier = Modifier.weight(1.2f)
+                ) {
+                    OutlinedTextField(
+                        value = months.find { it.first == String.format("%02d", uiState.selectedMonth) }?.second ?: "",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Month") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = monthExpanded) },
+                        modifier = Modifier
+                            .menuAnchor()
+                            .fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
                     )
+                    ExposedDropdownMenu(
+                        expanded = monthExpanded,
+                        onDismissRequest = { monthExpanded = false }
+                    ) {
+                        months.forEach { (monthNum, monthName) ->
+                            DropdownMenuItem(
+                                text = { Text(monthName) },
+                                onClick = {
+                                    viewModel.onMonthChange(monthNum.toInt())
+                                    monthExpanded = false
+                                }
+                            )
+                        }
+                    }
                 }
+
+                // Add Button (Small)
+                FilledIconButton(
+                    onClick = {
+                        val periodId = String.format(Locale.US, "%d-%02d", uiState.selectedYear, uiState.selectedMonth)
+                        viewModel.addPeriod(periodId)
+                    },
+                    modifier = Modifier.size(50.dp),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Period")
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Selected Periods (Chips)
+            if (uiState.selectedPeriods.isNotEmpty()) {
+                Text(
+                    text = "Selected Periods:",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    uiState.selectedPeriods.sorted().forEach { period ->
+                        InputChip(
+                            selected = true,
+                            onClick = { /* No action on click, use trailing icon to remove */ },
+                            label = { Text(period) },
+                            trailingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = "Remove",
+                                    modifier = Modifier
+                                        .size(16.dp)
+                                        .clickable { viewModel.removePeriod(period) }
+                                )
+                            },
+                            colors = InputChipDefaults.inputChipColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                labelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                    }
+                }
+            } else {
+                 Text(
+                    text = "No periods added yet.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                )
             }
             
             Spacer(modifier = Modifier.height(24.dp))

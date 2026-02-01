@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.condominio.data.model.Payment
 import com.example.condominio.data.model.SolvencyStatus
 import com.example.condominio.data.repository.AuthRepository
-import com.example.condominio.data.repository.DashboardRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val dashboardRepository: DashboardRepository
+    private val paymentRepository: com.example.condominio.data.repository.PaymentRepository,
+    private val buildingRepository: com.example.condominio.data.repository.BuildingRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -30,38 +30,59 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             
+            // Fetch latest user data
+            authRepository.fetchCurrentUser()
+            
             // Collect user details
             launch {
                 authRepository.currentUser.collect { user ->
                     user?.let {
+                        var buildingName = it.building
+                        
+                        // Fetch building name if missing or "Unknown Building" and we have an ID
+                        if ((buildingName.isEmpty() || buildingName == "Unknown Building" || buildingName == "Unknown") && it.buildingId.isNotEmpty()) {
+                            try {
+                                val result = buildingRepository.getBuilding(it.buildingId)
+                                result.onSuccess { building ->
+                                    buildingName = building.name
+                                }
+                            } catch (e: Exception) {
+                                // Keep original name on error
+                            }
+                        }
+
+                        var apartmentUnit = it.apartmentUnit
+                        
+                        // If apartmentUnit looks like a UUID, fetch details
+                        if (apartmentUnit.length == 36 && apartmentUnit.contains("-")) {
+                            authRepository.getUnit(apartmentUnit).onSuccess { unitDto ->
+                                apartmentUnit = unitDto.name
+                            }
+                        }
+
                         _uiState.update { state ->
                             state.copy(
                                 userName = it.name,
-                                userBuilding = it.building,
-                                userApartment = it.apartmentUnit
+                                userBuilding = buildingName,
+                                userApartment = apartmentUnit
                             )
                         }
                     }
                 }
             }
             
-            // Fetch dashboard summary from API
+            // Fetch dashboard summary from API using PaymentRepository
             launch {
-                val result = dashboardRepository.getDashboardSummary()
+                val result = paymentRepository.getPaymentSummary()
                 result.onSuccess { summary ->
-                    // Map API solvency status string to enum
-                    val status = when (summary.solvencyStatus.uppercase()) {
-                        "SOLVENT" -> SolvencyStatus.SOLVENT
-                        "OVERDUE" -> SolvencyStatus.PENDING // Map OVERDUE to PENDING for now
-                        else -> SolvencyStatus.PENDING
-                    }
-                    
                     _uiState.update {
                         it.copy(
-                            solvencyStatus = status,
+                            solvencyStatus = summary.solvencyStatus,
                             recentPayments = summary.recentTransactions,
                             pendingPeriods = summary.pendingPeriods,
                             paidPeriods = summary.paidPeriods,
+                            // Only update unit name from summary if it's not a UUID
+                            userApartment = if (summary.unitName.isNotEmpty() && !summary.unitName.matches(Regex("^[0-9a-fA-F-]{36}$"))) summary.unitName else it.userApartment,
                             isLoading = false
                         )
                     }

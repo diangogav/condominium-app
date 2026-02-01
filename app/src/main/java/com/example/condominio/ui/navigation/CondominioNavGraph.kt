@@ -15,6 +15,7 @@ import com.example.condominio.ui.screens.profile.ProfileScreen
 import com.example.condominio.ui.screens.profile.EditProfileScreen
 import com.example.condominio.ui.screens.profile.NotificationSettingsScreen
 import com.example.condominio.ui.screens.profile.ChangePasswordScreen
+import com.example.condominio.ui.screens.auth.PendingApprovalScreen
 
 @Composable
 fun CondominioNavGraph(
@@ -27,15 +28,25 @@ fun CondominioNavGraph(
         composable("login") {
             LoginScreen(
                 onLoginSuccess = { navController.navigate("dashboard") }, 
+                onPendingApproval = { navController.navigate("pending_approval") },
                 onRegisterClick = { navController.navigate("register") }
             )
         }
         composable("register") {
             RegisterScreen(
-                onRegisterSuccess = { navController.navigate("dashboard") {
+                onRegisterSuccess = { navController.navigate("pending_approval") {
                     popUpTo("login") { inclusive = true }
                 }}, 
                 onLoginClick = { navController.popBackStack() }
+            )
+        }
+        composable("pending_approval") {
+            PendingApprovalScreen(
+                onLogout = {
+                    navController.navigate("login") {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
             )
         }
         composable("dashboard") {

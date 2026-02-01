@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [UserEntity::class, PaymentEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @androidx.room.TypeConverters(Converters::class)

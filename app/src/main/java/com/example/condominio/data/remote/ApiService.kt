@@ -29,16 +29,29 @@ interface ApiService {
     ): Response<UserProfile>
     
     // Building endpoints
-    @GET("buildings/")
+    @GET("buildings")
     suspend fun getBuildings(): Response<List<Building>>
     
     @GET("buildings/{id}")
     suspend fun getBuilding(
         @Path("id") id: String
     ): Response<Building>
+
+    @GET("buildings/{id}/units")
+    suspend fun getBuildingUnits(
+        @Path("id") id: String
+    ): Response<List<UnitDto>>
+
+    @GET("buildings/units/{id}")
+    suspend fun getUnitDetails(
+        @Path("id") id: String
+    ): Response<UnitDto>
     
     // Payment endpoints
-    @GET("payments/")
+    @GET("payments/summary")
+    suspend fun getPaymentSummary(): Response<PaymentSummaryDto>
+
+    @GET("payments")
     suspend fun getPayments(
         @Query("year") year: Int? = null
     ): Response<List<PaymentDto>>
@@ -49,18 +62,15 @@ interface ApiService {
     ): Response<PaymentDto>
     
     @Multipart
-    @POST("payments/")
+    @POST("payments")
     suspend fun createPayment(
         @Part("amount") amount: RequestBody,
         @Part("date") date: RequestBody,
         @Part("method") method: RequestBody,
         @Part("reference") reference: RequestBody? = null,
         @Part("bank") bank: RequestBody? = null,
-        @Part("period") period: RequestBody? = null,
-        @Part proofImage: MultipartBody.Part? = null
+        @Part periods: List<MultipartBody.Part>,
+        @Part("building_id") buildingId: RequestBody? = null,
+        @Part proof_image: MultipartBody.Part? = null
     ): Response<PaymentDto>
-    
-    // Dashboard endpoints
-    @GET("dashboard/summary")
-    suspend fun getDashboardSummary(): Response<DashboardSummaryDto>
 }

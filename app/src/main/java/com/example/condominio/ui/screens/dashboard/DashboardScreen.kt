@@ -498,13 +498,25 @@ fun TransactionItem(payment: Payment, onClick: () -> Unit) {
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = payment.description,
+                text = if (payment.paidPeriods.isNotEmpty()) payment.paidPeriods.joinToString(", ") else payment.description,
                 style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
             )
             Text(
                 text = dateFormat.format(payment.date),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            )
+            
+            val statusColor = when (payment.status) {
+                PaymentStatus.APPROVED -> Color(0xFF4CAF50)
+                PaymentStatus.PENDING -> Color(0xFFFFC107)
+                PaymentStatus.REJECTED -> Color(0xFFF44336)
+            }
+            
+            Text(
+                text = payment.status.name,
+                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                color = statusColor
             )
         }
         Text(
