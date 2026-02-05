@@ -29,6 +29,8 @@ data class RegisterResponse(
     val accessToken: String,
     @SerializedName("refresh_token")
     val refreshToken: String,
+    @SerializedName("expires_in")
+    val expiresIn: Int,
     @SerializedName("user")
     val user: UserProfile
 )
@@ -38,6 +40,9 @@ data class UserProfile(
     val id: String? = null,
     val name: String? = null,
     val email: String? = null,
+    val role: String? = null,
+    val status: String? = null,
+    val units: List<UserUnitDto>? = null,
     // Legacy support
     @SerializedName(value = "unit", alternate = ["apartment_unit", "apartment", "unit_id"])
     val unit: com.google.gson.JsonElement? = null,
@@ -56,6 +61,7 @@ data class UserUnitDto(
     val unitId: String,
     @SerializedName("building_id")
     val buildingId: String,
+    @SerializedName("building_role")
     val role: String, // "owner", "resident"
     @SerializedName("is_primary")
     val isPrimary: Boolean

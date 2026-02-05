@@ -177,110 +177,137 @@ class RemoteAuthRepository @Inject constructor(
     }
 
     private suspend fun enrichUserWithUnits(user: User): User {
-        // Fetch user units
-        val unitsResponse = try {
-             apiService.getUserUnits(user.id)
-        } catch (e: Exception) {
-             null
+        // Start with existing units from the User object (mapped from Profile)
+        var currentUnits = user.units
+        
+        // If no units found, fallback to fetching from API
+        if (currentUnits.isEmpty()) {
+            val unitsResponse = try {
+                apiService.getUserUnits(user.id)
+            } catch (e: Exception) {
+                null
+            }
+
+            if (unitsResponse?.isSuccessful == true && unitsResponse.body() != null) {
+               currentUnits = unitsResponse.body()!!.map { dto ->
+                   com.example.condominio.data.model.UserUnit(
+                       unitId = dto.unitId,
+                       buildingId = dto.buildingId,
+                       unitName = "", // Needs enrichment
+                       buildingName = "", // Needs enrichment
+                       role = dto.role,
+                       isPrimary = dto.isPrimary
+                   )
+               }
+            }
         }
 
-        if (unitsResponse?.isSuccessful == true && unitsResponse.body() != null) {
-            val userUnitDtos = unitsResponse.body()!!
-            val userUnits = mutableListOf<com.example.condominio.data.model.UserUnit>()
+        // Now enrich names
+        val enrichedUnits = mutableListOf<com.example.condominio.data.model.UserUnit>()
+        for (unit in currentUnits) {
+            // If we already have names (unlikely from plain DTO), skip
+            var uName = unit.unitName
+            var bName = unit.buildingName
+            var bId = unit.buildingId
 
-            for (dto in userUnitDtos) {
-                // Fetch unit details to get name
-                val unitDetailsResp = try { apiService.getUnitDetails(dto.unitId) } catch(e: Exception) { null }
-                val unitName = unitDetailsResp?.body()?.name ?: "Unknown Unit"
-                val buildingId = unitDetailsResp?.body()?.buildingId ?: dto.buildingId
+            if (uName.isEmpty() || bName.isEmpty()) {
+                 // Fetch unit details
+                val unitDetailsResp = try { apiService.getUnitDetails(unit.unitId) } catch(e: Exception) { null }
+                if (unitDetailsResp?.body() != null) {
+                    val det = unitDetailsResp.body()!!
+                    uName = det.name
+                    bId = det.buildingId // Confirm building ID
+                } else {
+                    uName = "Unit ${unit.unitId.take(4)}"
+                }
                 
-                // Fetch building name if possible
-                val buildingResp = try { apiService.getBuilding(buildingId) } catch(e: Exception) { null }
-                val buildingName = buildingResp?.body()?.name ?: "Unknown Building"
-
-                userUnits.add(com.example.condominio.data.model.UserUnit(
-                    unitId = dto.unitId,
-                    buildingId = buildingId,
-                    unitName = unitName,
-                    buildingName = buildingName,
-                    role = dto.role,
-                    isPrimary = dto.isPrimary
-                ))
+                // Fetch building name
+                val buildingResp = try { apiService.getBuilding(bId) } catch(e: Exception) { null }
+                bName = buildingResp?.body()?.name ?: "Building"
             }
             
-            // Determine current unit
-            // 1. If currently selected unit is in the new list, keep it.
-            // 2. Else use primary.
-            // 3. Else use first.
-            val current = _currentUser.value?.currentUnit
-            val newCurrent = if (current != null && userUnits.any { it.unitId == current.unitId }) {
-                userUnits.find { it.unitId == current.unitId }
-            } else {
-                userUnits.find { it.isPrimary } ?: userUnits.firstOrNull()
-            }
-
-            return user.copy(units = userUnits, currentUnit = newCurrent)
-        } else {
-            // Fallback to legacy single unit enrichment if new endpoint fails or returns empty
-             // Use legacy enrich logic but map to new structure
-             val legacyUser = enrichUserWithLegacyUnit(user)
-             return legacyUser
+            enrichedUnits.add(unit.copy(
+                unitName = uName,
+                buildingName = bName,
+                buildingId = bId
+            ))
         }
+            
+        // Determine current unit
+        val current = _currentUser.value?.currentUnit
+        val newCurrent = if (current != null && enrichedUnits.any { it.unitId == current.unitId }) {
+            enrichedUnits.find { it.unitId == current.unitId }
+        } else {
+            enrichedUnits.find { it.isPrimary } ?: enrichedUnits.firstOrNull()
+        }
+
+        // If still no units, try legacy enrichment (for backward compatibility or odd data shapes)
+        if (enrichedUnits.isEmpty()) {
+             return enrichUserWithLegacyUnit(user)
+        }
+
+        return user.copy(units = enrichedUnits, currentUnit = newCurrent)
     }
 
     private suspend fun enrichUserWithLegacyUnit(user: User): User {
-        var enrichedUser = user
-        // Actually user.toDomain() sets apartmentUnit name if possible using existing data.
-        // But we want the ID. user.toDomain() puts ID in buildingId? No.
-        
-        // Let's re-examine toDomain helper below.
-        // It tries to extract unit info from the 'unit' JSON element.
-        
-        // If we have a unit ID string (which might be in apartmentUnit if it was a UUID), fetch details.
-        
-        // Simple fallback: If units list is empty, try to create one dummy unit from existing fields
-        if (user.units.isEmpty()) {
-             // We can't do much without an ID for the unit.
-             // If UserProfile returned a unit object, we might have it.
-        }
-        return enrichedUser
+        // Minimal fallback logic, kept simple
+        return user
     }
 }
 
 // Extension function to convert API UserProfile to domain User
 private fun UserProfile.toDomain(): User {
-    // Attempt to extract unit ID and name
-    var unitId = ""
-    var unitName = this.unitName ?: ""
-    
-    if (unit != null) {
-        if (unit.isJsonPrimitive) {
-            val s = unit.asString
-            // If it looks like UUID, it's ID. Else name.
-            if (s.length == 36 && s.contains("-")) unitId = s else unitName = s
-        } else if (unit.isJsonObject) {
-            val unitObj = unit.asJsonObject
-            unitId = if (unitObj.has("id")) unitObj.get("id").asString else ""
-            unitName = if (unitObj.has("name")) unitObj.get("name").asString else unitName
+    // 1. Map new 'units' list if available
+    val domainUnits = units?.map { dto ->
+        com.example.condominio.data.model.UserUnit(
+            unitId = dto.unitId,
+            buildingId = dto.buildingId,
+            unitName = "", // Placeholder, will be enriched
+            buildingName = "", // Placeholder
+            role = dto.role,
+            isPrimary = dto.isPrimary
+        )
+    } ?: emptyList()
+
+    // 2. Legacy fallback logic (try to extract from 'unit' field if list is empty)
+    var finalUnits = domainUnits
+    if (finalUnits.isEmpty()) {
+        // Attempt to extract unit ID and name from legacy 'unit' field
+        var unitId = ""
+        var unitName = this.unitName ?: ""
+        
+        if (unit != null) {
+            if (unit.isJsonPrimitive) {
+                val s = unit.asString
+                // If it looks like UUID, it's ID. Else name.
+                if (s.length == 36 && s.contains("-")) unitId = s else unitName = s
+            } else if (unit.isJsonObject) {
+                val unitObj = unit.asJsonObject
+                unitId = if (unitObj.has("id")) unitObj.get("id").asString else ""
+                unitName = if (unitObj.has("name")) unitObj.get("name").asString else unitName
+            }
+        }
+
+        if (unitId.isNotEmpty()) {
+             val legacyUnit = com.example.condominio.data.model.UserUnit(
+                 unitId = unitId,
+                 buildingId = buildingId ?: "",
+                 unitName = unitName.ifEmpty { "Unit" },
+                 buildingName = buildingName ?: "Building",
+                 role = "resident",
+                 isPrimary = true
+             )
+             finalUnits = listOf(legacyUnit)
         }
     }
-
-    val tempUnit = if (unitId.isNotEmpty()) {
-         com.example.condominio.data.model.UserUnit(
-             unitId = unitId,
-             buildingId = buildingId ?: "",
-             unitName = unitName.ifEmpty { "Unit $unitId" },
-             buildingName = buildingName ?: "Building",
-             role = "resident",
-             isPrimary = true
-         )
-    } else null
 
     return User(
         id = id ?: "",
         name = name ?: "Unknown",
         email = email ?: "",
-        units = if (tempUnit != null) listOf(tempUnit) else emptyList(),
-        currentUnit = tempUnit
+        role = role ?: "resident", // Map role from profile
+        status = status ?: "active", // Map status
+        units = finalUnits,
+        currentUnit = finalUnits.firstOrNull()
     )
 }

@@ -23,7 +23,6 @@ interface ApiService {
     @GET("users/me")
     suspend fun getCurrentUser(): Response<UserProfile>
     
-    @POST("users/me") // Should likely be PATCH based on REST, but confirm with backend. Prompt says PATCH.
     @PATCH("users/me")
     suspend fun updateUser(
         @Body updates: UpdateUserRequest

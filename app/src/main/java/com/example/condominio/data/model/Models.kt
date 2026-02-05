@@ -6,6 +6,8 @@ data class User(
     val id: String,
     val name: String,
     val email: String,
+    val role: String = "resident",
+    val status: String = "active",
     // Multi-unit support: A user can be associated with multiple units
     // The previous fields 'apartmentUnit' and 'building' are deprecated in favor of 'units'
     // but kept as derived properties or optional for backward compatibility if needed temporarily.
