@@ -9,6 +9,8 @@ import com.example.condominio.data.repository.AuthRepository
 import com.example.condominio.data.repository.PaymentRepository
 import com.example.condominio.data.repository.RemoteAuthRepository
 import com.example.condominio.data.repository.RemotePaymentRepository
+import com.example.condominio.data.repository.PettyCashRepository
+import com.example.condominio.data.repository.PettyCashRepositoryImpl
 import com.example.condominio.data.repository.BuildingRepository
 import com.example.condominio.data.repository.RemoteBuildingRepository
 import dagger.Binds
@@ -67,4 +69,10 @@ abstract class RepositoryModule {
     abstract fun bindBuildingRepository(
         buildingRepository: RemoteBuildingRepository
     ): BuildingRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPettyCashRepository(
+        pettyCashRepository: PettyCashRepositoryImpl
+    ): PettyCashRepository
 }

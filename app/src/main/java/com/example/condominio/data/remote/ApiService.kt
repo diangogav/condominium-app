@@ -111,4 +111,34 @@ interface ApiService {
     suspend fun getInvoicePayments(
         @Path("id") id: String
     ): Response<List<PaymentDto>>
+
+    // Petty Cash
+    @GET("petty-cash/balance/{buildingId}")
+    suspend fun getPettyCashBalance(
+        @Path("buildingId") buildingId: String
+    ): Response<PettyCashBalanceDto>
+
+    @GET("petty-cash/history/{buildingId}")
+    suspend fun getPettyCashHistory(
+        @Path("buildingId") buildingId: String,
+        @Query("type") type: String? = null,
+        @Query("category") category: String? = null,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 10
+    ): Response<List<PettyCashTransactionDto>>
+
+    @POST("petty-cash/income")
+    suspend fun registerPettyCashIncome(
+        @Body request: RegisterIncomeRequest
+    ): Response<PettyCashTransactionDto>
+
+    @Multipart
+    @POST("petty-cash/expense")
+    suspend fun registerPettyCashExpense(
+        @Part("building_id") buildingId: RequestBody,
+        @Part("amount") amount: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("category") category: RequestBody,
+        @Part evidence_image: MultipartBody.Part? = null
+    ): Response<PettyCashTransactionDto>
 }
