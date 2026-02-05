@@ -18,9 +18,8 @@ fun UserEntity.toDomain() = User(
     id = id,
     name = name,
     email = email,
-    apartmentUnit = apartmentUnit,
-    building = building,
-    buildingId = buildingId
+    units = emptyList(), // Room cache doesn't store units yet
+    currentUnit = null
 )
 
 fun User.toEntity() = UserEntity(

@@ -28,12 +28,20 @@ class RoomAuthRepository @Inject constructor(
         // Simple validation (in real app, this would be a backend call)
         if (email.isNotBlank() && password.length >= 6) {
             // If user exists, return it; otherwise create new one
+            val demoUnit = com.example.condominio.data.model.UserUnit(
+                unitId = "u1",
+                buildingId = "b1",
+                unitName = "4B",
+                buildingName = "Torre Este",
+                role = "owner",
+                isPrimary = true
+            )
             val user = existingUser?.toDomain() ?: User(
                 id = "user_${System.currentTimeMillis()}",
                 name = "Demo User",
                 email = email,
-                apartmentUnit = "4B",
-                building = "Torre Este"
+                units = listOf(demoUnit),
+                currentUnit = demoUnit
             )
             
             // Only insert if it's a new user
@@ -111,12 +119,21 @@ class RoomAuthRepository @Inject constructor(
             userDao.deleteUser(it)
         }
         
+        val demoUnit = com.example.condominio.data.model.UserUnit(
+            unitId = "u_demo",
+            buildingId = "b_demo",
+            unitName = "Demo Unit",
+            buildingName = building,
+            role = "owner",
+            isPrimary = true
+        )
+
         val user = User(
             id = "user_${System.currentTimeMillis()}",
             name = name,
             email = email,
-            apartmentUnit = "Demo Unit", // For demo, we just set a name
-            building = building
+            units = listOf(demoUnit),
+            currentUnit = demoUnit
         )
         
         userDao.insertUser(user.toEntity())
@@ -174,5 +191,10 @@ class RoomAuthRepository @Inject constructor(
     override suspend fun getUnit(unitId: String): Result<com.example.condominio.data.model.UnitDto> {
         delay(500)
         return Result.success(com.example.condominio.data.model.UnitDto(unitId, "building_id", "Demo Unit", "1", 0.0))
+    }
+
+    override fun setCurrentUnit(unit: com.example.condominio.data.model.UserUnit) {
+        // In Room impl, we might update the current user in DB or just in memory
+        // For now, it's a no-op or just updates local flow if we were caching it
     }
 }

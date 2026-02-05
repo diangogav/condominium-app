@@ -18,11 +18,47 @@ import kotlinx.coroutines.flow.first
 @HiltViewModel
 class CreatePaymentViewModel @Inject constructor(
     private val paymentRepository: PaymentRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val savedStateHandle: androidx.lifecycle.SavedStateHandle
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CreatePaymentUiState())
     val uiState = _uiState.asStateFlow()
+    
+    // Cache invoices to lookup details
+    private var availableInvoices: List<com.example.condominio.data.model.Invoice> = emptyList()
+
+    init {
+        loadPendingInvoices()
+    }
+
+    private fun loadPendingInvoices() {
+        viewModelScope.launch {
+            val user = authRepository.fetchCurrentUser().getOrNull()
+            val unitId = user?.currentUnit?.unitId ?: user?.units?.firstOrNull()?.unitId
+            
+            if (unitId != null) {
+                _uiState.update { it.copy(isLoadingInvoices = true) }
+                paymentRepository.getBalance(unitId).onSuccess { balance ->
+                    availableInvoices = balance.pendingInvoices
+                    _uiState.update { 
+                        it.copy(
+                            pendingInvoices = balance.pendingInvoices,
+                            isLoadingInvoices = false
+                        )
+                    }
+                    
+                    // Pre-select invoice if passed in navigation arguments
+                    val invoiceIdArg = savedStateHandle.get<String>("invoiceId")
+                    if (!invoiceIdArg.isNullOrEmpty()) {
+                         toggleInvoiceSelection(invoiceIdArg)
+                    }
+                }.onFailure {
+                    _uiState.update { it.copy(isLoadingInvoices = false) }
+                }
+            }
+        }
+    }
 
     fun onAmountChange(amount: String) {
         _uiState.update { it.copy(amount = amount) }
@@ -56,50 +92,24 @@ class CreatePaymentViewModel @Inject constructor(
         _uiState.update { it.copy(proofUrl = url) }
     }
 
-    fun addPeriod(period: String) {
+    fun toggleInvoiceSelection(invoiceId: String) {
         _uiState.update { state ->
-            if (!state.selectedPeriods.contains(period)) {
-                state.copy(selectedPeriods = state.selectedPeriods + period)
+            val newSelection = if (state.selectedInvoiceIds.contains(invoiceId)) {
+                state.selectedInvoiceIds - invoiceId
             } else {
-                state
+                state.selectedInvoiceIds + invoiceId
             }
+            
+            // Auto-update amount based on selection
+            val selectedTotal = availableInvoices
+                .filter { newSelection.contains(it.id) }
+                .sumOf { it.remaining }
+                
+            state.copy(
+                selectedInvoiceIds = newSelection,
+                amount = String.format(java.util.Locale.US, "%.2f", selectedTotal)
+            )
         }
-    }
-
-    fun removePeriod(period: String) {
-        _uiState.update { state ->
-            state.copy(selectedPeriods = state.selectedPeriods - period)
-        }
-    }
-
-
-    fun onYearChange(year: Int) {
-        _uiState.update { it.copy(selectedYear = year) }
-        // Automatically toggle the period when year changes? 
-        // Based on original code, selecting a year triggered a toggle. 
-        // But maybe we should just update the selector and let the user click a button or something?
-        // The original code was:
-        // selectedYear = year
-        // val periodId = ...
-        // viewModel.onPeriodToggle(periodId)
-        // Let's replicate this behavior to preserve UX, but it's a bit odd. 
-        // Actually, usually dropdowns just select the value. 
-        // The user issue is that the dropdown VALUE doesn't change. 
-        // So first let's just update the state.
-        // We will invoke onPeriodToggle from the UI callback if needed, 
-        // OR calculate period here.
-        // Let's just update state here. The UI can call onPeriodToggle separately if that's the desired UX,
-        // or we can couple them.
-        // Given the user report "always remains the first element", moving state to VM fixes the display.
-        // If I look at the UI code again, the dropdown item onClick did TWO things: updating `selectedYear` and calling `onPeriodToggle`.
-        // So I will expose `onYearChange` and `onMonthChange` and letting the UI call `onPeriodToggle` if that's what it wants, 
-        // or better: `onYearChange` updates the year, and we can have a separate `addPeriod` action?
-        // No, the UI pattern there implies selecting a year/month adds it to the list.
-        // I'll stick to simple state updates for now and let the UI drive the multi-step logic or refactor later.
-    }
-
-    fun onMonthChange(month: Int) {
-        _uiState.update { it.copy(selectedMonth = month) }
     }
 
     fun onSubmitClick() {
@@ -111,39 +121,69 @@ class CreatePaymentViewModel @Inject constructor(
             return
         }
 
-        if (state.description.isBlank()) {
-            _uiState.update { it.copy(error = "Description is required") }
-            return
+        /* 
+        // Validation: Must select at least one invoice OR provide description?
+        // Allocation logic:
+        // 1. If invoices selected, allocate amount to them order by date (oldest first).
+        // 2. If no invoices selected, treat as "Unallocated" or "General Payment"? 
+        //    For now, enforcing invoice selection if pending invoices exist.
+        */
+        
+        if (state.selectedInvoiceIds.isEmpty() && state.pendingInvoices.isNotEmpty()) {
+             // Optional: Allow proceeding without selection if valid reason?
+             // Enforcing selection for better data quality
+             _uiState.update { it.copy(error = "Please select invoices to pay") }
+             return
         }
         
-        if (state.selectedPeriods.isEmpty()) {
-            _uiState.update { it.copy(error = "Please select at least one month") }
-            return
-        }
-
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             
-            // Get current user to access buildingId
-            val currentUser = authRepository.currentUser.first()
-            val buildingId = currentUser?.buildingId
+            // Get current user and unit
+            val user = authRepository.fetchCurrentUser().getOrNull()
+            val unitId = user?.currentUnit?.unitId ?: user?.units?.firstOrNull()?.unitId
             
-            if (buildingId.isNullOrEmpty()) {
-                _uiState.update { it.copy(isLoading = false, error = "User building not found. Please re-login.") }
+            if (unitId.isNullOrEmpty()) {
+                _uiState.update { it.copy(isLoading = false, error = "User/Unit not found.") }
                 return@launch
             }
 
+            // Calculate Allocations
+            val allocations = mutableListOf<com.example.condominio.data.model.PaymentAllocation>()
+            var remainingAmount = amount
+            
+            // Sort selected invoices by period/date (Assuming period YYYY-MM sortable string)
+            // Sort selected invoices by period/date
+            val selectedInvoices = availableInvoices
+                .filter { state.selectedInvoiceIds.contains(it.id) }
+                .sortedBy { it.period } 
+            
+            val paidPeriods = selectedInvoices.map { it.period }
+                
+            for (invoice in selectedInvoices) {
+                if (remainingAmount <= 0) break
+                
+                val toPay = minOf(remainingAmount, invoice.remaining)
+                allocations.add(com.example.condominio.data.model.PaymentAllocation(
+                    invoiceId = invoice.id,
+                    amount = toPay
+                ))
+                remainingAmount -= toPay
+            }
+            
             val result = paymentRepository.createPayment(
                 amount = amount,
                 date = state.date,
                 description = state.description,
                 method = state.method,
+                unitId = unitId,
+                allocations = allocations,
                 reference = state.reference.ifBlank { null },
                 bank = state.bank.ifBlank { null },
                 phone = state.phone.ifBlank { null },
                 proofUrl = state.proofUrl,
-                paidPeriods = state.selectedPeriods,
-                buildingId = buildingId // Pass buildingId from user session
+                paidPeriods = paidPeriods,
+                buildingId = user?.currentUnit?.buildingId
             )
             _uiState.update { it.copy(isLoading = false) }
             
@@ -165,10 +205,10 @@ data class CreatePaymentUiState(
     val reference: String = "",
     val phone: String = "",
     val proofUrl: String? = null,
-    val selectedPeriods: List<String> = emptyList(),
-    val selectedYear: Int = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR),
-    val selectedMonth: Int = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH) + 1,
+    val pendingInvoices: List<com.example.condominio.data.model.Invoice> = emptyList(),
+    val selectedInvoiceIds: Set<String> = emptySet(),
     val isLoading: Boolean = false,
+    val isLoadingInvoices: Boolean = false,
     val error: String? = null,
     val isSuccess: Boolean = false
 )

@@ -69,8 +69,7 @@ class EditProfileViewModel @Inject constructor(
             val updatedUser = User(
                 id = state.userId,
                 name = state.name,
-                email = state.email,
-                apartmentUnit = state.apartmentUnit
+                email = state.email
             )
 
             val result = authRepository.updateUser(updatedUser)

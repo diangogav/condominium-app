@@ -16,6 +16,10 @@ import com.example.condominio.ui.screens.profile.EditProfileScreen
 import com.example.condominio.ui.screens.profile.NotificationSettingsScreen
 import com.example.condominio.ui.screens.profile.ChangePasswordScreen
 import com.example.condominio.ui.screens.auth.PendingApprovalScreen
+import com.example.condominio.ui.screens.billing.InvoiceDetailScreen
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 
 @Composable
 fun CondominioNavGraph(
@@ -27,9 +31,28 @@ fun CondominioNavGraph(
     ) {
         composable("login") {
             LoginScreen(
-                onLoginSuccess = { navController.navigate("dashboard") }, 
+                onLoginSuccess = { hasMultiple -> 
+                    if (hasMultiple) {
+                        navController.navigate("unit_selection") {
+                            popUpTo("login") { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate("dashboard") {
+                            popUpTo("login") { inclusive = true }
+                        }
+                    }
+                }, 
                 onPendingApproval = { navController.navigate("pending_approval") },
                 onRegisterClick = { navController.navigate("register") }
+            )
+        }
+        composable("unit_selection") {
+            com.example.condominio.ui.screens.UnitSelectionScreen(
+                onUnitSelected = {
+                    navController.navigate("dashboard") {
+                        popUpTo("unit_selection") { inclusive = true }
+                    }
+                }
             )
         }
         composable("register") {
@@ -54,7 +77,33 @@ fun CondominioNavGraph(
                 onPayClick = { navController.navigate("create_payment") },
                 onHistoryClick = { navController.navigate("payment_history") },
                 onPaymentClick = { paymentId -> navController.navigate("payment_detail/$paymentId") },
-                onProfileClick = { navController.navigate("profile") }
+                onProfileClick = { navController.navigate("profile") },
+                onUnitClick = { navController.navigate("unit_selection") },
+                onSeeAllInvoicesClick = { navController.navigate("invoice_list") }
+            )
+        }
+        composable("invoice_list") {
+            com.example.condominio.ui.screens.billing.InvoiceListScreen(
+                onBackClick = { navController.popBackStack() },
+                onInvoiceClick = { invoice ->
+                    if (invoice.status == com.example.condominio.data.model.InvoiceStatus.PAID || invoice.paid > 0) {
+                        navController.navigate("invoice_detail/${invoice.id}")
+                    } else {
+                        navController.navigate("create_payment?invoiceId=${invoice.id}")
+                    }
+                }
+            )
+        }
+        composable(
+            route = "invoice_detail/{invoiceId}",
+            arguments = listOf(navArgument("invoiceId") { type = NavType.StringType })
+        ) {
+            InvoiceDetailScreen(
+                onBackClick = { navController.popBackStack() },
+                onSeeAllPaymentsClick = { navController.navigate("payment_history") },
+                onSeeAllInvoicesClick = { navController.navigate("invoice_list") { popUpTo("invoice_list") { inclusive = true } } },
+                onPayRemainderClick = { invoiceId -> navController.navigate("create_payment?invoiceId=$invoiceId") },
+                onPaymentClick = { paymentId -> navController.navigate("payment_detail/$paymentId") }
             )
         }
         composable("payment_history") {
@@ -63,7 +112,14 @@ fun CondominioNavGraph(
                 onPaymentClick = { paymentId -> navController.navigate("payment_detail/$paymentId") }
             )
         }
-        composable("create_payment") {
+        composable(
+            route = "create_payment?invoiceId={invoiceId}",
+            arguments = listOf(navArgument("invoiceId") { 
+                nullable = true 
+                defaultValue = null
+                type = NavType.StringType 
+            })
+        ) {
             CreatePaymentScreen(
                 onBackClick = { navController.popBackStack() },
                 onSubmitSuccess = { navController.popBackStack() }

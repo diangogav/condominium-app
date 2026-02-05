@@ -42,8 +42,11 @@ class PaymentHistoryViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             
+            val user = authRepository.fetchCurrentUser().getOrNull()
+            val unitId = user?.currentUnit?.unitId ?: user?.units?.firstOrNull()?.unitId
+
             try {
-                val payments = paymentRepository.getPayments()
+                val payments = paymentRepository.getPayments(unitId)
                 _uiState.update { 
                     it.copy(
                         payments = payments,

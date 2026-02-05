@@ -30,65 +30,78 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             
-            // Fetch latest user data
-            authRepository.fetchCurrentUser()
+            // Fetch currentUser to get selected unit
+            val userResult = authRepository.fetchCurrentUser()
             
-            // Collect user details
-            launch {
-                authRepository.currentUser.collect { user ->
-                    user?.let {
-                        var buildingName = it.building
-                        
-                        // Fetch building name if missing or "Unknown Building" and we have an ID
-                        if ((buildingName.isEmpty() || buildingName == "Unknown Building" || buildingName == "Unknown") && it.buildingId.isNotEmpty()) {
-                            try {
-                                val result = buildingRepository.getBuilding(it.buildingId)
-                                result.onSuccess { building ->
-                                    buildingName = building.name
-                                }
-                            } catch (e: Exception) {
-                                // Keep original name on error
-                            }
-                        }
+            if (userResult.isSuccess) {
+                val user = userResult.getOrNull()
+                val currentUnit = user?.currentUnit
+                
+                _uiState.update { state ->
+                    state.copy(
+                        userName = user?.name ?: "",
+                        userBuilding = currentUnit?.buildingName ?: user?.building ?: "",
+                        userApartment = currentUnit?.unitName ?: user?.apartmentUnit ?: ""
+                    )
+                }
 
-                        var apartmentUnit = it.apartmentUnit
-                        
-                        // If apartmentUnit looks like a UUID, fetch details
-                        if (apartmentUnit.length == 36 && apartmentUnit.contains("-")) {
-                            authRepository.getUnit(apartmentUnit).onSuccess { unitDto ->
-                                apartmentUnit = unitDto.name
+                // If we have a unit ID, fetch balance
+                // Fallback to legacy getPaymentSummary if no unit ID (shouldn't happen in Pro)
+                val unitId = currentUnit?.unitId ?: user?.units?.firstOrNull()?.unitId
+                
+                if (!unitId.isNullOrEmpty()) {
+                    // Fetch Balance
+                    launch {
+                        val result = paymentRepository.getBalance(unitId)
+                        result.onSuccess { balance ->
+                            val solvency = if (balance.totalDebt > 0) SolvencyStatus.PENDING else SolvencyStatus.SOLVENT
+                            _uiState.update {
+                                it.copy(
+                                    solvencyStatus = solvency,
+                                    totalDebt = balance.totalDebt,
+                                    pendingInvoices = balance.pendingInvoices,
+                                    // Use pendingInvoices to derive pending periods if needed, 
+                                    // or wait for further instructions. For now keeping balance data.
+                                )
                             }
-                        }
-
-                        _uiState.update { state ->
-                            state.copy(
-                                userName = it.name,
-                                userBuilding = buildingName,
-                                userApartment = apartmentUnit
-                            )
+                        }.onFailure {
+                             // Fallback or error state
                         }
                     }
-                }
-            }
-            
-            // Fetch dashboard summary from API using PaymentRepository
-            launch {
-                val result = paymentRepository.getPaymentSummary()
-                result.onSuccess { summary ->
-                    _uiState.update {
-                        it.copy(
-                            solvencyStatus = summary.solvencyStatus,
-                            recentPayments = summary.recentTransactions,
-                            pendingPeriods = summary.pendingPeriods,
-                            paidPeriods = summary.paidPeriods,
-                            // Only update unit name from summary if it's not a UUID
-                            userApartment = if (summary.unitName.isNotEmpty() && !summary.unitName.matches(Regex("^[0-9a-fA-F-]{36}$"))) summary.unitName else it.userApartment,
-                            isLoading = false
-                        )
+
+                    // Fetch Recent Transactions
+                    launch {
+                        try {
+                            val payments = paymentRepository.getPayments(unitId)
+                            _uiState.update { 
+                                it.copy(
+                                    recentPayments = payments.take(5), // Show last 5
+                                    isLoading = false // End loading when at least this is done (or coordinate)
+                                )
+                            }
+                        } catch (e: Exception) {
+                            // Handle error
+                            _uiState.update { it.copy(isLoading = false) }
+                        }
                     }
-                }.onFailure {
-                    _uiState.update { it.copy(isLoading = false) }
+                } else {
+                     // Legacy fallback
+                     launch {
+                        paymentRepository.getPaymentSummary().onSuccess { summary ->
+                            _uiState.update {
+                                it.copy(
+                                    solvencyStatus = summary.solvencyStatus,
+                                    recentPayments = summary.recentTransactions,
+                                    pendingPeriods = summary.pendingPeriods,
+                                    paidPeriods = summary.paidPeriods,
+                                    isLoading = false
+                                )
+                            }
+                        }
+                     }
                 }
+            } else {
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
     }
@@ -106,5 +119,7 @@ data class DashboardUiState(
     val recentPayments: List<Payment> = emptyList(),
     val pendingPeriods: List<String> = emptyList(),
     val paidPeriods: List<String> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val totalDebt: Double = 0.0,
+    val pendingInvoices: List<com.example.condominio.data.model.Invoice> = emptyList()
 )

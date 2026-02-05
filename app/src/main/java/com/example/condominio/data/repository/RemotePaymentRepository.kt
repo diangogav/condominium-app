@@ -1,8 +1,6 @@
 package com.example.condominio.data.repository
 
-import com.example.condominio.data.model.Payment
-import com.example.condominio.data.model.PaymentMethod
-import com.example.condominio.data.model.toDomain
+import com.example.condominio.data.model.*
 import com.example.condominio.data.remote.ApiService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,12 +18,13 @@ import javax.inject.Singleton
 
 @Singleton
 class RemotePaymentRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val gson: com.google.gson.Gson
 ) : PaymentRepository {
     
-    override suspend fun getPayments(): List<Payment> {
+    override suspend fun getPayments(unitId: String?): List<Payment> {
         return try {
-            val response = apiService.getPayments()
+            val response = apiService.getPayments(unitId = unitId)
             if (response.isSuccessful && response.body() != null) {
                 response.body()!!.map { it.toDomain() }
             } else {
@@ -85,6 +84,8 @@ class RemotePaymentRepository @Inject constructor(
         date: Date,
         description: String,
         method: PaymentMethod,
+        unitId: String,
+        allocations: List<com.example.condominio.data.model.PaymentAllocation>,
         reference: String?,
         bank: String?,
         phone: String?,
@@ -93,61 +94,134 @@ class RemotePaymentRepository @Inject constructor(
         buildingId: String?
     ): Result<Payment> {
         return try {
-            val amountPart = RequestBody.create("text/plain".toMediaTypeOrNull(), amount.toString())
-            val datePart = RequestBody.create("text/plain".toMediaTypeOrNull(), SimpleDateFormat("yyyy-MM-dd", Locale.US).format(date))
-            val methodPart = RequestBody.create("text/plain".toMediaTypeOrNull(), method.name)
-            val referencePart = reference?.let { RequestBody.create("text/plain".toMediaTypeOrNull(), it) }
-            val bankPart = bank?.let { RequestBody.create("text/plain".toMediaTypeOrNull(), it) }
-            val buildingIdPart = buildingId?.let { RequestBody.create("text/plain".toMediaTypeOrNull(), it) }
-
-            // Create list of parts for periods
-            // For an array field in Retrofit Multipart, we usually send them as multiple parts with the same name "periods[]" or just "periods" depending on backend.
-            // User request said: "periods (Array de Strings)".
-            // Standard convention for array in FormData is key="periods" or key="periods[]".
-            // Let's assume "periods" allows multiple values or "periods[]". I'll try "periods" first with multiple parts, 
-            // OR construct a single part if it expects a JSON array string? No, "Array of Strings" usually means multiple fields.
-            // Wait, the prompt said: "periods (Array de Strings)".
-            // If I use @Part periods: List<MultipartBody.Part>, Retrofit sends them.
-            // Let's create the list.
-            val periodParts = paidPeriods.map { period ->
-                MultipartBody.Part.createFormData("periods", period) 
-                // Note: If backend expects "periods[]", change name to "periods[]". 
-                // Standard Express/Multer often handles "periods" if it's defined as array, or "periods[]".
-                // I'll stick to "periods" based on the name change key.
-            }
-
-            var imagePart: MultipartBody.Part? = null
-            if (proofUrl != null) {
-                val file = File(proofUrl)
-                if (file.exists()) {
-                    val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                    imagePart = MultipartBody.Part.createFormData("proof_image", file.name, requestFile)
-                }
+            val allocationDtos = allocations.map { 
+                com.example.condominio.data.model.AllocationDto(
+                    invoiceId = it.invoiceId,
+                    amount = it.amount
+                )
             }
             
-            val response = apiService.createPayment(
-                amount = amountPart,
-                date = datePart,
-                method = methodPart,
-                reference = referencePart,
-                bank = bankPart,
-                periods = periodParts,
-                buildingId = buildingIdPart,
-                proof_image = imagePart
-            )
+            val dateStr = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(date)
+            
+            val response = if (!proofUrl.isNullOrEmpty()) {
+                // Multipart Flow
+                val file = File(proofUrl)
+                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                val proofPart = MultipartBody.Part.createFormData("proof_image", file.name, requestFile)
+                
+                apiService.createPaymentMultipart(
+                    amount = amount.toString().toRequestBody("text/plain".toMediaTypeOrNull()),
+                    unitId = unitId.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    buildingId = buildingId?.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    method = method.name.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    date = dateStr.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    notes = description.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    reference = reference?.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    bank = bank?.toRequestBody("text/plain".toMediaTypeOrNull()),
+                    allocations = gson.toJson(allocationDtos).toRequestBody("application/json".toMediaTypeOrNull()),
+                    periods = gson.toJson(paidPeriods).toRequestBody("application/json".toMediaTypeOrNull()),
+                    proof_image = proofPart
+                )
+            } else {
+                // JSON Flow
+                val request = com.example.condominio.data.model.CreatePaymentRequest(
+                    unitId = unitId,
+                    buildingId = buildingId,
+                    amount = amount,
+                    amountCurrency = "USD",
+                    date = dateStr,
+                    method = method.name,
+                    reference = reference,
+                    bank = bank,
+                    notes = description,
+                    allocations = allocationDtos,
+                    proofUrl = null,
+                    periods = paidPeriods
+                )
+                apiService.createPayment(request)
+            }
             
             if (response.isSuccessful && response.body() != null) {
-                val payment = response.body()!!
-                Result.success(payment.toDomain())
+                Result.success(response.body()!!.toDomain())
             } else {
-                val errorBody = response.errorBody()?.string()
-                val errorMsg = "Payment creation failed (${response.code()}): ${errorBody ?: "Unknown error"}"
-                android.util.Log.e("RemotePaymentRepo", errorMsg)
-                Result.failure(Exception(errorMsg))
+                 val errorMsg = response.errorBody()?.string() ?: "Payment creation failed"
+                 Result.failure(Exception(errorMsg))
             }
         } catch (e: Exception) {
-            android.util.Log.e("RemotePaymentRepo", "Exception creating payment", e)
-            Result.failure(Exception("Error: ${e.message}"))
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getBalance(unitId: String): Result<com.example.condominio.data.model.Balance> {
+        return try {
+            val response = apiService.getBalance(unitId)
+            if (response.isSuccessful && response.body() != null) {
+                // Map BalanceDto to Balance
+                val dto = response.body()!!
+                val balance = com.example.condominio.data.model.Balance(
+                    unitId = dto.unit,
+                    totalDebt = dto.totalDebt,
+                    pendingInvoices = dto.details.map { it.toDomain() }
+                )
+                Result.success(balance)
+            } else {
+                Result.failure(Exception("Failed to fetch balance"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getInvoices(unitId: String, status: String?): Result<List<Invoice>> {
+        return try {
+            val response = apiService.getInvoices(unitId, status)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!.map { it.toDomain() })
+            } else {
+                Result.failure(Exception("Failed to fetch invoices"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getInvoice(id: String): Result<Invoice> {
+        return try {
+            val response = apiService.getInvoice(id)
+            if (response.isSuccessful && response.body() != null) {
+                Result.success(response.body()!!.toDomain())
+            } else {
+                Result.failure(Exception("Failed to fetch invoice details"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun getInvoicePayments(invoiceId: String): Result<List<Payment>> {
+        return try {
+            val response = apiService.getInvoicePayments(invoiceId)
+            if (response.isSuccessful && response.body() != null) {
+                val payments = response.body()!!.map { dto ->
+                    val domainPayment = dto.toDomain()
+                    // If the DTO has an allocated amount for this specific invoice, ensure it's in the allocations list
+                    if (dto.allocatedAmount != null && dto.allocatedAmount > 0) {
+                        val specificAllocation = com.example.condominio.data.model.PaymentAllocation(
+                            invoiceId = invoiceId,
+                            amount = dto.allocatedAmount
+                        )
+                        // Prepend or add to existing allocations
+                        domainPayment.copy(allocations = listOf(specificAllocation) + domainPayment.allocations)
+                    } else {
+                        domainPayment
+                    }
+                }
+                Result.success(payments)
+            } else {
+                Result.failure(Exception("Failed to fetch invoice payments"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

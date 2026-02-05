@@ -91,10 +91,10 @@ fun CreatePaymentScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Register Payment", fontWeight = FontWeight.Bold) },
+                title = { Text("Registrar Pago", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Regresar")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -114,7 +114,7 @@ fun CreatePaymentScreen(
             Spacer(modifier = Modifier.height(24.dp))
             
             Text(
-                text = "Enter Payment Amount",
+                text = "Monto del Pago",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
@@ -141,7 +141,7 @@ fun CreatePaymentScreen(
 
             // Payment Method
             Text(
-                text = "Payment Method",
+                text = "Método de Pago",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -152,7 +152,12 @@ fun CreatePaymentScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 OutlinedTextField(
-                    value = uiState.method.label,
+                    value = when(uiState.method) {
+                        PaymentMethod.PAGO_MOVIL -> "Pago Móvil"
+                        PaymentMethod.TRANSFERENCIA -> "Transferencia"
+                        PaymentMethod.EFECTIVO -> "Efectivo"
+                        else -> uiState.method.label
+                    },
                     onValueChange = {},
                     readOnly = true,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
@@ -165,7 +170,14 @@ fun CreatePaymentScreen(
                 ) {
                     PaymentMethod.values().forEach { method ->
                         DropdownMenuItem(
-                            text = { Text(method.label) },
+                            text = { 
+                                Text(when(method) {
+                                    PaymentMethod.PAGO_MOVIL -> "Pago Móvil"
+                                    PaymentMethod.TRANSFERENCIA -> "Transferencia"
+                                    PaymentMethod.EFECTIVO -> "Efectivo"
+                                    else -> method.label
+                                }) 
+                            },
                             onClick = {
                                 viewModel.onMethodChange(method)
                                 expanded = false
@@ -183,7 +195,7 @@ fun CreatePaymentScreen(
                     OutlinedTextField(
                         value = uiState.bank,
                         onValueChange = viewModel::onBankChange,
-                        label = { Text("Issuing Bank") },
+                        label = { Text("Banco Emisor") },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp)
                     )
@@ -191,7 +203,7 @@ fun CreatePaymentScreen(
                     OutlinedTextField(
                         value = uiState.phone,
                         onValueChange = viewModel::onPhoneChange,
-                        label = { Text("Phone Number") },
+                        label = { Text("Número de Teléfono") },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
@@ -200,7 +212,7 @@ fun CreatePaymentScreen(
                     OutlinedTextField(
                         value = uiState.reference,
                         onValueChange = viewModel::onReferenceChange,
-                        label = { Text("Reference Number") },
+                        label = { Text("Número de Referencia") },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -210,7 +222,7 @@ fun CreatePaymentScreen(
                     OutlinedTextField(
                         value = uiState.bank,
                         onValueChange = viewModel::onBankChange,
-                        label = { Text("Issuing Bank") },
+                        label = { Text("Banco Emisor") },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp)
                     )
@@ -218,7 +230,7 @@ fun CreatePaymentScreen(
                     OutlinedTextField(
                         value = uiState.reference,
                         onValueChange = viewModel::onReferenceChange,
-                        label = { Text("Reference Number") }, // Usually "referencia" for transfer too
+                        label = { Text("Número de Referencia") },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -226,143 +238,92 @@ fun CreatePaymentScreen(
                 }
                 PaymentMethod.EFECTIVO -> {
                      Text(
-                        text = "For cash payments, please upload a clear photo of the receipt or handover document.",
+                        text = "Para pagos en efectivo, por favor sube una foto del recibo o comprobante de entrega.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                         modifier = Modifier.padding(bottom = 8.dp)
                      )
                 }
+                else -> {}
             }
             
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Period Selector
+            // Invoice Selector
             Text(
-                text = "Applying to Period(s)",
+                text = "Seleccionar Facturas a Pagar",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Year and Month selectors
-            val months = listOf(
-                "01" to "January", "02" to "February", "03" to "March",
-                "04" to "April", "05" to "May", "06" to "June",
-                "07" to "July", "08" to "August", "09" to "September",
-                "10" to "October", "11" to "November", "12" to "December"
-            )
-            
-            var monthExpanded by remember { mutableStateOf(false) }
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Year Input
-                OutlinedTextField(
-                    value = uiState.selectedYear.toString(),
-                    onValueChange = { newValue ->
-                        if (newValue.all { it.isDigit() }) {
-                             val year = newValue.toIntOrNull() ?: 0
-                             viewModel.onYearChange(year)
-                        }
-                    },
-                    label = { Text("Year") },
-                    modifier = Modifier.weight(0.8f),
-                    shape = RoundedCornerShape(12.dp),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true
-                )
-                
-                // Month Dropdown
-                ExposedDropdownMenuBox(
-                    expanded = monthExpanded,
-                    onExpandedChange = { monthExpanded = it },
-                    modifier = Modifier.weight(1.2f)
+            if (uiState.isLoadingInvoices) {
+                Box(
+                    modifier = Modifier.fillMaxWidth().height(100.dp),
+                    contentAlignment = Alignment.Center
                 ) {
-                    OutlinedTextField(
-                        value = months.find { it.first == String.format("%02d", uiState.selectedMonth) }?.second ?: "",
-                        onValueChange = {},
-                        readOnly = true,
-                        label = { Text("Month") },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = monthExpanded) },
-                        modifier = Modifier
-                            .menuAnchor()
-                            .fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    ExposedDropdownMenu(
-                        expanded = monthExpanded,
-                        onDismissRequest = { monthExpanded = false }
-                    ) {
-                        months.forEach { (monthNum, monthName) ->
-                            DropdownMenuItem(
-                                text = { Text(monthName) },
-                                onClick = {
-                                    viewModel.onMonthChange(monthNum.toInt())
-                                    monthExpanded = false
-                                }
-                            )
-                        }
-                    }
+                    CircularProgressIndicator()
                 }
-
-                // Add Button (Small)
-                FilledIconButton(
-                    onClick = {
-                        val periodId = String.format(Locale.US, "%d-%02d", uiState.selectedYear, uiState.selectedMonth)
-                        viewModel.addPeriod(periodId)
-                    },
-                    modifier = Modifier.size(50.dp),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add Period")
-                }
-            }
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            // Selected Periods (Chips)
-            if (uiState.selectedPeriods.isNotEmpty()) {
-                Text(
-                    text = "Selected Periods:",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                
-                FlowRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    uiState.selectedPeriods.sorted().forEach { period ->
-                        InputChip(
-                            selected = true,
-                            onClick = { /* No action on click, use trailing icon to remove */ },
-                            label = { Text(period) },
-                            trailingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = "Remove",
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .clickable { viewModel.removePeriod(period) }
-                                )
-                            },
-                            colors = InputChipDefaults.inputChipColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                labelColor = MaterialTheme.colorScheme.onPrimaryContainer
+            } else if (uiState.pendingInvoices.isNotEmpty()) {
+                val invoices = uiState.pendingInvoices.sortedBy { it.period }
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    invoices.forEach { invoice ->
+                        val isSelected = uiState.selectedInvoiceIds.contains(invoice.id)
+                        Card(
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
                             ),
-                            shape = RoundedCornerShape(8.dp)
-                        )
+                            modifier = Modifier.fillMaxWidth().clickable { viewModel.toggleInvoiceSelection(invoice.id) }
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Checkbox(
+                                    checked = isSelected,
+                                    onCheckedChange = { viewModel.toggleInvoiceSelection(invoice.id) }
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Column(modifier = Modifier.weight(1f)) {
+                                    val monthName = try {
+                                        val periodDate = SimpleDateFormat("yyyy-MM", Locale.US).parse(invoice.period)
+                                        SimpleDateFormat("MMMM", Locale("es", "ES")).format(periodDate!!).replaceFirstChar { it.uppercase() }
+                                    } catch (e: Exception) {
+                                        invoice.period
+                                    }
+                                    Text(
+                                        text = invoice.description ?: monthName,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        text = "Pendiente: $${String.format("%.2f", invoice.remaining)}",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                                Text(
+                                    text = invoice.period,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
                     }
+                }
+                
+                if (uiState.selectedInvoiceIds.isNotEmpty()) {
+                    Text(
+                        text = "${uiState.selectedInvoiceIds.size} facturas seleccionadas",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
                 }
             } else {
                  Text(
-                    text = "No periods added yet.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                    text = "No se encontraron facturas pendientes.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
                 )
             }
@@ -370,7 +331,7 @@ fun CreatePaymentScreen(
             Spacer(modifier = Modifier.height(24.dp))
             
             Text(
-                text = "Payment Description",
+                text = "Descripción del Pago",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -379,20 +340,20 @@ fun CreatePaymentScreen(
                 value = uiState.description,
                 onValueChange = viewModel::onDescriptionChange,
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("e.g. Monthly Fee - Oct") },
+                placeholder = { Text("Ej. Pago de enero") },
                 shape = RoundedCornerShape(12.dp)
             )
             
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Payment Date",
+                text = "Fecha del Pago",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
             OutlinedTextField(
-                value = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(uiState.date),
+                value = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(uiState.date),
                 onValueChange = {},
                 readOnly = true,
                 modifier = Modifier
@@ -400,7 +361,7 @@ fun CreatePaymentScreen(
                     .clickable { datePickerDialog.show() },
                 trailingIcon = {
                     IconButton(onClick = { datePickerDialog.show() }) {
-                        Icon(imageVector = Icons.Default.CalendarToday, contentDescription = "Select Date")
+                        Icon(imageVector = Icons.Default.CalendarToday, contentDescription = "Seleccionar Fecha")
                     }
                 },
                 shape = RoundedCornerShape(12.dp),
@@ -415,7 +376,7 @@ fun CreatePaymentScreen(
             Spacer(modifier = Modifier.height(24.dp))
             
             Text(
-                text = if(uiState.method == PaymentMethod.EFECTIVO) "Proof of Payment (Required)" else "Upload Proof (Optional)",
+                text = if(uiState.method == PaymentMethod.EFECTIVO) "Comprobante de Pago (Requerido)" else "Subir Comprobante (Opcional)",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp),
                 color = if(uiState.method == PaymentMethod.EFECTIVO) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
@@ -436,17 +397,17 @@ fun CreatePaymentScreen(
                     )
                     .clickable { imagePickerLauncher.launch("image/*") },
                 contentAlignment = Alignment.Center
-            ) {
+              ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(
                         imageVector = if (selectedImageUri != null) Icons.Default.CheckCircle else Icons.Default.CloudUpload,
                         contentDescription = null,
-                        tint = if (selectedImageUri != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(32.dp)
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = if (selectedImageUri != null) "Image selected" else "Tap to upload image",
+                        text = if (selectedImageUri != null) "Imagen seleccionada" else "Toca para subir imagen",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -474,7 +435,7 @@ fun CreatePaymentScreen(
                 if (uiState.isLoading) {
                     CircularProgressIndicator(color = Color.White)
                 } else {
-                    Text("Register Payment", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Text("Registrar Pago", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 }
             }
             

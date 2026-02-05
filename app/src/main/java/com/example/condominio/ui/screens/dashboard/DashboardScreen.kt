@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.History
@@ -47,6 +48,8 @@ fun DashboardScreen(
     onHistoryClick: () -> Unit,
     onPaymentClick: (String) -> Unit,
     onProfileClick: () -> Unit,
+    onUnitClick: () -> Unit,
+    onSeeAllInvoicesClick: () -> Unit = {},
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -80,23 +83,17 @@ fun DashboardScreen(
                     userName = uiState.userName,
                     building = uiState.userBuilding,
                     apartmentUnit = uiState.userApartment,
-                    onProfileClick = onProfileClick
+                    onProfileClick = onProfileClick,
+                    onUnitClick = onUnitClick
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
             item {
-                Text(
-                    text = "Monthly Status (2024)",
-                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(bottom = 12.dp)
-                )
-                
-                SolvencyFlipCard(
-                    solvencyStatus = uiState.solvencyStatus,
-                    payments = uiState.recentPayments,
-                    pendingPeriods = uiState.pendingPeriods,
-                    paidPeriods = uiState.paidPeriods
+                BillingCard(
+                    totalDebt = uiState.totalDebt,
+                    pendingInvoices = uiState.pendingInvoices,
+                    onSeeAllClick = onSeeAllInvoicesClick
                 )
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -126,11 +123,90 @@ fun DashboardScreen(
 }
 
 @Composable
+fun BillingCard(
+    totalDebt: Double,
+    pendingInvoices: List<com.example.condominio.data.model.Invoice>,
+    onSeeAllClick: () -> Unit = {}
+) {
+    val isSolvent = totalDebt <= 0
+    val cardColor = if (isSolvent) Color(0xFF4CAF50) else Color(0xFFD32F2F) // Green or Red
+
+    Card(
+        colors = CardDefaults.cardColors(containerColor = cardColor),
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(modifier = Modifier.padding(24.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Total Debt",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.White.copy(alpha = 0.8f)
+                )
+                TextButton(
+                    onClick = onSeeAllClick,
+                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
+                ) {
+                    Text("See all", style = MaterialTheme.typography.labelLarge)
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "$${String.format("%.2f", totalDebt)}",
+                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            if (pendingInvoices.isNotEmpty()) {
+                Text(
+                    text = "Pending Invoices:",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                pendingInvoices.take(3).forEach { invoice ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = invoice.description ?: invoice.period,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.White.copy(alpha = 0.9f)
+                        )
+                        Text(
+                            text = "$${String.format("%.2f", invoice.remaining)}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                }
+            } else {
+                Text(
+                    text = "You are up to date! 🎉",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun HeaderSection(
     userName: String,
     building: String = "",
     apartmentUnit: String = "",
-    onProfileClick: () -> Unit = {}
+    onProfileClick: () -> Unit = {},
+    onUnitClick: () -> Unit = {}
 ) {
     Row(
         modifier = Modifier
@@ -139,7 +215,7 @@ fun HeaderSection(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
+        Column(modifier = Modifier.clickable(onClick = onUnitClick)) {
             Text(
                 text = "Welcome back,",
                 style = MaterialTheme.typography.bodyMedium,
@@ -151,258 +227,51 @@ fun HeaderSection(
             )
             if (building.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "$building • Apt $apartmentUnit",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
-        // Avatar - Clickable to open profile
-        Box(
-            modifier = Modifier
-                .size(48.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
-                .clickable(onClick = onProfileClick),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = userName.take(1).uppercase(),
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-    }
-}
-
-@Composable
-fun SolvencyFlipCard(
-    solvencyStatus: SolvencyStatus,
-    payments: List<Payment>,
-    pendingPeriods: List<String>,
-    paidPeriods: List<String>
-) {
-    var isFlipped by remember { mutableStateOf(false) }
-    val rotation by animateFloatAsState(
-        targetValue = if (isFlipped) 180f else 0f,
-        animationSpec = tween(durationMillis = 600, easing = FastOutSlowInEasing),
-        label = "flip"
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .clickable { isFlipped = !isFlipped }
-    ) {
-        // Back side (shown when flipped)
-        if (rotation > 90f) {
-            PaymentStatusGrid(
-                payments = payments,
-                pendingPeriods = pendingPeriods,
-                paidPeriods = paidPeriods,
-                modifier = Modifier.graphicsLayer {
-                    rotationY = 180f + rotation
-                    cameraDistance = 12f * density
-                }
-            )
-        } else {
-            // Front side (solvency status)
-            SolvencyStatusCard(
-                solvencyStatus = solvencyStatus,
-                modifier = Modifier.graphicsLayer {
-                    rotationY = rotation
-                    cameraDistance = 12f * density
-                }
-            )
-        }
-    }
-}
-
-@Composable
-fun SolvencyStatusCard(
-    solvencyStatus: SolvencyStatus,
-    modifier: Modifier = Modifier
-) {
-    val isUpToDate = solvencyStatus == SolvencyStatus.SOLVENT
-    val backgroundColor = if (isUpToDate) {
-        Color(0xFF4CAF50).copy(alpha = 0.15f) // Green
-    } else {
-        Color(0xFFFF6D00).copy(alpha = 0.15f) // Orange
-    }
-    val accentColor = if (isUpToDate) {
-        Color(0xFF4CAF50)
-    } else {
-        Color(0xFFFF6D00)
-    }
-
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
-            .border(2.dp, accentColor.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
-            .padding(24.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = if (isUpToDate) Icons.Default.CheckCircle else Icons.Default.Payment,
-                contentDescription = null,
-                tint = accentColor,
-                modifier = Modifier.size(48.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = if (isUpToDate) "¡Estás al día!" else "Pago Pendiente",
-                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                color = accentColor
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = if (isUpToDate) "Todos tus pagos están al corriente" else "Tienes pagos pendientes por realizar",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = "Tap para ver detalles",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                fontSize = 11.sp
-            )
-        }
-    }
-}
-
-@Composable
-fun PaymentStatusGrid(
-    payments: List<Payment>,
-    pendingPeriods: List<String>,
-    paidPeriods: List<String>,
-    modifier: Modifier = Modifier
-) {
-    // Use backend-calculated paid periods
-    val paidSet = paidPeriods.toSet()
-
-    val calendar = Calendar.getInstance()
-    val currentYear = calendar.get(Calendar.YEAR)
-    val currentMonthIndex = calendar.get(Calendar.MONTH) // 0-indexed
-    
-    // Blinking animation for current pending month
-    val infiniteTransition = rememberInfiniteTransition(label = "blinking")
-    val alpha by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 0.2f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(800, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "alpha"
-    )
-    
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp))
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
-        // Grid of 2 rows x 6 columns
-        val months = (0..11).toList()
-        val rows = months.chunked(6) // 6 months per row
-        
-        rows.forEach { rowMonths ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                rowMonths.forEach { monthIndex ->
-                    val periodId = String.format(Locale.US, "%d-%02d", currentYear, monthIndex + 1)
-                    val isPaid = paidSet.contains(periodId) // Use paidPeriods directly
-                    val isCurrent = monthIndex == currentMonthIndex
-                    val isPast = monthIndex < currentMonthIndex
-                    
-                    // Use 3-letter abbreviation
-                    val monthName = SimpleDateFormat("MMM", Locale.US).format(
-                        Calendar.getInstance().apply { set(Calendar.MONTH, monthIndex) }.time
-                    ).uppercase()
-                    
-                    MonthStatusItem(
-                        month = monthName,
-                        isPaid = isPaid,
-                        isCurrent = isCurrent,
-                        isPast = isPast,
-                        blinkingAlpha = if (isCurrent && !isPaid) alpha else 1f,
-                        modifier = Modifier.weight(1f)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "$building • Apt $apartmentUnit",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                        fontWeight = FontWeight.Medium
+                    )
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.Default.ArrowDropDown,
+                        contentDescription = "Select Unit",
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(16.dp)
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
+        }
+        // Avatar - Clickable to open profile
+        Surface(
+            modifier = Modifier
+                .size(52.dp)
+                .clickable(onClick = onProfileClick),
+            shape = CircleShape,
+            color = MaterialTheme.colorScheme.primaryContainer,
+            tonalElevation = 2.dp,
+            border = androidx.compose.foundation.BorderStroke(2.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                if (userName.isNotEmpty()) {
+                    Text(
+                        text = userName.take(1).uppercase(),
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                } else {
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.Default.Person,
+                        contentDescription = "Profile",
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
         }
     }
 }
 
-@Composable
-fun MonthStatusItem(
-    month: String,
-    isPaid: Boolean,
-    isCurrent: Boolean,
-    isPast: Boolean,
-    blinkingAlpha: Float,
-    modifier: Modifier = Modifier
-) {
-    // Determine color based on status
-    val dotColor = when {
-        isPaid -> Color(0xFF4CAF50) // Green for paid
-        isCurrent -> Color.Yellow // Yellow for current pending
-        isPast -> Color.Red // Red for overdue
-        else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f) // Grey for future
-    }
-    
-    val borderColor = when {
-        isPaid || isCurrent || isPast -> Color.Transparent
-        else -> MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-    }
-
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Indicator Dot
-        Box(
-            modifier = Modifier
-                .size(12.dp)
-                .graphicsLayer { alpha = if (isCurrent && !isPaid) blinkingAlpha else 1f }
-                .clip(CircleShape)
-                .background(dotColor)
-                .border(
-                    width = 1.dp,
-                    color = borderColor,
-                    shape = CircleShape
-                )
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = month,
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontSize = 10.sp,
-                fontWeight = if (isPaid || isCurrent) FontWeight.Bold else FontWeight.Normal,
-                letterSpacing = 0.5.sp
-            ),
-            color = if (isPaid || isCurrent) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-        )
-    }
-}
 
 @Composable
 fun QuickActions(onPayClick: () -> Unit, onHistoryClick: () -> Unit) {
@@ -498,7 +367,7 @@ fun TransactionItem(payment: Payment, onClick: () -> Unit) {
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = if (payment.paidPeriods.isNotEmpty()) payment.paidPeriods.joinToString(", ") else payment.description,
+                text = if (payment.description.isNotBlank()) payment.description else payment.paidPeriods.joinToString(", "),
                 style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
             )
             Text(

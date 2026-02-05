@@ -196,13 +196,40 @@ fun PaymentDetailScreen(
                             DetailRow("Reported on", timestampFormat.format(it))
                         }
                         DetailRow("Method", payment.method.label)
+                        payment.userName?.let { DetailRow("Paid By", it) }
                         
                         // New Details
                         payment.bank?.let { DetailRow("Bank", it) }
                         payment.reference?.let { DetailRow("Reference", it) }
                         payment.phone?.let { DetailRow("Mobile", it) }
                         
-                        if (payment.paidPeriods.isNotEmpty()) {
+                        if (payment.allocations.isNotEmpty()) {
+                            Text(
+                                text = "Allocations",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                modifier = Modifier.padding(top=12.dp, bottom=8.dp)
+                            )
+                            payment.allocations.forEach { allocation ->
+                                Row(
+                                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    // Truncate Invoice ID for display or show full?
+                                    Text(
+                                        text = "Inv. ...${allocation.invoiceId.takeLast(6)}", 
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                    Text(
+                                        text = "$${String.format("%.2f", allocation.amount)}",
+                                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                }
+                            }
+                            HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f), modifier = Modifier.padding(top=8.dp))
+                        } else if (payment.paidPeriods.isNotEmpty()) {
                             DetailRow("Paid Periods", payment.paidPeriods.joinToString(", "))
                         }
 

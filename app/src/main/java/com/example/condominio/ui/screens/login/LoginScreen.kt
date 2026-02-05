@@ -21,7 +21,7 @@ import com.example.condominio.ui.theme.CondominioTheme
 
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit,
+    onLoginSuccess: (Boolean) -> Unit,
     onPendingApproval: () -> Unit,
     onRegisterClick: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
@@ -30,7 +30,7 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.isSuccess, uiState.isPending) {
         if (uiState.isSuccess) {
-            onLoginSuccess()
+            onLoginSuccess(uiState.hasMultipleUnits)
         } else if (uiState.isPending) {
             onPendingApproval()
         }

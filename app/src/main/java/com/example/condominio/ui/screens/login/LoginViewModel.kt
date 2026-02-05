@@ -39,8 +39,15 @@ class LoginViewModel @Inject constructor(
             val result = authRepository.login(_uiState.value.email, _uiState.value.password)
             _uiState.update { it.copy(isLoading = false) }
             
-            result.onSuccess {
-                _uiState.update { it.copy(isSuccess = true) }
+            result.onSuccess { user ->
+                // Check if user has multiple units
+                val hasMultiple = user.units.size > 1
+                // If single unit, auto-select it (if not already set by repo to first)
+                if (!hasMultiple && user.units.isNotEmpty()) {
+                    authRepository.setCurrentUnit(user.units.first())
+                }
+                
+                _uiState.update { it.copy(isSuccess = true, hasMultipleUnits = hasMultiple) }
             }.onFailure { error ->
                 if (error is com.example.condominio.data.model.UserPendingException) {
                     _uiState.update { it.copy(isPending = true) }
@@ -69,5 +76,6 @@ data class LoginUiState(
     val error: String? = null,
     val isSuccess: Boolean = false,
     val isPending: Boolean = false,
-    val databaseCleared: Boolean = false
+    val databaseCleared: Boolean = false,
+    val hasMultipleUnits: Boolean = false
 )
