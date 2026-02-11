@@ -20,7 +20,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     
-    private const val BASE_URL = "https://condominio.api.diangogavidia.com/"
+    // private const val BASE_URL = "https://condominio.api.diangogavidia.com/"
+    private const val BASE_URL = "http://10.0.2.2:3000/" // Localhost for Android Emulator
     
     @Provides
     @Singleton
