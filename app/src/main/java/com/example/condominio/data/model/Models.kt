@@ -99,8 +99,8 @@ enum class SolvencyStatus(val label: String) {
 
 enum class PaymentMethod(val label: String) {
     PAGO_MOVIL("Pago Móvil"),
-    TRANSFERENCIA("Transferencia"),
-    EFECTIVO("Efectivo")
+    TRANSFER("Transferencia"),
+    CASH("Efectivo")
 }
 
 enum class PaymentStatus {

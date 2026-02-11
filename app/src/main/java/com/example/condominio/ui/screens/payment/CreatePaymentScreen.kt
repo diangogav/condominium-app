@@ -154,8 +154,8 @@ fun CreatePaymentScreen(
                 OutlinedTextField(
                     value = when(uiState.method) {
                         PaymentMethod.PAGO_MOVIL -> "Pago Móvil"
-                        PaymentMethod.TRANSFERENCIA -> "Transferencia"
-                        PaymentMethod.EFECTIVO -> "Efectivo"
+                        PaymentMethod.TRANSFER -> "Transferencia"
+                        PaymentMethod.CASH -> "Efectivo"
                         else -> uiState.method.label
                     },
                     onValueChange = {},
@@ -173,8 +173,8 @@ fun CreatePaymentScreen(
                             text = { 
                                 Text(when(method) {
                                     PaymentMethod.PAGO_MOVIL -> "Pago Móvil"
-                                    PaymentMethod.TRANSFERENCIA -> "Transferencia"
-                                    PaymentMethod.EFECTIVO -> "Efectivo"
+                                    PaymentMethod.TRANSFER -> "Transferencia"
+                                    PaymentMethod.CASH -> "Efectivo"
                                     else -> method.label
                                 }) 
                             },
@@ -218,7 +218,7 @@ fun CreatePaymentScreen(
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
                 }
-                PaymentMethod.TRANSFERENCIA -> {
+                PaymentMethod.TRANSFER -> {
                     OutlinedTextField(
                         value = uiState.bank,
                         onValueChange = viewModel::onBankChange,
@@ -236,7 +236,7 @@ fun CreatePaymentScreen(
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                     )
                 }
-                PaymentMethod.EFECTIVO -> {
+                PaymentMethod.CASH -> {
                      Text(
                         text = "Para pagos en efectivo, por favor sube una foto del recibo o comprobante de entrega.",
                         style = MaterialTheme.typography.bodySmall,
@@ -376,10 +376,10 @@ fun CreatePaymentScreen(
             Spacer(modifier = Modifier.height(24.dp))
             
             Text(
-                text = if(uiState.method == PaymentMethod.EFECTIVO) "Comprobante de Pago (Requerido)" else "Subir Comprobante (Opcional)",
+                text = if(uiState.method == PaymentMethod.CASH) "Comprobante de Pago (Requerido)" else "Subir Comprobante (Opcional)",
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(bottom = 8.dp),
-                color = if(uiState.method == PaymentMethod.EFECTIVO) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                color = if(uiState.method == PaymentMethod.CASH) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
             )
 
             Box(
@@ -392,7 +392,7 @@ fun CreatePaymentScreen(
                     )
                     .border(
                         1.dp, 
-                        if(uiState.method == PaymentMethod.EFECTIVO && uiState.proofUrl == null ) MaterialTheme.colorScheme.error.copy(alpha=0.5f) else Color.Transparent, 
+                        if(uiState.method == PaymentMethod.CASH && uiState.proofUrl == null ) MaterialTheme.colorScheme.error.copy(alpha=0.5f) else Color.Transparent, 
                         RoundedCornerShape(12.dp)
                     )
                     .clickable { imagePickerLauncher.launch("image/*") },

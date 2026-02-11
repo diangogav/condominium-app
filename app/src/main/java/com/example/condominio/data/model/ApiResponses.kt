@@ -215,9 +215,17 @@ fun PaymentDto.toDomain(): Payment {
     }
 
     val paymentMethod = try {
-        if (method != null) PaymentMethod.valueOf(method.uppercase()) else PaymentMethod.TRANSFERENCIA
+        if (method != null) {
+            when (method.uppercase()) {
+                "TRANSFERENCIA", "TRANSFER" -> PaymentMethod.TRANSFER
+                "EFECTIVO", "CASH" -> PaymentMethod.CASH
+                else -> PaymentMethod.valueOf(method.uppercase())
+            }
+        } else {
+            PaymentMethod.TRANSFER
+        }
     } catch (e: Exception) {
-        PaymentMethod.TRANSFERENCIA
+        PaymentMethod.TRANSFER
     }
 
     val dateObj = try {
