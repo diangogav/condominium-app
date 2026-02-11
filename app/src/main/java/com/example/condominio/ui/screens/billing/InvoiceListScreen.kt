@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -117,11 +118,21 @@ fun InvoiceItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = invoice.description ?: "Cuota de Condominio",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (invoice.type == com.example.condominio.data.model.InvoiceType.PETTY_CASH_REPLENISHMENT) {
+                            Icon(
+                                imageVector = Icons.Default.Build, // Using Build as a proxy for maintenance/petty cash
+                                contentDescription = "Caja Chica",
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(16.dp).padding(end = 4.dp)
+                            )
+                        }
+                        Text(
+                            text = invoice.description ?: "Cuota de Condominio",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                     Text(
                         text = "Periodo: ${invoice.period}",
                         style = MaterialTheme.typography.bodySmall,
