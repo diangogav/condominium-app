@@ -98,7 +98,7 @@ data class BalanceDto(
 )
 
 data class InvoiceDto(
-        @SerializedName(value = "id", alternate = ["invoiceId"]) val id: String,
+        @SerializedName(value = "id", alternate = ["invoiceId", "_id"]) val id: String,
         val period: String,
         val amount: Double,
         @SerializedName("paid_amount") val paid: Double? = 0.0,
@@ -106,8 +106,7 @@ data class InvoiceDto(
         val status: String,
         val description: String? = null,
         @SerializedName("due_date") val dueDate: String? = null,
-        @SerializedName("unit_id") val unitId: String? = null,
-        val type: String? = null
+        @SerializedName("unit_id") val unitId: String? = null
 )
 
 fun InvoiceDto.toDomain(): Invoice {
@@ -143,13 +142,7 @@ fun InvoiceDto.toDomain(): Invoice {
             remaining = remaining ?: (amount - (paid ?: 0.0)),
             status = invoiceStatus,
             description = description,
-            dueDate = date,
-            type =
-                    try {
-                        if (type != null) InvoiceType.valueOf(type) else InvoiceType.COMMON
-                    } catch (e: Exception) {
-                        InvoiceType.COMMON
-                    }
+            dueDate = date
     )
 }
 
@@ -180,6 +173,17 @@ data class PaymentUserDto(val id: String, val name: String)
 
 fun PaymentDto.toDomain(): Payment {
     val finalId = paymentId ?: id
+
+    val paymentStatus =
+            try {
+                if (status != null) PaymentStatus.valueOf(status.uppercase())
+                else
+                        PaymentStatus
+                                .APPROVED // Default to APPROVED if missing (likely approved in join
+                // table)
+            } catch (e: Exception) {
+                PaymentStatus.PENDING
+            }
 
     val paymentMethod =
             try {

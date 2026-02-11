@@ -149,7 +149,7 @@ fun PettyCashScreen(onBackClick: () -> Unit, viewModel: PettyCashViewModel = hil
                 onConfirm = { amount, desc, _, _ ->
                     viewModel.registerIncome(amount, desc) { showIncomeSheet = false }
                 },
-                isLoading = uiState.isLoading
+                isSubmitting = uiState.isSubmitting
         )
     }
 
@@ -172,7 +172,7 @@ fun PettyCashScreen(onBackClick: () -> Unit, viewModel: PettyCashViewModel = hil
                                 )
                     }
                 },
-                isLoading = uiState.isLoading,
+                isSubmitting = uiState.isSubmitting,
                 currentBalance = uiState.balance?.currentBalance ?: 0.0
         )
     }
@@ -379,7 +379,7 @@ fun MovementSheet(
         isIncome: Boolean,
         onDismiss: () -> Unit,
         onConfirm: (Double, String, PettyCashCategory?, String?) -> Unit,
-        isLoading: Boolean,
+        isSubmitting: Boolean,
         currentBalance: Double = 0.0
 ) {
     val sheetState = rememberModalBottomSheetState()
@@ -569,7 +569,7 @@ fun MovementSheet(
                     },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
                     enabled =
-                            !isLoading &&
+                            !isSubmitting &&
                                     amount.isNotEmpty() &&
                                     (isIncome || amount.toDoubleOrNull() != null),
                     shape = RoundedCornerShape(16.dp),
@@ -584,7 +584,7 @@ fun MovementSheet(
                                             else MaterialTheme.colorScheme.primary
                             )
             ) {
-                if (isLoading)
+                if (isSubmitting)
                         CircularProgressIndicator(
                                 color = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.size(24.dp)

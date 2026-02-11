@@ -14,17 +14,19 @@ data class User(
         // temporarily.
         val units: List<UserUnit> = emptyList(),
         // Helper to get the primary or first unit for default display
-        val currentUnit: UserUnit? = units.firstOrNull()
+        val currentUnit: UserUnit? = units.firstOrNull(),
+        // Store building ID from profile directly regarding of units (for admins/board)
+        val profileBuildingId: String? = null
 ) {
-    // Computed properties for backward compatibility during refactor
-    val apartmentUnit: String
-        get() = currentUnit?.unitName ?: ""
+        // Computed properties for backward compatibility during refactor
+        val apartmentUnit: String
+                get() = currentUnit?.unitName ?: ""
 
-    val building: String
-        get() = currentUnit?.buildingName ?: ""
+        val building: String
+                get() = currentUnit?.buildingName ?: ""
 
-    val buildingId: String
-        get() = currentUnit?.buildingId ?: ""
+        val buildingId: String
+                get() = currentUnit?.buildingId ?: profileBuildingId ?: ""
 }
 
 data class UserUnit(
@@ -80,15 +82,15 @@ data class Invoice(
 )
 
 enum class InvoiceStatus {
-    PENDING,
-    PAID,
-    CANCELLED,
-    OVERDUE
+        PENDING,
+        PAID,
+        CANCELLED,
+        OVERDUE
 }
 
 enum class InvoiceType {
-    COMMON,
-    PETTY_CASH_REPLENISHMENT
+        COMMON,
+        PETTY_CASH_REPLENISHMENT
 }
 
 data class DashboardSummary(
@@ -100,20 +102,20 @@ data class DashboardSummary(
 )
 
 enum class SolvencyStatus(val label: String) {
-    SOLVENT("Al día"),
-    PENDING("Pagos Pendientes")
+        SOLVENT("Al día"),
+        PENDING("Pagos Pendientes")
 }
 
 enum class PaymentMethod(val label: String) {
-    PAGO_MOVIL("Pago Móvil"),
-    TRANSFER("Transferencia"),
-    CASH("Efectivo")
+        PAGO_MOVIL("Pago Móvil"),
+        TRANSFER("Transferencia"),
+        CASH("Efectivo")
 }
 
 enum class PaymentStatus {
-    PENDING,
-    APPROVED,
-    REJECTED
+        PENDING,
+        APPROVED,
+        REJECTED
 }
 
 data class PaymentSummary(

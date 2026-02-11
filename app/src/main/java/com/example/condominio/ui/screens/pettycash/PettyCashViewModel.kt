@@ -17,7 +17,8 @@ data class PettyCashUiState(
         val error: String? = null,
         val canManage: Boolean = false,
         val buildingId: String? = null,
-        val isRefreshing: Boolean = false
+        val isRefreshing: Boolean = false,
+        val isSubmitting: Boolean = false
 )
 
 @HiltViewModel
@@ -119,7 +120,7 @@ constructor(
             return
         }
 
-        _uiState.update { it.copy(isLoading = true) }
+        _uiState.update { it.copy(isSubmitting = true) }
 
         viewModelScope.launch {
             android.util.Log.d("PettyCashVM", "Registering income for building: $bId")
@@ -127,10 +128,11 @@ constructor(
             if (result.isSuccess) {
                 refreshData()
                 onSuccess()
+                _uiState.update { it.copy(isSubmitting = false) }
             } else {
                 val error = result.exceptionOrNull()?.message
                 android.util.Log.e("PettyCashVM", "Register income failed: $error")
-                _uiState.update { it.copy(isLoading = false, error = error) }
+                _uiState.update { it.copy(isSubmitting = false, error = error) }
             }
         }
     }
@@ -154,7 +156,7 @@ constructor(
         // We no longer block if amount > currentBalance, relying on backend to handle the overage
         // logic
 
-        _uiState.update { it.copy(isLoading = true) }
+        _uiState.update { it.copy(isSubmitting = true) }
 
         viewModelScope.launch {
             android.util.Log.d("PettyCashVM", "Registering expense for building: $bId")
@@ -169,10 +171,11 @@ constructor(
             if (result.isSuccess) {
                 refreshData()
                 onSuccess()
+                _uiState.update { it.copy(isSubmitting = false) }
             } else {
                 val error = result.exceptionOrNull()?.message
                 android.util.Log.e("PettyCashVM", "Register expense failed: $error")
-                _uiState.update { it.copy(isLoading = false, error = error) }
+                _uiState.update { it.copy(isSubmitting = false, error = error) }
             }
         }
     }
