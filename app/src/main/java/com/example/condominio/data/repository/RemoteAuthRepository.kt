@@ -216,7 +216,6 @@ constructor(private val apiService: ApiService, private val tokenManager: TokenM
                                     buildingId = dto.buildingId,
                                     unitName = "", // Needs enrichment
                                     buildingName = "", // Needs enrichment
-                                    role = dto.role,
                                     isPrimary = dto.isPrimary
                             )
                         }
@@ -293,8 +292,16 @@ private fun UserProfile.toDomain(): User {
                         buildingId = dto.buildingId,
                         unitName = "", // Placeholder, will be enriched
                         buildingName = "", // Placeholder
-                        role = dto.role,
                         isPrimary = dto.isPrimary
+                )
+            }
+                    ?: emptyList()
+
+    val domainBuildingRoles =
+            buildingRoles?.map { dto ->
+                com.example.condominio.data.model.BuildingRole(
+                        buildingId = dto.buildingId,
+                        role = dto.role
                 )
             }
                     ?: emptyList()
@@ -325,7 +332,6 @@ private fun UserProfile.toDomain(): User {
                             buildingId = buildingId ?: "",
                             unitName = unitName.ifEmpty { "Unit" },
                             buildingName = buildingName ?: "Building",
-                            role = "resident",
                             isPrimary = true
                     )
             finalUnits = listOf(legacyUnit)
@@ -339,6 +345,7 @@ private fun UserProfile.toDomain(): User {
             role = role ?: "resident", // Map role from profile
             status = status ?: "active", // Map status
             units = finalUnits,
+            buildingRoles = domainBuildingRoles,
             currentUnit = finalUnits.firstOrNull(),
             profileBuildingId = buildingId
     )

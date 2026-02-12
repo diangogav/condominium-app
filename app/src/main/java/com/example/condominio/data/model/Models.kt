@@ -13,6 +13,7 @@ data class User(
         // but kept as derived properties or optional for backward compatibility if needed
         // temporarily.
         val units: List<UserUnit> = emptyList(),
+        val buildingRoles: List<BuildingRole> = emptyList(),
         // Helper to get the primary or first unit for default display
         val currentUnit: UserUnit? = units.firstOrNull(),
         // Store building ID from profile directly regarding of units (for admins/board)
@@ -34,8 +35,12 @@ data class UserUnit(
         val buildingId: String,
         val unitName: String, // e.g., "1-A"
         val buildingName: String, // e.g., "Residencias El Paraiso"
-        val role: String, // "owner", "resident"
         val isPrimary: Boolean = false
+)
+
+data class BuildingRole(
+        val buildingId: String,
+        val role: String // e.g., "BOARD"
 )
 
 data class Payment(
@@ -49,9 +54,10 @@ data class Payment(
         val bank: String? = null,
         val phone: String? = null,
         val proofUrl: String? = null,
-        val paidPeriods: List<String> = emptyList(),
         val allocations: List<PaymentAllocation> = emptyList(), // Detailed allocation
         val createdAt: Date? = null,
+        val processedAt: Date? = null,
+        val processorName: String? = null,
         val userName: String? = null
 )
 
@@ -96,8 +102,6 @@ enum class InvoiceType {
 data class DashboardSummary(
         val solvencyStatus: String,
         val lastPaymentDate: Date?,
-        val pendingPeriods: List<String>,
-        val paidPeriods: List<String>,
         val recentTransactions: List<Payment>
 )
 
@@ -121,8 +125,6 @@ enum class PaymentStatus {
 data class PaymentSummary(
         val solvencyStatus: SolvencyStatus,
         val lastPaymentDate: Date?,
-        val pendingPeriods: List<String>,
-        val paidPeriods: List<String>,
         val recentTransactions: List<Payment>,
         val unitName: String = "",
         val totalDebt: Double = 0.0

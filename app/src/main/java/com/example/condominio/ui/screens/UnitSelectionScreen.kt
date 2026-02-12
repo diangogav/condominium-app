@@ -55,9 +55,25 @@ fun UnitSelectionScreen(
                     )
                     
                     LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(uiState.units) { unit ->
-                            UnitItem(unit = unit) {
-                                viewModel.onUnitSelected(unit)
+                        items(uiState.items) { item ->
+                            val onClick = { viewModel.onItemSelected(item) }
+                            when (item) {
+                                is SelectionItem.UnitItem -> {
+                                    UnitCard(
+                                        title = item.unit.unitName,
+                                        subtitle = item.unit.buildingName,
+                                        role = "Residente",
+                                        onClick = onClick
+                                    )
+                                }
+                                is SelectionItem.RoleItem -> {
+                                    UnitCard(
+                                        title = "Administración",
+                                        subtitle = "Edificio ${item.role.buildingId.take(8)}",
+                                        role = item.role.role,
+                                        onClick = onClick
+                                    )
+                                }
                             }
                         }
                     }
@@ -68,7 +84,7 @@ fun UnitSelectionScreen(
 }
 
 @Composable
-fun UnitItem(unit: UserUnit, onClick: () -> Unit) {
+fun UnitCard(title: String, subtitle: String, role: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,15 +93,15 @@ fun UnitItem(unit: UserUnit, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = unit.unitName,
+                text = title,
                 style = MaterialTheme.typography.titleLarge
             )
             Text(
-                text = unit.buildingName,
+                text = subtitle,
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "Rol: ${unit.role}",
+                text = "Rol: $role",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary
             )

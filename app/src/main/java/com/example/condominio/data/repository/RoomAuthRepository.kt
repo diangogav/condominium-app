@@ -33,7 +33,6 @@ class RoomAuthRepository @Inject constructor(
                 buildingId = "b1",
                 unitName = "4B",
                 buildingName = "Torre Este",
-                role = "owner",
                 isPrimary = true
             )
             val user = existingUser?.toDomain() ?: User(
@@ -92,8 +91,7 @@ class RoomAuthRepository @Inject constructor(
                 }.time,
                 status = com.example.condominio.data.model.PaymentStatus.APPROVED,
                 description = "Condo Fee ${monthName(m)}",
-                method = com.example.condominio.data.model.PaymentMethod.PAGO_MOVIL,
-                paidPeriods = listOf(periodId)
+                method = com.example.condominio.data.model.PaymentMethod.PAGO_MOVIL
             )
             
             paymentDao.insertPayment(payment.toEntity())
@@ -124,7 +122,6 @@ class RoomAuthRepository @Inject constructor(
             buildingId = "b_demo",
             unitName = "Demo Unit",
             buildingName = building,
-            role = "owner",
             isPrimary = true
         )
 

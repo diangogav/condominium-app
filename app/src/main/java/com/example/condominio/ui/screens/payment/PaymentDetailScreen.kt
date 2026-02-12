@@ -10,7 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Download
@@ -70,7 +70,7 @@ fun PaymentDetailScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {
@@ -203,6 +203,10 @@ fun PaymentDetailScreen(
                         payment.reference?.let { DetailRow("Reference", it) }
                         payment.phone?.let { DetailRow("Mobile", it) }
                         
+                        if (payment.status != PaymentStatus.PENDING && !payment.processorName.isNullOrEmpty()) {
+                            DetailRow("Processed By", payment.processorName)
+                        }
+
                         if (payment.allocations.isNotEmpty()) {
                             Text(
                                 text = "Allocations",
@@ -215,9 +219,8 @@ fun PaymentDetailScreen(
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    // Truncate Invoice ID for display or show full?
                                     Text(
-                                        text = "Inv. ...${allocation.invoiceId.takeLast(6)}", 
+                                        text = if (allocation.invoicePeriod != null) "Period ${allocation.invoicePeriod}" else "Inv. ...${allocation.invoiceId.takeLast(6)}", 
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
@@ -229,8 +232,6 @@ fun PaymentDetailScreen(
                                 }
                             }
                             HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f), modifier = Modifier.padding(top=8.dp))
-                        } else if (payment.paidPeriods.isNotEmpty()) {
-                            DetailRow("Paid Periods", payment.paidPeriods.joinToString(", "))
                         }
 
                         DetailRow("Description", payment.description)

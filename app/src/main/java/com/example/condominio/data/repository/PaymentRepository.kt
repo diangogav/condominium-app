@@ -27,7 +27,6 @@ interface PaymentRepository {
         bank: String? = null,
         phone: String? = null,
         proofUrl: String? = null,
-        paidPeriods: List<String> = emptyList(), // Deprecated in favor of allocations
         buildingId: String? = null
     ): Result<Payment>
 

@@ -26,9 +26,17 @@ class UnitSelectionViewModel @Inject constructor(
     private fun loadUnits() {
         viewModelScope.launch {
             authRepository.fetchCurrentUser().onSuccess { user ->
+                val unitItems = user.units.map { SelectionItem.UnitItem(it) }
+                val roleItems = user.buildingRoles.map { SelectionItem.RoleItem(it) }
+                
+                // Merge and remove duplicates (building + unit might overlap, but they are different items)
+                // Actually, if I have a unit in building A and I am BOARD in building A, 
+                // I should probably see both options or handle them distinctly.
+                // The prompt says "union of IDs", but we need names.
+                
                 _uiState.update { 
                     it.copy(
-                        units = user.units, 
+                        items = unitItems + roleItems, 
                         isLoading = false,
                         userName = user.name
                     ) 
@@ -39,14 +47,36 @@ class UnitSelectionViewModel @Inject constructor(
         }
     }
 
-    fun onUnitSelected(unit: UserUnit) {
-        authRepository.setCurrentUnit(unit)
+    fun onItemSelected(item: SelectionItem) {
+        when (item) {
+            is SelectionItem.UnitItem -> {
+                authRepository.setCurrentUnit(item.unit)
+            }
+            is SelectionItem.RoleItem -> {
+                // If we select a building role, we might need a "Virtual Unit" 
+                // or a different way to track active building.
+                // For now, let's create a placeholder UserUnit to satisfy current repository logic
+                val virtualUnit = UserUnit(
+                    unitId = "ADMIN-${item.role.buildingId}",
+                    buildingId = item.role.buildingId,
+                    unitName = "Administración",
+                    buildingName = "Edificio ${item.role.buildingId.take(4)}", // Idealmente buscar nombre
+                    isPrimary = false
+                )
+                authRepository.setCurrentUnit(virtualUnit)
+            }
+        }
         _uiState.update { it.copy(unitSelected = true) }
     }
 }
 
+sealed class SelectionItem {
+    data class UnitItem(val unit: UserUnit) : SelectionItem()
+    data class RoleItem(val role: com.example.condominio.data.model.BuildingRole) : SelectionItem()
+}
+
 data class UnitSelectionUiState(
-    val units: List<UserUnit> = emptyList(),
+    val items: List<SelectionItem> = emptyList(),
     val isLoading: Boolean = true,
     val userName: String = "",
     val unitSelected: Boolean = false

@@ -90,7 +90,6 @@ constructor(private val apiService: ApiService, private val gson: com.google.gso
             bank: String?,
             phone: String?,
             proofUrl: String?,
-            paidPeriods: List<String>,
             buildingId: String?
     ): Result<Payment> {
         return try {
@@ -135,11 +134,6 @@ constructor(private val apiService: ApiService, private val gson: com.google.gso
                                                 .toRequestBody(
                                                         "application/json".toMediaTypeOrNull()
                                                 ),
-                                periods =
-                                        gson.toJson(paidPeriods)
-                                                .toRequestBody(
-                                                        "application/json".toMediaTypeOrNull()
-                                                ),
                                 proof_image = proofPart
                         )
                     } else {
@@ -156,8 +150,7 @@ constructor(private val apiService: ApiService, private val gson: com.google.gso
                                         bank = bank,
                                         notes = description,
                                         allocations = allocationDtos,
-                                        proofUrl = null,
-                                        periods = paidPeriods
+                                        proofUrl = null
                                 )
                         apiService.createPayment(request)
                     }

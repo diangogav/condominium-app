@@ -18,8 +18,7 @@ data class PaymentEntity(
     val reference: String? = null,
     val bank: String? = null,
     val phone: String? = null,
-    val proofUrl: String? = null,
-    val paidPeriods: List<String> = emptyList()
+    val proofUrl: String? = null
 )
 
 fun PaymentEntity.toDomain() = Payment(
@@ -32,8 +31,7 @@ fun PaymentEntity.toDomain() = Payment(
     reference = reference,
     bank = bank,
     phone = phone,
-    proofUrl = proofUrl,
-    paidPeriods = paidPeriods
+    proofUrl = proofUrl
 )
 
 fun Payment.toEntity() = PaymentEntity(
@@ -46,6 +44,5 @@ fun Payment.toEntity() = PaymentEntity(
     reference = reference,
     bank = bank,
     phone = phone,
-    proofUrl = proofUrl,
-    paidPeriods = paidPeriods
+    proofUrl = proofUrl
 )

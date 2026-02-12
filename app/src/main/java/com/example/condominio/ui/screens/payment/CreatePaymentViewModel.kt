@@ -157,8 +157,6 @@ class CreatePaymentViewModel @Inject constructor(
             val selectedInvoices = availableInvoices
                 .filter { state.selectedInvoiceIds.contains(it.id) }
                 .sortedBy { it.period } 
-            
-            val paidPeriods = selectedInvoices.map { it.period }
                 
             for (invoice in selectedInvoices) {
                 if (remainingAmount <= 0) break
@@ -182,7 +180,6 @@ class CreatePaymentViewModel @Inject constructor(
                 bank = state.bank.ifBlank { null },
                 phone = state.phone.ifBlank { null },
                 proofUrl = state.proofUrl,
-                paidPeriods = paidPeriods,
                 buildingId = user?.currentUnit?.buildingId
             )
             _uiState.update { it.copy(isLoading = false) }

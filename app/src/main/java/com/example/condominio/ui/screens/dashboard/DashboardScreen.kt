@@ -377,9 +377,7 @@ fun TransactionItem(payment: Payment, onClick: () -> Unit) {
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                    text =
-                            if (payment.description.isNotBlank()) payment.description
-                            else payment.paidPeriods.joinToString(", "),
+                    text = if (payment.description.isNotBlank()) payment.description else "Pago",
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold)
             )
             Text(
@@ -395,11 +393,20 @@ fun TransactionItem(payment: Payment, onClick: () -> Unit) {
                         PaymentStatus.REJECTED -> Color(0xFFF44336)
                     }
 
-            Text(
-                    text = payment.status.name,
-                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                    color = statusColor
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                        text = payment.status.name,
+                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                        color = statusColor
+                )
+                if (payment.status != PaymentStatus.PENDING && !payment.processorName.isNullOrEmpty()) {
+                    Text(
+                            text = " • Por: ${payment.processorName}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                    )
+                }
+            }
         }
         Text(
                 text = "$${String.format("%.2f", payment.amount)}",

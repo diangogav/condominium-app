@@ -33,6 +33,7 @@ data class UserProfile(
         val role: String? = null,
         val status: String? = null,
         val units: List<UserUnitDto>? = null,
+        @SerializedName("buildingRoles") val buildingRoles: List<BuildingRoleDto>? = null,
         // Legacy support
         @SerializedName(value = "unit", alternate = ["apartment_unit", "apartment", "unit_id"])
         val unit: com.google.gson.JsonElement? = null,
@@ -46,15 +47,17 @@ data class UserProfile(
 data class UserUnitDto(
         @SerializedName("unit_id") val unitId: String,
         @SerializedName("building_id") val buildingId: String,
-        @SerializedName("building_role") val role: String, // "owner", "resident"
         @SerializedName("is_primary") val isPrimary: Boolean
+)
+
+data class BuildingRoleDto(
+        @SerializedName("building_id") val buildingId: String,
+        val role: String
 )
 
 data class PaymentSummaryDto(
         @SerializedName("solvency_status") val solvencyStatus: String,
         @SerializedName("last_payment_date") val lastPaymentDate: String?,
-        @SerializedName("pending_periods") val pendingPeriods: List<String>,
-        @SerializedName("paid_periods") val paidPeriods: List<String>,
         @SerializedName("recent_transactions") val recentTransactions: List<PaymentDto>,
         @SerializedName(value = "unit", alternate = ["apartment_unit"])
         val unitObject: UnitDto? = null,
@@ -82,8 +85,6 @@ fun PaymentSummaryDto.toDomain(): PaymentSummary {
     return PaymentSummary(
             solvencyStatus = solvency,
             lastPaymentDate = lastPayment,
-            pendingPeriods = pendingPeriods,
-            paidPeriods = paidPeriods,
             recentTransactions = recentTransactions.map { it.toDomain() },
             unitName = unitObject?.name ?: unitObject?.id ?: unitId ?: "",
             totalDebt = totalDebt ?: 0.0
@@ -159,9 +160,11 @@ data class PaymentDto(
         @SerializedName("unit_id") val unitId: String? = null,
         @SerializedName("building_id") val buildingId: String? = null,
         @SerializedName("proof_url") val proofUrl: String? = null,
-        val periods: List<String>? = null,
         val allocations: List<AllocationDto>? = null,
         @SerializedName("created_at") val createdAt: String? = null,
+        @SerializedName("processed_at") val processedAt: String? = null,
+        @SerializedName("processed_by") val processedBy: String? = null,
+        val processor: ProcessorDto? = null,
         val notes: String? = null,
         @SerializedName("allocated_amount") val allocatedAmount: Double? = null,
         @SerializedName("allocation_id") val allocationId: String? = null,
@@ -170,6 +173,8 @@ data class PaymentDto(
 )
 
 data class PaymentUserDto(val id: String, val name: String)
+
+data class ProcessorDto(val name: String)
 
 fun PaymentDto.toDomain(): Payment {
     val finalId = paymentId ?: id
@@ -234,7 +239,7 @@ fun PaymentDto.toDomain(): Payment {
     return Payment(
             id = finalId,
             amount = amount,
-            date = dateObj ?: java.util.Date(),
+            date = dateObj,
             status = paymentStatus,
             description = finalDescription,
             method = paymentMethod,
@@ -242,8 +247,15 @@ fun PaymentDto.toDomain(): Payment {
             bank = bank,
             proofUrl = proofUrl,
             allocations = allocations?.map { it.toDomain() } ?: emptyList(),
-            paidPeriods = periods ?: emptyList(),
-            userName = user?.name
+            userName = user?.name,
+            processedAt = processedAt?.let {
+                try {
+                    java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.US).parse(it)
+                } catch (e: Exception) {
+                    null
+                }
+            },
+            processorName = processor?.name
     )
 }
 
@@ -264,8 +276,7 @@ data class CreatePaymentRequest(
         val notes: String? = null,
         val bank: String? = null,
         @SerializedName("amount_currency") val amountCurrency: String = "USD",
-        @SerializedName("proof_url") val proofUrl: String? = null,
-        val periods: List<String>? = emptyList()
+        @SerializedName("proof_url") val proofUrl: String? = null
 )
 
 data class UpdateUserRequest(

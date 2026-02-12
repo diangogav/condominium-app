@@ -59,9 +59,6 @@ interface ApiService {
             @Part("reference") reference: RequestBody?,
             @Part("bank") bank: RequestBody?,
             @Part("allocations") allocations: RequestBody?, // JSON string
-            @Part("periods")
-            periods: RequestBody?, // JSON string or comma-separated? Backend likely expects
-            // array-like or JSON
             @Part proof_image: MultipartBody.Part? = null
     ): Response<PaymentDto>
 
